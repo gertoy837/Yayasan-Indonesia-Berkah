@@ -6,7 +6,7 @@
 
 - Clone the repository
 ``` 
-git clone https://github.com/gertoy837/DataSantri`
+git clone https://github.com/gertoy837/DataSantri.git
 cd DataSantri
 ```
 - Install dependencies
