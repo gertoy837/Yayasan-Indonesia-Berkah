@@ -24,7 +24,8 @@
             <img class="img-error" src="{{ asset('template/dist') }}/assets/compiled/svg/error-404.svg" alt="Not Found">
             <h1 class="error-title">NOT FOUND</h1>
             <p class='fs-5 text-gray-600'>Gak ada, Mau nyari apa emangnya?</p>
-            <a href="{{ route('dashboard') }}" class="btn btn-lg btn-outline-primary mt-3">Go Home</a>
+            <a href="" class="btn btn-lg btn-outline-primary mt-3">Go Home</a>
+            
         </div>
     </div>
 </div>

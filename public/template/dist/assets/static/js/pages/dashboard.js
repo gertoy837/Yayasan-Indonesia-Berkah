@@ -15,7 +15,7 @@ var optionsProfileVisit = {
   plotOptions: {},
   series: [
     {
-      name: "sales",
+      name: "prestasi",
       data: [9, 20, 30, 20, 10, 20, 30, 20, 10, 20, 30, 20],
     },
   ],
@@ -39,7 +39,7 @@ var optionsProfileVisit = {
 }
 let optionsVisitorsProfile = {
   series: [70, 30],
-  labels: ["Male", "Female"],
+  labels: ["Ikhwan", "Akhwat"],
   colors: ["#435ebe", "#55c6e8"],
   chart: {
     type: "donut",
@@ -57,6 +57,7 @@ let optionsVisitorsProfile = {
     },
   },
 }
+
 
 var optionsEurope = {
   series: [
@@ -121,6 +122,7 @@ var optionsEurope = {
   },
 }
 
+
 let optionsAmerica = {
   ...optionsEurope,
   colors: ["#008b75"],
@@ -129,6 +131,7 @@ let optionsIndonesia = {
   ...optionsEurope,
   colors: ["#dc3545"],
 }
+
 
 var chartProfileVisit = new ApexCharts(
   document.querySelector("#chart-profile-visit"),
@@ -150,6 +153,7 @@ var chartIndonesia = new ApexCharts(
   document.querySelector("#chart-indonesia"),
   optionsIndonesia
 )
+
 
 chartIndonesia.render()
 chartAmerica.render()

@@ -18,7 +18,21 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/dashboard';
-    public const ADMIN_DASHBOARD = '/admin/dashboard';
+    public const DONATUR = '/donaturdashboard';
+    public const ADMIN = '/admindashboard';
+
+   protected function authenticated(Request $request, $user)
+{
+    if ($user->role == 'santri') {
+        return redirect('/dashboard'); // Ganti dengan rute santri yang sesuai
+    } elseif ($user->role == 'admin') {
+        return redirect('/admindashboard'); // Ganti dengan rute admin yang sesuai
+    } elseif ($user->role == 'donatur') {
+        return redirect('/donaturdashboard'); // Ganti dengan rute donatur yang sesuai
+    }
+
+    return redirect('/'); // Jika usertype tidak dikenali, arahkan ke halaman utama
+}
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

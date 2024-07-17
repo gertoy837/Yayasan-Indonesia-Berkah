@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('tgllahir_santri');
             $table->string('domisili_santri');
             $table->string('alamat_santri');
-            $table->string('photo_santri');
+            $table->string('photo_santri')->nullable();
             $table->timestamps();
         });
     }

@@ -19,14 +19,23 @@
         <div class="row h-100">
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
-                    <div class="auth-logo">
-                        <h3>IB Data</h3>
-                    </div>
+                    
                     <h1 class="auth-title">Sign Up</h1>
                     <p class="auth-subtitle mb-5">Input your data to register to our website.</p>
 
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <select id="role" name="role" class="form-control form-control-xl" required>
+                                <option value="santri">Santri</option>
+                                <option value="admin">Admin</option>
+                                <option value="donatur">Donatur</option>
+                            </select>
+                            <div class="form-control-icon">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                        </div>
                         <div class="form-group position-relative has-icon-left mb-4">
                             <input type="text" class="form-control form-control-xl" name="email" placeholder="Email" :value="old('email')" required>
                             <div class="form-control-icon">
