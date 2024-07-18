@@ -64,50 +64,43 @@
     <div class="sidebar-menu">
         <ul class="menu">
             <li class="sidebar-title">Menu</li>
-            
-            <li
-                class="sidebar-item ">
-                {{-- <a href="{{route('dashboard')}}" class='sidebar-link'>
+
+            <li class="sidebar-item ">
+                <a href="{{ route('admindashboard') }}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
-                </a> --}}
-            </li>  
-            
-            <li
-                class="sidebar-item ">
-                <a href="{{route('santri')}}" class='sidebar-link'>
+                </a>
+            </li>
+
+            <li class="sidebar-item ">
+                <a href="{{ route('adminsantri') }}" class='sidebar-link'>
                     <i class="bi bi-file-earmark-medical-fill"></i>
                     <span>Data Santri</span>
                 </a>
-            </li>
-            
-                <li
-                class="sidebar-item ">
-                <a href="{{route('pelanggaran')}}" class='sidebar-link'>
+
+            <li class="sidebar-item ">
+                <a href="{{ route('adminpelanggaran') }}" class='sidebar-link'>
                     <i class="bi bi-exclamation-triangle"></i>
                     <span>Pelanggaran</span>
                 </a>
             </li>
 
-            <li
-                class="sidebar-item ">
-                <a href="{{route('prestasi')}}" class='sidebar-link'>
+            <li class="sidebar-item ">
+                <a href="{{ route('adminprestasi') }}" class='sidebar-link'>
                     <i class="bi bi-trophy"></i>
                     <span>Prestasi</span>
                 </a>
             </li>
 
-            <li
-                class="sidebar-item ">
-                <a href="{{route('mutabaah')}}" class='sidebar-link'>
+            <li class="sidebar-item ">
+                <a href="{{ route('adminmutabaah') }}" class='sidebar-link'>
                     <i class="bi bi-calendar"></i>
                     <span>Mutaba'ah Santri</span>
                 </a>
             </li>
 
-            <li
-                class="sidebar-item active">
-                <a href="{{route('nilai')}}" class='sidebar-link'>
+            <li class="sidebar-item active">
+                <a href="{{ route('adminnilai') }}" class='sidebar-link'>
                     <i class="bi bi-award"></i>
                     <span>Nilai Santri</span>
                 </a>
@@ -303,7 +296,7 @@
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
-            @yield('nilai')
+            @yield('adminNilai')
 
  
     <script src="{{ asset('template/dist/assets') }}/static/js/components/dark.js"></script>

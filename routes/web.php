@@ -222,6 +222,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // mutabaah
     Route::get('/mutabaah',[MutabaahController::class, 'index'])->name('mutabaah');
+    Route::get('/mutabaah/addMutabaah',[MutabaahController::class, 'create'])->name('tambahMutabaah');
 
     // nilai
     Route::get('/nilai',[NilaiController::class, 'index'])->name('nilai');
@@ -233,6 +234,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // tahajud
     Route::get('/mutabaah/addmutabaahtahajud', [MutabaahController::class, 'create2'])->name('tambahmutabaahtahajud');
+    // Route::get('/mutabaah/addmutabaah', [MutabaahController::class, 'create'])->name('tambahmutabaah');
     Route::get('/mutabaah/formeditmutabaahtahajud/{id}',[MutabaahController::class, 'edit'])->name('editmutabaahtahajud'); 
     Route::put('/mutabaah/updatemutabaahtahajud/{id}',[MutabaahController::class, 'update'])->name('updatemutabaahtahajud');
     Route::get('/mutabaah/hapusmutabaahtahajud/{id}',[MutabaahController::class, 'destroy'])->name('hapusmutabaahtahajud');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Santri;
 use App\Http\Controllers\Controller;
 use App\Models\mutabaah;
+use App\Models\Santri;
 use Illuminate\Http\Request;
 
 class MutabaahController extends Controller
@@ -27,7 +28,8 @@ class MutabaahController extends Controller
      */
     public function create(request $request)
     {
-
+        $querysantri = Santri::all();
+        return view('santrii.mutabaah.tambah',compact('querysantri'));
     }
 
 

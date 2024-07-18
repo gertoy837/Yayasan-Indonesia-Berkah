@@ -1,5 +1,5 @@
-@extends('template.nilai')
-@section('nilai')
+@extends('template.adminNilai')
+@section('adminNilai')
     <div class=" text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h3 class="mb-0">Nilai Santri</h3>
