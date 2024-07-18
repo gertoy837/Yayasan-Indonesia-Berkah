@@ -85,10 +85,11 @@
                                         Sholat Berjamaah</th>
                                     <th scope="col" colspan="10">Sunnah</th>
                                     <th scope="col" colspan="2">Dzikir</th>
-                                    <th scope="col" colspan="2" style="white-space: nowrap; padding: 0 2rem">
-                                        Sahur & Shaum</th>
+                                    <th scope="col" colspan="2" style="white-space: nowrap; padding: 0 2rem">Sahur
+                                        & Shaum</th>
                                     <th scope="col" colspan="3">Work Out</th>
                                     <th scope="col" colspan="5">Muamalah & Ihsan</th>
+                                    <th scope="col" rowspan="2" class="px-5">Action</th>
                                 </tr>
                                 <tr class="text-white">
                                     <th scope="col" class="text-center" style="white-space: nowrap">S</th>
@@ -123,41 +124,55 @@
                             <tbody>
                                 @php
                                     $no = 1;
-                                    $date = date('Y-m-d');
                                 @endphp
-                                <tr>
-                                    <td class="text-center">{{ $no++ }}</td>
-                                    <td>{{ $date }}</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>5 lembar juz 1</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td></td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>1 Halaman</td>
-                                    <td>√</td>
-                                </tr>
+                                @foreach ($mutabaah as $item)
+                                    <tr>
+                                        <td class="text-center">{{ $no++ }}</td>
+                                        <td>{{ $item->tanggal }}</td>
+                                        <td>{{ $item->shubuh ? '√' : '' }}</td>
+                                        <td>{{ $item->dzuhur ? '√' : '' }}</td>
+                                        <td>{{ $item->ashar ? '√' : '' }}</td>
+                                        <td>{{ $item->maghrib ? '√' : '' }}</td>
+                                        <td>{{ $item->isya ? '√' : '' }}</td>
+                                        <td style="white-space: nowrap">{{ $item->tilawah }}</td>
+                                        <td>{{ $item->al_mulk ? '√' : '' }}</td>
+                                        <td>{{ $item->solawat ? '√' : '' }}</td>
+                                        <td>{{ $item->al_kahfi ? '√' : '' }}</td>
+                                        <td>{{ $item->tahajud ? '√' : '' }}</td>
+                                        <td>{{ $item->dhuha ? '√' : '' }}</td>
+                                        <td>{{ $item->rs ? '√' : '' }}</td>
+                                        <td>{{ $item->rd ? '√' : '' }}</td>
+                                        <td>{{ $item->rm ? '√' : '' }}</td>
+                                        <td>{{ $item->ri ? '√' : '' }}</td>
+                                        <td>{{ $item->dzikir_pagi ? '√' : '' }}</td>
+                                        <td>{{ $item->dzikir_petang ? '√' : '' }}</td>
+                                        <td>{{ $item->sahur_senin ? '√' : '' }}</td>
+                                        <td>{{ $item->sahur_kamis ? '√' : '' }}</td>
+                                        <td>{{ $item->workout_situp ? '√' : '' }}</td>
+                                        <td>{{ $item->workout_pushup ? '√' : '' }}</td>
+                                        <td>{{ $item->workout_run ? '√' : '' }}</td>
+                                        <td>{{ $item->tiga_s ? '√' : '' }}</td>
+                                        <td>{{ $item->mendoakan_orangtua ? '√' : '' }}</td>
+                                        <td>{{ $item->bersyukur ? '√' : '' }}</td>
+                                        <td style="white-space: nowrap">{{ $item->reading_book }}</td>
+                                        <td>{{ $item->mendoakan_oranglain ? '√' : '' }}</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-warning rounded-pill m-2"
+                                                href="{{ route('editMutabaah', $item->id) }}"><i
+                                                    class="fa fa-solid fa-pen"></i></a>
+                                            <form action="{{ route('hapusMutabaah', $item->id) }}" method="POST"
+                                                style="display: inline;" onsubmit="return confirm('Mau Dihapus?!')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-light rounded-pill m-2"><i
+                                                        class="fa fa-solid fa-trash"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>

@@ -223,6 +223,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // mutabaah
     Route::get('/mutabaah',[MutabaahController::class, 'index'])->name('mutabaah');
     Route::get('/mutabaah/addMutabaah',[MutabaahController::class, 'create'])->name('tambahMutabaah');
+    Route::post('/mutabaah/addMutabaah/create',[MutabaahController::class, 'store'])->name('storeMutabaah');
+    Route::get('/mutabaah/edit/{id}', [MutabaahController::class, 'edit'])->name('editMutabaah');
+    Route::put('/mutabaah/update/{id}', [MutabaahController::class, 'update'])->name('updateMutabaah');
+    Route::delete('/mutabaah/{id}', [MutabaahController::class, 'destroy'])->name('hapusMutabaah');
 
     // nilai
     Route::get('/nilai',[NilaiController::class, 'index'])->name('nilai');
