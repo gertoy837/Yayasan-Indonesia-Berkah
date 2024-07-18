@@ -113,7 +113,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // nilai
     Route::get('/adminnilai',[AdminNilaiController::class, 'index'])->name('adminnilai');
-    Route::get('/adminnilai/addnilai', [NilaiController::class, 'create'])->name('admintambahnilai');
+    Route::get('/adminnilai/addnilai', [AdminNilaiController::class, 'create'])->name('admintambahnilai');
     Route::get('/adminnilai/formeditnilai/{id}',[AdminNilaiController::class, 'edit'])->name('admineditnilai'); 
     Route::put('/adminnilai/updatenilai/{id}',[AdminNilaiController::class, 'update'])->name('adminupdatenilai');
     Route::get('/adminnilai/hapusnilai/{id}',[AdminNilaiController::class, 'destroy'])->name('adminhapusnilai');

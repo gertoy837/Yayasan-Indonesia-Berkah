@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\nilai;
+use App\Models\Santri;
 use App\Http\Requests\Storenilai;
 use App\Http\Requests\updatenilai;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class AdminNilaiController extends Controller
     public function create(Request $request)
     {
         $query = nilai::all();
-        return view('admin.nilai.tambah',compact('query'));
+        $santri = Santri::all();
+        return view('admin.nilai.tambah',compact('query','santri'));
     }
 
 

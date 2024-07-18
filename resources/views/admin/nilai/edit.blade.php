@@ -29,7 +29,7 @@
                      <div class="col-md-6 col-12">
                         <div class="form-group">
                         <label for="first-name-column">Nama Santri</label>
-                        <input value="{{$edit['namasantri']}}"  type="no" id="first-name-column" class="form-control"
+                        <input value="{{$edit['namasantri']}}" disabled  type="no" id="first-name-column" class="form-control"
                                placeholder="Nama Santri" name="namasantri">
                         </div>
                     </div>
