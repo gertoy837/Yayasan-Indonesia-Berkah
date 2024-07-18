@@ -13,7 +13,7 @@ class MutabaahController extends Controller
     public function index(Request $request)
     {
 
-
+        return view ('santrii.mutabaah.index');
     }
     public function detail(Request $request)
     {

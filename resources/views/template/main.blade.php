@@ -67,7 +67,7 @@
             
             <li
                 class="sidebar-item ">
-                <a href="{{route('dashboard')}}" class='sidebar-link'>
+                <a href="{{route('santridashboard')}}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>

@@ -13,7 +13,7 @@ class AdminMutabaahController extends Controller
      */
     public function index(Request $request)
     {
-
+        return view ('admin.mutabaah.index');
 
     }
     public function detail(Request $request)
