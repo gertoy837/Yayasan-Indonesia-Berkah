@@ -52,7 +52,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item ">
-                            <a href="{{ route('nilai') }}" class='sidebar-link'>
+                            <a href="{{ route('adminnilai') }}" class='sidebar-link'>
                                 <i class="bi bi-paper fill"></i>
                                 <p class="dika ml-4">Nilai Santri</p>
                             </a>
