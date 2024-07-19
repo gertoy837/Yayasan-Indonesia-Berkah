@@ -8,7 +8,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href=" {{ route('adminsantri') }}">IB Data</a>
+                            <a href="{{ route('adminsantri') }}">IB Data</a>
                         </div>
                         <div class="sidebar-toggler  x">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -65,17 +65,49 @@
             @include('include.header')
             <div id="main-content">
                 <div class="table-card prestasi-card-container">
-                    <div class=" text-center rounded p-4">
+                    <div class="text-center rounded">
                         <div class="d-flex align-items-center justify-content-between">
-                            <h3 class="mb-0">Pelanggaran Santri</h3>
+                            <h3 class="mb-0">Mutabaah {{ Auth::user()->name }}</h3>
                             <center>
                             </center>
-                            <a class="btn btn-md btn-primary " style="margin-bottom:20px"
-                                href="{{ route('tambahMutabaah') }}"><i class="fas fa-plus-circle"></i> Add
-                                New Data</a>
+                            <a class="btn btn-md btn-primary" style="margin-bottom:20px"
+                                href="{{ route('tambahMutabaah') }}">
+                                <i class="fas fa-plus-circle"></i> Add New Data
+                            </a>
                         </div>
                     </div>
-                    <div class="card-body py-4 px-4">
+
+                    <!-- Dropdown for selecting month -->
+                    <div class="mb-3">
+                        <!-- Form untuk memilih bulan dan tahun -->
+                        <form id="filter-form" method="GET" action="{{ route('mutabaah') }}">
+                            <div class="d-flex justify-content-lg-end">
+                                <div class="form-group">
+                                    <select name="bulan" id="bulan" class="form-control">
+                                        @foreach ($months as $month)
+                                            <option value="{{ $month->month }}"
+                                                {{ $month->month == $selectedMonth ? 'selected' : '' }}>
+                                                {{ $month->month_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select name="tahun" id="tahun" class="form-control">
+                                        @foreach ($years as $year)
+                                            <option value="{{ $year->year }}"
+                                                {{ $year->year == $selectedYear ? 'selected' : '' }}>
+                                                {{ $year->year }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+
+                    <div class="card-body mb-5">
                         <table class="table text-start align-right table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-white text-center">
@@ -157,15 +189,17 @@
                                         <td style="white-space: nowrap">{{ $item->reading_book }}</td>
                                         <td>{{ $item->mendoakan_oranglain ? '√' : '' }}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning rounded-pill m-2"
-                                                href="{{ route('editMutabaah', $item->id) }}"><i
-                                                    class="fa fa-solid fa-pen"></i></a>
+                                            <a class="btn btn-warning rounded-5 m-2"
+                                                href="{{ route('editMutabaah', $item->id) }}">
+                                                <i class="fa fa-solid fa-pen"></i>
+                                            </a>
                                             <form action="{{ route('hapusMutabaah', $item->id) }}" method="POST"
                                                 style="display: inline;" onsubmit="return confirm('Mau Dihapus?!')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-light rounded-pill m-2"><i
-                                                        class="fa fa-solid fa-trash"></i></button>
+                                                <button type="submit" class="btn btn-light rounded-5 m-2">
+                                                    <i class="fa fa-solid fa-trash"></i>
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>
@@ -179,6 +213,68 @@
         </div>
         @include('include.bagianbawah')
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearSelect = document.getElementById('tahun');
+            const monthSelect = document.getElementById('bulan');
+            const filterForm = document.getElementById('filter-form');
+
+            function submitForm() {
+                filterForm.submit();
+            }
+
+            yearSelect.addEventListener('change', function() {
+                submitForm();
+            });
+
+            monthSelect.addEventListener('change', function() {
+                submitForm();
+            });
+
+            function updateMonths(year, keepSelectedMonth = false) {
+                fetch(`/mutabaah/months?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const currentSelectedMonth = keepSelectedMonth ? monthSelect.value : '';
+
+                        monthSelect.innerHTML = '';
+                        if (data.length > 0) {
+                            let monthFound = false;
+                            data.forEach((month) => {
+                                const option = document.createElement('option');
+                                option.value = month.month;
+                                option.textContent = month.month_name;
+                                monthSelect.appendChild(option);
+
+                                if (month.month.toString() === currentSelectedMonth) {
+                                    option.selected = true;
+                                    monthFound = true;
+                                }
+                            });
+
+                            if (!monthFound) {
+                                monthSelect.value = data[0].month;
+                            }
+                        } else {
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.textContent = 'Tidak ada bulan untuk tahun ini';
+                            monthSelect.appendChild(option);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching months:', error));
+            }
+
+            yearSelect.addEventListener('change', function() {
+                updateMonths(this.value, false);
+            });
+
+            if (yearSelect.options.length > 0) {
+                updateMonths(yearSelect.value, true);
+            }
+        });
+    </script>
+
 </body>
 
 </html>
