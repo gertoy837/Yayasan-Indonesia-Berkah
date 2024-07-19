@@ -25,7 +25,8 @@
                             <a href=" {{ route('adminsantri') }}">IB Data</a>
                         </div>
                         <div class="sidebar-toggler  x">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i
+                                    class="bi bi-x bi-middle"></i></a>
                         </div>
                     </div>
                 </div>
@@ -91,9 +92,13 @@
                     </div>
                 </div>
                 <div class="page-content">
+                    @if ($errors->has('tanggal'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('tanggal') }}
+                        </div>
+                    @endif
                     <section class="section">
                         <div class="card">
-
                             <form method="post" action="{{ route('storeMutabaah') }}" enctype="multipart/form-data">
                                 @csrf
                                 <section id="multiple-column-form">
@@ -114,8 +119,7 @@
 
                                                             <div class="col-md-6 col-12">
                                                                 <label for="basicInput">Tanggal</label>
-                                                                <input name="tanggal" id="tanggal"
-                                                                    type="date"
+                                                                <input name="tanggal" id="tanggal" type="date"
                                                                     class="form-control flatpickr-no-config"
                                                                     placeholder="Select date..">
                                                             </div>

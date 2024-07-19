@@ -92,17 +92,15 @@
                     </div>
                 </div>
                 <div class="page-content">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                @endforeach
+                        </div>
+                    @endif
                     <section class="section">
                         <div class="card">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
                             <form action="{{ route('updateMutabaah', $mutabaah->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
@@ -126,7 +124,7 @@
                                                                 <label for="basicInput">Tanggal</label>
                                                                 <input name="tanggal" id="tanggal" type="date"
                                                                     class="form-control flatpickr-no-config"
-                                                                     value="{{ $mutabaah->tanggal }}">
+                                                                    value="{{ $mutabaah->tanggal }}">
                                                             </div>
 
                                                             <div class="col-md-6 mt-3">
@@ -138,7 +136,8 @@
                                                                         <div class="col-md-12 col-12 mb-2">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox" name="shubuh"
-                                                                                id="flexCheckDefault" {{ $mutabaah->shubuh ? 'checked' : '' }}>
+                                                                                id="flexCheckDefault"
+                                                                                {{ $mutabaah->shubuh ? 'checked' : '' }}>
                                                                             <label class="form-check-label px-2"
                                                                                 for="flexCheckDefault">
                                                                                 Shubuh
@@ -148,7 +147,8 @@
                                                                         <div class="col-md-12 col-12 mb-2">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox" name="dzuhur"
-                                                                                id="flexCheckDefault2" {{ $mutabaah->dzuhur ? 'checked' : '' }}>
+                                                                                id="flexCheckDefault2"
+                                                                                {{ $mutabaah->dzuhur ? 'checked' : '' }}>
                                                                             <label class="form-check-label px-2"
                                                                                 for="flexCheckDefault2">
                                                                                 Dzuhur
@@ -180,7 +180,8 @@
                                                                         <div class="col-md-12 col-12 mb-2">
                                                                             <input class="form-check-input"
                                                                                 type="checkbox" name="isya"
-                                                                                id="flexCheckDefault5" {{ $mutabaah->isya ? 'checked' : '' }}>
+                                                                                id="flexCheckDefault5"
+                                                                                {{ $mutabaah->isya ? 'checked' : '' }}>
                                                                             <label class="form-check-label px-2"
                                                                                 for="flexCheckDefault5">
                                                                                 Isya
@@ -197,10 +198,10 @@
                                                                 <div class="row">
                                                                     <div class="col-md-12 col-12">
                                                                         <div class="mb-3">
-                                                                            <label
-                                                                                for="tilawah">Tilawah</label>
+                                                                            <label for="tilawah">Tilawah</label>
                                                                             <input type="text" class="form-control"
-                                                                                name="tilawah" id="tilawah" value="{{ $mutabaah->tilawah }}">
+                                                                                name="tilawah" id="tilawah"
+                                                                                value="{{ $mutabaah->tilawah }}">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-12">
@@ -387,14 +388,15 @@
                                                             </div>
                                                             <div class="col-md-6 col-12 mb-3">
                                                                 <label for="basicInput">Reading Book</label>
-                                                                <input name="reading_book" id="reading_book" type="text"
-                                                                 value="{{ $mutabaah->reading_book }}"
+                                                                <input name="reading_book" id="reading_book"
+                                                                    type="text"
+                                                                    value="{{ $mutabaah->reading_book }}"
                                                                     class="form-control flatpickr-no-config">
                                                             </div>
                                                             <div class="col-md-12 col-12">
                                                                 <div class="form-group">
                                                                     <input class="form-check-input" type="checkbox"
-                                                                    {{ $mutabaah->tiga_s ? 'checked' : '' }}
+                                                                        {{ $mutabaah->tiga_s ? 'checked' : '' }}
                                                                         name="3s" id="3s">
                                                                     <label for="3s" class="px-2">3S</label>
                                                                 </div>
@@ -402,7 +404,7 @@
                                                             <div class="col-md-12 col-12">
                                                                 <div class="form-group">
                                                                     <input class="form-check-input" type="checkbox"
-                                                                    {{ $mutabaah->mendoakan_orangtua ? 'checked' : '' }}
+                                                                        {{ $mutabaah->mendoakan_orangtua ? 'checked' : '' }}
                                                                         name="mendoakanOrangTua"
                                                                         id="mendoakanOrangTua">
                                                                     <label for="mendoakanOrangTua"
@@ -412,7 +414,7 @@
                                                             <div class="col-md-12 col-12">
                                                                 <div class="form-group">
                                                                     <input class="form-check-input" type="checkbox"
-                                                                    {{ $mutabaah->bersyukur ? 'checked' : '' }}
+                                                                        {{ $mutabaah->bersyukur ? 'checked' : '' }}
                                                                         name="bersyukur" id="bersyukur">
                                                                     <label for="bersyukur" class="px-2">Bersyukur
                                                                         Kepada Allah</label>
@@ -421,7 +423,7 @@
                                                             <div class="col-md-12 col-12">
                                                                 <div class="form-group">
                                                                     <input class="form-check-input" type="checkbox"
-                                                                    {{ $mutabaah->mendoakan_oranglain ? 'checked' : '' }}
+                                                                        {{ $mutabaah->mendoakan_oranglain ? 'checked' : '' }}
                                                                         name="mendoakanOrangLain"
                                                                         id="mendoakanOrangLain">
                                                                     <label for="mendoakanOrangLain"

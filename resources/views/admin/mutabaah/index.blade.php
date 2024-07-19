@@ -8,7 +8,7 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href=" {{ route('adminsantri') }}">IB Data</a>
+                            <a href="{{ route('adminsantri') }}">IB Data</a>
                         </div>
                         <div class="sidebar-toggler  x">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -17,46 +17,44 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
-
+                        <h4 class="sidebar-title">Menu</h4>
                         <li class="sidebar-item ">
-                            <a href="{{ route('admindashboard') }}" class='sidebar-link'>
+                            <a href="{{ route('admindashboard') }}" class='sidebar-link '>
                                 <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
+                                <p class="dika ml-4">Dashboard</p>
                             </a>
                         </li>
-
                         <li class="sidebar-item ">
-                            <a href="{{ route('adminsantri') }}" class='sidebar-link'>
+                            <a href="{{ route('santri') }}" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-medical-fill"></i>
-                                <span>Data Santri</span>
+                                <p class="dika ml-4">Data Santri</p>
                             </a>
+                        </li>
 
-                        <li class="sidebar-item ">
-                            <a href="{{ route('adminpelanggaran') }}" class='sidebar-link'>
+                        <li class="sidebar-item">
+                            <a href="{{ route('pelanggaran') }}" class='sidebar-link'>
                                 <i class="bi bi-exclamation-triangle"></i>
-                                <span>Pelanggaran</span>
+                                <p class="dika ml-4">Pelanggaran</p>
                             </a>
                         </li>
 
                         <li class="sidebar-item ">
-                            <a href="{{ route('adminprestasi') }}" class='sidebar-link'>
+                            <a href="{{ route('prestasi') }}" class='sidebar-link'>
                                 <i class="bi bi-trophy"></i>
-                                <span>Prestasi</span>
+                                <p class="dika ml-4">Prestasi</p>
                             </a>
                         </li>
 
                         <li class="sidebar-item active">
                             <a href="{{ route('adminmutabaah') }}" class='sidebar-link'>
                                 <i class="bi bi-calendar"></i>
-                                <span>Mutaba'ah Santri</span>
+                                <p class="dika ml-4">Mutabaah Santri</p>
                             </a>
                         </li>
-
                         <li class="sidebar-item ">
-                            <a href="{{ route('adminnilai') }}" class='sidebar-link'>
-                                <i class="bi bi-award"></i>
-                                <span>Nilai Santri</span>
+                            <a href="{{ route('nilai') }}" class='sidebar-link'>
+                                <i class="bi bi-paper fill"></i>
+                                <p class="dika ml-4">Nilai Santri</p>
                             </a>
                         </li>
                     </ul>
@@ -66,298 +64,53 @@
         <div id="main" class='layout-navbar navbar-fixed'>
             @include('include.header')
             <div id="main-content">
-                {{-- MODAL TAMBAH SANTRI --}}
-                <div class="modal fade text-left modal-borderless" id="tambahsantri" tabindex="-1" role="dialog"
-                    aria-labelledby="myModalLabel1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Masukkan Data Santri</h5>
-                                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <i data-feather="x"></i>
-                                </button>
-                            </div>
-                            <form method="post" action="{{ route('adminstoretambah') }}" enctype="multipart/form-data">
-
-                                @csrf <div class="card">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <form class="form form-horizontal">
-                                                <div class="form-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label for="nama_santri">Nama Lengkap</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input type="text" id="nama_santri" class="form-control"
-                                                                placeholder="Nama Lengkap" name="nama_santri">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="domisili_santri">Domisili</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input type="text" id="domisili_santri"
-                                                                class="form-control" placeholder="Domisili"
-                                                                name="domisili_santri">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="alamat_santri">Alamat Lengkap</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input type="text" id="company-column"
-                                                                class="form-control" name="alamat_santri"
-                                                                placeholder="Alamat Lengkap">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="angkatan_santri">Angkatan</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <select class="form-select" id="inputGroupSelect01"
-                                                                name="angkatan_santri">
-                                                                <option selected>Pilih...</option>
-                                                                <option>Mustawa 1</option>
-                                                                <option>Mustawa 2</option>
-                                                                <option>Mustawa 3</option>
-                                                            </select>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for=" tgllahir_santri">Tanggal Lahir</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input name="tgllahir_santri" id="tgllahir_santri"
-                                                                type="date"
-                                                                class="form-control flatpickr-no-config"
-                                                                placeholder="Select date..">
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="photo_santri">Photo Santri</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input class="form-control" name="photo_santri"
-                                                                type="file" id="formFile">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for=" jk_santri">Jenis Kelamin</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="jk_santri" id="flexRadioDefault1"
-                                                                    value="Ikhwan">
-                                                                <label class="form-check-label"
-                                                                    for="flexRadioDefault1">
-                                                                    Ikhwan
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="jk_santri" id="flexRadioDefault1"
-                                                                    value="Akhwat">
-                                                                <label class="form-check-label"
-                                                                    for="flexRadioDefault1">
-                                                                    Akhwat
-                                                                </label>
-                                                            </div>
-                                                        </div>
-
-                                                        <br>
-
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light-secondary"
-                                                data-bs-dismiss="modal">
-                                                <i class="bx bx-x d-block d-sm-none"></i>
-                                                <span class="d-none d-sm-block">Close</span>
-                                            </button>
-                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                {{-- MODAL PRESTASI --}}
-                <div class="modal fade text-left modal-borderless" id="tambahpelanggaran" tabindex="-1"
-                    role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Masukkan Data Pelanggaran</h5>
-                                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <i data-feather="x"></i>
-                                </button>
-                            </div>
-                            <form method="post" action="{{ route('adminstorepelanggaran') }}"
-                                enctype="multipart/form-data">
-
-                                @csrf
-                                <div class="card">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <form class="form form-horizontal">
-                                                <div class="form-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label for="nama_santri">Nama Santri</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input type="text" id="nama_santri"
-                                                                class="form-control" placeholder="Nama Santri"
-                                                                name="nama_santri">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="nama_pelanggaran">Pelanggaran</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input type="text" id="nama_pelanggaran"
-                                                                class="form-control" placeholder="Nama pelanggaran"
-                                                                name="nama_pelanggaran">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="kategori_pelanggaran">Jenis</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <select class="form-select" id="inputGroupSelect01"
-                                                                name="kategori_pelanggaran">
-                                                                <option selected>Pilih...</option>
-                                                                <option>Ringan</option>
-                                                                <option>Sedang</option>
-                                                                <option>Berat</option>
-                                                            </select>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="deskripsi_pelanggaran">Deskripsi</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-
-                                                            <textarea class="form-control" id="deskripsi_pelanggaran" class="form-control" placeholder="Deskripsi Pelanggaran"
-                                                                name="deskripsi_pelanggaran" rows="3"></textarea>
-                                                        </div>
-
-
-                                                        <br>
-
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light-secondary"
-                                                data-bs-dismiss="modal">
-                                                <i class="bx bx-x d-block d-sm-none"></i>
-                                                <span class="d-none d-sm-block">Close</span>
-                                            </button>
-                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal fade text-left modal-borderless" id="tambahprestasi" tabindex="-1" role="dialog"
-                    aria-labelledby="myModalLabel1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Masukkan Data Prestasi</h5>
-                                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                    <i data-feather="x"></i>
-                                </button>
-                            </div>
-                            <form method="post" action="{{ route('adminstoreprestasi') }}"
-                                enctype="multipart/form-data">
-
-                                @csrf
-                                <div class="card">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <form class="form form-horizontal">
-                                                <div class="form-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <label for="nama_santri">Nama Santri</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input type="text" id="nama_santri"
-                                                                class="form-control" placeholder="Nama Santri"
-                                                                name="nama_santri">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="nama_santri">Nama Prestasi</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input type="text" id="nama_prestasi"
-                                                                class="form-control" placeholder="Nama Prestasi"
-                                                                name="nama_prestasi">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="kategori_prestasi">Kategori</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-                                                            <input type="text" id="first-name-column"
-                                                                class="form-control" placeholder="kategori prestasi"
-                                                                name="kategori_prestasi">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label for="keterangan_prestasi">Deskripsi</label>
-                                                        </div>
-                                                        <div class="col-md-8 form-group">
-
-                                                            <textarea class="form-control" id="keterangan_prestasi" class="form-control" placeholder="Deskripsi Prestasi"
-                                                                name="keterangan_prestasi" rows="3"></textarea>
-                                                        </div>
-
-
-                                                        <br>
-
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light-secondary"
-                                                data-bs-dismiss="modal">
-                                                <i class="bx bx-x d-block d-sm-none"></i>
-                                                <span class="d-none d-sm-block">Close</span>
-                                            </button>
-                                            <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Modal End --}}
                 <div class="table-card prestasi-card-container">
-                    <div class=" text-center rounded p-4">
+                    <div class="text-center rounded">
                         <div class="d-flex align-items-center justify-content-between">
-                            <h3 class="mb-0">Pelanggaran Santri</h3>
-                            <center>
-                            </center>
-                            <a class="btn btn-md btn-primary " style="margin-bottom:20px"
-                                href="{{ route('admintambahpelanggaran') }}"><i class="fas fa-plus-circle"></i> Add
-                                New Data</a>
+                            <h3 class="mb-3">Data Mutabaah Santri</h3>
                         </div>
                     </div>
-                    <div class="card-body py-4 px-4">
+
+                    <!-- Dropdown for selecting month -->
+                    <div class="mb-3">
+                        <!-- Form untuk memilih santri, bulan, dan tahun -->
+                        <form method="GET" action="{{ route('adminmutabaah') }}" id="mutabaahForm">
+                            <div class=" float-left">
+                                <select name="user_id" id="user_id" class="form-control">
+                                    @foreach ($santri as $s)
+                                        <option value="{{ $s->id }}"
+                                            {{ $s->id == $selectedUserId ? 'selected' : '' }}>
+                                            {{ $s->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-lg-end">
+                                <div class="form-group">
+                                    <select name="bulan" id="bulan" class="form-control">
+                                        @foreach ($months as $month)
+                                            <option value="{{ $month->month }}"
+                                                {{ $month->month == $selectedMonth ? 'selected' : '' }}>
+                                                {{ $month->month_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select name="tahun" id="tahun" class="form-control">
+                                        @foreach ($years as $year)
+                                            <option value="{{ $year->year }}"
+                                                {{ $year->year == $selectedYear ? 'selected' : '' }}>
+                                                {{ $year->year }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card-body mb-5">
                         <table class="table text-start align-right table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-white text-center">
@@ -367,8 +120,8 @@
                                         Sholat Berjamaah</th>
                                     <th scope="col" colspan="10">Sunnah</th>
                                     <th scope="col" colspan="2">Dzikir</th>
-                                    <th scope="col" colspan="2" style="white-space: nowrap; padding: 0 2rem">
-                                        Sahur & Shaum</th>
+                                    <th scope="col" colspan="2" style="white-space: nowrap; padding: 0 2rem">Sahur
+                                        & Shaum</th>
                                     <th scope="col" colspan="3">Work Out</th>
                                     <th scope="col" colspan="5">Muamalah & Ihsan</th>
                                 </tr>
@@ -405,39 +158,40 @@
                             <tbody>
                                 @php
                                     $no = 1;
-                                    $date = date('Y-m-d');
                                 @endphp
-                                <tr>
-                                    <td class="text-center">{{ $no++ }}</td>
-                                    <td>{{ $date }}</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>5 lembar juz 1</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td></td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>√</td>
-                                    <td>1 Halaman</td>
-                                    <td>√</td>
-                                </tr>
+                                @foreach ($mutabaah as $item)
+                                    <tr>
+                                        <td class="text-center">{{ $no++ }}</td>
+                                        <td>{{ $item->tanggal }}</td>
+                                        <td>{{ $item->shubuh ? '√' : '' }}</td>
+                                        <td>{{ $item->dzuhur ? '√' : '' }}</td>
+                                        <td>{{ $item->ashar ? '√' : '' }}</td>
+                                        <td>{{ $item->maghrib ? '√' : '' }}</td>
+                                        <td>{{ $item->isya ? '√' : '' }}</td>
+                                        <td style="white-space: nowrap">{{ $item->tilawah }}</td>
+                                        <td>{{ $item->al_mulk ? '√' : '' }}</td>
+                                        <td>{{ $item->solawat ? '√' : '' }}</td>
+                                        <td>{{ $item->al_kahfi ? '√' : '' }}</td>
+                                        <td>{{ $item->tahajud ? '√' : '' }}</td>
+                                        <td>{{ $item->dhuha ? '√' : '' }}</td>
+                                        <td>{{ $item->rs ? '√' : '' }}</td>
+                                        <td>{{ $item->rd ? '√' : '' }}</td>
+                                        <td>{{ $item->rm ? '√' : '' }}</td>
+                                        <td>{{ $item->ri ? '√' : '' }}</td>
+                                        <td>{{ $item->dzikir_pagi ? '√' : '' }}</td>
+                                        <td>{{ $item->dzikir_petang ? '√' : '' }}</td>
+                                        <td>{{ $item->sahur_senin ? '√' : '' }}</td>
+                                        <td>{{ $item->sahur_kamis ? '√' : '' }}</td>
+                                        <td>{{ $item->workout_situp ? '√' : '' }}</td>
+                                        <td>{{ $item->workout_pushup ? '√' : '' }}</td>
+                                        <td>{{ $item->workout_run ? '√' : '' }}</td>
+                                        <td>{{ $item->tiga_s ? '√' : '' }}</td>
+                                        <td>{{ $item->mendoakan_orangtua ? '√' : '' }}</td>
+                                        <td>{{ $item->bersyukur ? '√' : '' }}</td>
+                                        <td style="white-space: nowrap">{{ $item->reading_book }}</td>
+                                        <td>{{ $item->mendoakan_oranglain ? '√' : '' }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -445,8 +199,60 @@
             </div>
         </div>
         @include('include.bagianbawah')
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userSelect = document.getElementById('user_id');
+            const yearSelect = document.getElementById('tahun');
+            const monthSelect = document.getElementById('bulan');
+            const form = document.getElementById('mutabaahForm');
 
+            userSelect.addEventListener('change', function() {
+                updateYearsAndMonths(this.value);
+            });
+
+            yearSelect.addEventListener('change', function() {
+                updateMonths(userSelect.value, this.value);
+            });
+
+            monthSelect.addEventListener('change', function() {
+                form.submit(); // Otomatis submit form setelah bulan berubah
+            });
+
+            function updateYearsAndMonths(userId) {
+                fetch(`/adminmutabaah/years?user_id=${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        yearSelect.innerHTML = '';
+                        data.forEach(year => {
+                            const option = document.createElement('option');
+                            option.value = year.year;
+                            option.textContent = year.year;
+                            yearSelect.appendChild(option);
+                        });
+                        updateMonths(userId, yearSelect.value);
+                    })
+                    .catch(error => console.error('Error fetching years:', error));
+            }
+
+            function updateMonths(userId, year) {
+                fetch(`/adminmutabaah/months?user_id=${userId}&year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        monthSelect.innerHTML = '';
+                        data.forEach(month => {
+                            const option = document.createElement('option');
+                            option.value = month.month;
+                            option.textContent = month.month_name;
+                            monthSelect.appendChild(option);
+                        });
+                        form.submit(); // Otomatis submit form setelah memperbarui bulan
+                    })
+                    .catch(error => console.error('Error fetching months:', error));
+            }
+        });
+    </script>
 </body>
 
 </html>
