@@ -3,8 +3,8 @@
     <div class=" text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h3 class="mb-0">Nilai Santri</h3>
-            <a class="btn btn-md btn-primary " style="margin-bottom:20px" href="{{ route('tambahnilai') }}"><i
-                    class="fas fa-plus-circle"></i> Add New Data</a>
+            {{-- <a class="btn btn-md btn-primary " style="margin-bottom:20px" href="{{ route('tambahnilai') }}"><i
+                    class="fas fa-plus-circle"></i> Add New Data</a> --}}
         </div>
     </div>
     <div class="card">
@@ -22,7 +22,6 @@
                         <th scope="col">Bahasa Arab</th>
                         <th scope="col">Bahasa Inggris</th>
                         <th scope="col">Polygon</th>
-                        <th style="center" scope="col">Action </th>
                     </tr>
                 </thead>
 
@@ -31,7 +30,8 @@
                     $no = 1;
                     ?>
                     @foreach ($query as $item)
-                        <tr>
+                        @if (strtolower($item->namasantri) == strtolower(Auth::user()->name))
+                            <tr>
                             <td>{{ $no }}</td>
                             <td>{{ $item->namasantri }}</td>
                             <td>{{ $item->Fiqih }}</td>
@@ -42,16 +42,20 @@
                             <td>{{ $item->Quran }}</td>
                             <td>{{ $item->Polygon }}</td>
 
-                            <td class="text-center">
+                            {{-- <td class="text-center">
                                 <a class="btn btn-warning rounded-pill m-2" href="{{ route('editnilai', $item->id) }}"><i
                                         class="fa fa-solid fa-pen"></i></a>
                                 <a class="btn btn-light rounded-pill m-2" href="{{ route('hapusnilai', $item->id) }}"
                                     onclick="return confirm('Mau Dihapus!?')"><i class="fa fa-solid fa-trash"></i></a>
-                            </td>
+                            </td> --}}
                         </tr>
                         <?php
                         $no++;
                         ?>
+                        @else
+                            
+                        @endif
+                        
                     @endforeach
                 </tbody>
             </table>

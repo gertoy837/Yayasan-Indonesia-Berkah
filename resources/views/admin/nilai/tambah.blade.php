@@ -2,7 +2,7 @@
 @section('adminNilai')
 <div class="table-card prestasi-card-container">
     <div class=" text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center justify-content-between mb-0">
             <h3 class="mb-0">Tambah Data Nilai Santri</h3>
             <a class="btn btn-md btn-primary " style="margin-bottom:20px" href="{{ route('adminnilai') }}"><i
                     class="fas fa-arrow-left mr-2"></i>Kembali</a>

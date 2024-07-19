@@ -14,7 +14,7 @@ class MutabaahController extends Controller
      */
     public function index(Request $request)
     {
-        $mutabaah = Mutabaah::all();
+        $mutabaah = mutabaah::all();
         return view('santrii.mutabaah.index', compact('mutabaah'));
     }
     public function detail(Request $request)

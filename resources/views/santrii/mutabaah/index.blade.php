@@ -75,7 +75,8 @@
                                 New Data</a>
                         </div>
                     </div>
-                    <div class="card-body py-4 px-4">
+                    <div class="card">
+                        <div class="card-body py-4 px-4">
                         <table class="table text-start align-right table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-white text-center">
@@ -173,6 +174,7 @@
                             </tbody>
                         </table>
 
+                    </div>
                     </div>
                 </div>
             </div>

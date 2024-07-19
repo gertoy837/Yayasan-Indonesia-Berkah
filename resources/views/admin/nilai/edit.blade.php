@@ -10,12 +10,9 @@
         <section class="section">
         <div class="card">
                 
-    <form method="post" action="{{ route('updatenilai',$edit['id']) }}">
+    <form method="POST" action="{{ route('adminupdatenilai',$edit['id']) }}">
         @method('PUT')
         @csrf
-
-    <section id="multiple-column-form">
-        <div class="row match-height">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -29,7 +26,9 @@
                      <div class="col-md-6 col-12">
                         <div class="form-group">
                         <label for="first-name-column">Nama Santri</label>
-                        <input value="{{$edit['namasantri']}}" disabled  type="no" id="first-name-column" class="form-control"
+                        <input  value="{{$edit['namasantri']}}" disabled  type="no" id="first-name-column" class="form-control"
+                               placeholder="Nama Santri" name="">
+                        <input  value="{{$edit['namasantri']}}" hidden  type="no" id="first-name-column" class="form-control"
                                placeholder="Nama Santri" name="namasantri">
                         </div>
                     </div>
@@ -87,7 +86,7 @@
                                         
     <div class="col-12 d-flex justify-content-end">
         <button type="submit" class="btn btn-primary me-1 mb-1">edit</button>
-        <a href="{{ route('nilai') }}" type="reset" class="btn btn-light-secondary me-1 mb-1">Kembali</a>
+        <a href="{{ route('adminnilai') }}" type="reset" class="btn btn-light-secondary me-1 mb-1">Kembali</a>
     </div>
         </form>
             </div>

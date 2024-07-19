@@ -19,7 +19,8 @@ class AdminNilaiController extends Controller
     {
                 // $data =  new nilai;
                 $query = nilai::all();
-                return view ('admin.nilai.index',compact('request','query'));
+                $santris = Santri::all();
+                return view ('admin.nilai.index',compact('request','query','santris'));
     }
 
     /**
