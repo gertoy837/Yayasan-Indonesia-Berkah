@@ -26,6 +26,9 @@
                                     <option value="{{$item->nama_santri}}">{{$item->nama_santri}}</option>
                                     @endforeach
                                 </select>
+                                @error('namasantri')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6 col-12">

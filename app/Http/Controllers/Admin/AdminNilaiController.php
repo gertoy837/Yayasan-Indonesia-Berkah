@@ -39,9 +39,27 @@ class AdminNilaiController extends Controller
      */
     public function store(Request $request)
     {
-        $nilai = new nilai();
-        $test = 1;
+        // Validasi input
+        $request->validate([
+            'namasantri' => 'required',
+            'Fiqih' => 'required|numeric',
+            'IT' => 'required|numeric',
+            'Hadis' => 'required|numeric',
+            'Quran' => 'required|numeric',
+            'BahasaArab' => 'required|numeric',
+            'BahasaInggris' => 'required|numeric',
+            'Polygon' => 'required|numeric',
+        ]);
 
+        // Periksa apakah nama santri sudah ada di tabel nilai
+        $existingSantri = Nilai::where('namasantri', $request->namasantri)->first();
+
+        if ($existingSantri) {
+            return back()->withErrors(['namasantri' => 'Nama santri ini sudah ada dalam tabel nilai.'])->withInput();
+        }
+
+        // Simpan data baru
+        $nilai = new Nilai();
         $nilai->namasantri = $request->namasantri;
         $nilai->Fiqih = $request->Fiqih;
         $nilai->Hadis = $request->Hadis;
@@ -50,12 +68,13 @@ class AdminNilaiController extends Controller
         $nilai->BahasaArab = $request->BahasaArab;
         $nilai->BahasaInggris = $request->BahasaInggris;
         $nilai->Polygon = $request->Polygon;
-       
+    
         $nilai->save();
 
         session()->flash('add', 'Data nilai berhasil ditambahkan!');
         return redirect()->route('adminnilai');
     }
+
 
     /**
      * Display the specified resource.
