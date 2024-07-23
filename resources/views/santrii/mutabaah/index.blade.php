@@ -68,12 +68,6 @@
                     <div class="text-center rounded">
                         <div class="d-flex align-items-center justify-content-between">
                             <h3 class="mb-0">Mutabaah {{ Auth::user()->name }}</h3>
-                            <center>
-                            </center>
-                            <a class="btn btn-md btn-primary" style="margin-bottom:20px"
-                                href="{{ route('tambahMutabaah') }}">
-                                <i class="fas fa-plus-circle"></i> Add New Data
-                            </a>
                         </div>
                     </div>
 
@@ -121,7 +115,6 @@
                                         & Shaum</th>
                                     <th scope="col" colspan="3">Work Out</th>
                                     <th scope="col" colspan="5">Muamalah & Ihsan</th>
-                                    <th scope="col" rowspan="2" class="px-5">Action</th>
                                 </tr>
                                 <tr class="text-white">
                                     <th scope="col" class="text-center" style="white-space: nowrap">S</th>
@@ -188,20 +181,6 @@
                                         <td>{{ $item->bersyukur ? '√' : '' }}</td>
                                         <td style="white-space: nowrap">{{ $item->reading_book }}</td>
                                         <td>{{ $item->mendoakan_oranglain ? '√' : '' }}</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-warning rounded-5 m-2"
-                                                href="{{ route('editMutabaah', $item->id) }}">
-                                                <i class="fa fa-solid fa-pen"></i>
-                                            </a>
-                                            <form action="{{ route('hapusMutabaah', $item->id) }}" method="POST"
-                                                style="display: inline;" onsubmit="return confirm('Mau Dihapus?!')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-light rounded-5 m-2">
-                                                    <i class="fa fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

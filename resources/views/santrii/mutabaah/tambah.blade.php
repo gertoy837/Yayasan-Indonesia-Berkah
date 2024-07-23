@@ -84,7 +84,7 @@
             <div id="main-content">
                 <div class="d-flex justify-content-between">
                     <div class="page-heading">
-                        <h3>Tambah Data Mutabaah {{ Auth::user()->name }}</h3>
+                        <h3>Tambah Data Mutabaah {{ Auth::user()->nama_lengkap }}</h3>
                     </div>
                     <div class="">
                         <a href="{{ route('mutabaah') }}" type="reset"
@@ -112,7 +112,7 @@
                                                                 <div class="form-group">
                                                                     <label for="santri_id">Nama Santri</label>
                                                                     <input disabled name="name" type="text"
-                                                                        id="" value="{{ Auth::user()->name }}"
+                                                                        id="" value="{{ Auth::user()->nama_lengkap }}"
                                                                         class="form-control">
                                                                 </div>
                                                             </div>
@@ -183,7 +183,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6 col-12 mt-3">
+                                                            <div class="col-md-6 col-12 my-3">
                                                                 <div class="col-md-12">
                                                                     <h5>Sunnah</h5>
                                                                 </div>

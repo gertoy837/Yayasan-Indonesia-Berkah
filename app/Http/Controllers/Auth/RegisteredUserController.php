@@ -31,30 +31,24 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'name' => ['required', 'string', 'max:255'],
+        'username' => ['required', 'string', 'max:255', 'unique:' . User::class],
+        'nama_lengkap' => ['required', 'string', 'max:255', 'unique:' . User::class],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'role' => ['required', 'string', 'in:santri,admin,donatur'],
     ]);
 
     $user = User::create([
-        'name' => $request->name,
+        'username' => $request->username,
+        'nama_lengkap' => $request->nama_lengkap,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'role' => $request->role,
     ]);
 
     event(new Registered($user));
 
     Auth::login($user);
 
-    if (Auth::user()->role === 'santri') {
-        return redirect(RouteServiceProvider::HOME);
-    } elseif (Auth::user()->role === 'admin') {
-        return redirect(RouteServiceProvider::ADMIN);
-    } elseif (Auth::user()->role === 'donatur') {
-        return redirect(RouteServiceProvider::DONATUR);
-    }
+    return redirect(RouteServiceProvider::HOME);
 }
 
 }

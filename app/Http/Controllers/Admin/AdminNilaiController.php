@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\nilai;
 use App\Models\Santri;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Storenilai;
 use App\Http\Requests\updatenilai;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,20 +19,51 @@ class AdminNilaiController extends Controller
      */
     public function index(Request $request)
     {
-                // $data =  new nilai;
-                $query = nilai::all();
-                $santris = Santri::all();
-                return view ('admin.nilai.index',compact('request','query','santris'));
+        $selectedAngkatan = $request->input('angkatan');
+
+        $query = DB::table('users')
+            ->join('nilai', 'nilai.user_id', '=', 'users.id')
+            ->join('santri', 'santri.user_id', '=', 'users.id')
+            ->select(
+                'nilai.id as nilai_id',
+                'users.nama_lengkap',
+                'santri.jk_santri',
+                'santri.angkatan_santri',
+                'nilai.Fiqih',
+                'nilai.IT',
+                'nilai.Hadis',
+                'nilai.Quran',
+                'nilai.BahasaArab',
+                'nilai.BahasaInggris',
+                'nilai.Polygon'
+            )
+            ->where('users.role', 'santri');
+
+        if ($request->filled('search')) {
+            $query->where('users.nama_lengkap', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('gender')) {
+            $query->where('santri.jk_santri', $request->gender);
+        }
+
+        if ($selectedAngkatan) {
+            $query->where('santri.angkatan_santri', $selectedAngkatan);
+        }
+
+        $query = $query->orderBy('nama_lengkap', 'asc')->get();
+        $angkatanList = DB::table('santri')->distinct()->pluck('angkatan_santri');
+
+        return view('admin.nilai.index', compact('angkatanList', 'query'));
     }
 
     /**
      * Show the form for creating a new resource.
-     */ 
+     */
     public function create(Request $request)
     {
-        $query = nilai::all();
-        $santri = Santri::all();
-        return view('admin.nilai.tambah',compact('query','santri'));
+        $users = User::where('role', 'santri')->get();
+        return view('admin.nilai.tambah', compact('users'));
     }
 
 
@@ -40,9 +73,8 @@ class AdminNilaiController extends Controller
     public function store(Request $request)
     {
         $nilai = new nilai();
-        $test = 1;
 
-        $nilai->namasantri = $request->namasantri;
+        $nilai->user_id = $request->user_id;
         $nilai->Fiqih = $request->Fiqih;
         $nilai->Hadis = $request->Hadis;
         $nilai->IT = $request->IT;
@@ -50,7 +82,7 @@ class AdminNilaiController extends Controller
         $nilai->BahasaArab = $request->BahasaArab;
         $nilai->BahasaInggris = $request->BahasaInggris;
         $nilai->Polygon = $request->Polygon;
-       
+
         $nilai->save();
 
         session()->flash('add', 'Data nilai berhasil ditambahkan!');
@@ -63,9 +95,8 @@ class AdminNilaiController extends Controller
     public function show($id)
     {
         $nilai = nilai::findOrFail($id);
-        
 
-        return view('admin.mutabaah.nilai',compact('adminnilai'));
+        return view('admin.mutabaah.nilai', compact('adminnilai'));
 
     }
 
@@ -74,9 +105,9 @@ class AdminNilaiController extends Controller
      */
     public function edit($id)
     {
-        $edit = nilai::findOrFail($id);
-        $query = nilai::all();
-        return view ('admin.nilai.edit',compact('edit'));
+        $query = nilai::findOrFail($id);
+        $users = User::where('id', $query->user_id)->first();
+        return view('admin.nilai.edit', compact('users', 'query'));
     }
 
     /**
@@ -86,7 +117,7 @@ class AdminNilaiController extends Controller
     {
         $nilai = nilai::findOrFail($id);
 
-        $nilai->namasantri = $request->namasantri;
+        $nilai->user_id = $request->user_id;
         $nilai->Fiqih = $request->Fiqih;
         $nilai->Hadis = $request->Hadis;
         $nilai->IT = $request->IT;
@@ -105,7 +136,7 @@ class AdminNilaiController extends Controller
      */
     public function destroy($id)
     {
-        $hapus =nilai ::findOrFail($id);
+        $hapus = nilai::findOrFail($id);
         $hapus->delete();
         session()->flash('destroy', 'Data nilai berhasil dihapus!');
         return redirect()->route('adminnilai');

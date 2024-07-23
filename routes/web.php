@@ -85,9 +85,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/adminsantris/search', [AdminController::class, 'search'])->name('search');
 
     // DATA SANTRI
-    Route::get('/adminsantri', [AdminController::class, 'index'])->name('adminsantri');
+    Route::get('/adminsantri', [AdminController::class, 'index2'])->name('adminsantri');
     Route::get('/adminsantriaddsantri', [AdminController::class, 'create'])->name('admintambahsantri');
-    Route::post('/adminsantristore', [AdminController::class, 'store'])->name('adminstoretambah');
+    Route::post('/adminsantri/create', [AdminController::class, 'store'])->name('adminstoretambah');
     Route::get('/adminsantriformeditsantri/{id}', [AdminController::class, 'edit'])->name('admineditsantri');
     Route::put('/adminsantri/updatesantri/{id}', [AdminController::class, 'update'])->name('adminupdatesantri');
     Route::get('/adminsantri/show/{id}', [AdminController::class, 'show'])->name('admindetailsantri');
@@ -95,7 +95,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // pelanggaran
     Route::get('/adminpelanggaran', [AdminPelanggaranController::class, 'index'])->name('adminpelanggaran');
-    Route::get('/adminpelanggaran/addpelanggaran', [PelanggaranController::class, 'create'])->name('admintambahpelanggaran');
+    Route::get('/adminpelanggaran/addpelanggaran', [AdminPelanggaranController::class, 'create'])->name('admintambahpelanggaran');
     Route::post('/adminpelanggaran/store', [AdminPelanggaranController::class, 'store'])->name('adminstorepelanggaran');
     Route::get('/adminpelanggaran/formeditpelanggaran/{id}', [AdminPelanggaranController::class, 'edit'])->name('admineditpelanggaran');
     Route::put('/adminpelanggaran/updatepelanggaran/{id}', [AdminPelanggaranController::class, 'update'])->name('adminupdatepelanggaran');
@@ -104,7 +104,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // prestasi
     Route::get('/adminprestasi', [AdminPrestasiController::class, 'index'])->name('adminprestasi');
-    Route::get('/adminprestasi/addprestasi', [PrestasiController::class, 'create'])->name('admintambahprestasi');
+    Route::get('/adminprestasi/addprestasi', [AdminPrestasiController::class, 'create'])->name('admintambahprestasi');
     Route::post('/adminprestasi/store', [AdminPrestasiController::class, 'store'])->name('adminstoreprestasi');
     Route::get('/adminprestasi/formeditprestasi/{id}', [AdminPrestasiController::class, 'edit'])->name('admineditprestasi');
     Route::put('/adminprestasi/updateprestasi/{id}', [AdminPrestasiController::class, 'update'])->name('adminupdateprestasi');
@@ -114,17 +114,21 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // nilai
     Route::get('/adminnilai', [AdminNilaiController::class, 'index'])->name('adminnilai');
     Route::get('/adminnilai/addnilai', [AdminNilaiController::class, 'create'])->name('admintambahnilai');
-    Route::get('/adminnilai/formeditnilai/{id}', [AdminNilaiController::class, 'edit'])->name('admineditnilai');
+    Route::get('/adminnilai/edit/{id}', [AdminNilaiController::class, 'edit'])->name('admineditnilai');
     Route::put('/adminnilai/updatenilai/{id}', [AdminNilaiController::class, 'update'])->name('adminupdatenilai');
     Route::get('/adminnilai/hapusnilai/{id}', [AdminNilaiController::class, 'destroy'])->name('adminhapusnilai');
     Route::post('/adminnilai/nilai', [AdminNilaiController::class, 'store'])->name('adminstorenilai');
 
     // mutabaah
     Route::get('/adminmutabaah', [AdminMutabaahController::class, 'index'])->name('adminmutabaah');
-    Route::get('/adminmutabaah/months', [AdminMutabaahController::class, 'getMonthsByYear']);
-    Route::get('/adminmutabaah/years', [AdminMutabaahController::class, 'getYearsBySantri']);
-    Route::get('/adminmutabaah/months', [AdminMutabaahController::class, 'getMonthsBySantriAndYear']);
-    
+    Route::get('/adminmutabaah/detail/{id}', [AdminMutabaahController::class, 'detail'])->name('adminmutabaahdetail');
+    Route::get('/adminmutabaah/getMonths/{id}', [AdminMutabaahController::class, 'getMonths'])->name('getMonths');
+    Route::get('/adminmutabaah/tambah/{id}', [AdminMutabaahController::class, 'create'])->name('tambahMutabaah');
+    Route::post('/adminmutabaah/create', [AdminMutabaahController::class, 'store'])->name('storeMutabaah');
+    Route::get('/adminmutabaah/edit/{id}', [AdminMutabaahController::class, 'edit'])->name('editMutabaah');
+    Route::put('/adminmutabaah/update/{id}', [AdminMutabaahController::class, 'update'])->name('updateMutabaah');
+    Route::delete('/adminmutabaah/{id}', [AdminMutabaahController::class, 'destroy'])->name('hapusMutabaah');
+
     // tahajud
     Route::get('/adminmutabaah/addmutabaahtahajud', [MutabaahController::class, 'create2'])->name('admintambahmutabaahtahajud');
     Route::get('/adminmutabaah/formeditmutabaahtahajud/{id}', [AdminMutabaahController::class, 'edit'])->name('admineditmutabaahtahajud');
@@ -226,11 +230,11 @@ Route::middleware(['auth', 'santri'])->group(function () {
     // mutabaah
     Route::get('/mutabaah', [MutabaahController::class, 'index'])->name('mutabaah');
     Route::get('/mutabaah/months', [MutabaahController::class, 'getMonthsByYear']);
-    Route::get('/mutabaah/addMutabaah', [MutabaahController::class, 'create'])->name('tambahMutabaah');
-    Route::post('/mutabaah/addMutabaah/create', [MutabaahController::class, 'store'])->name('storeMutabaah');
-    Route::get('/mutabaah/edit/{id}', [MutabaahController::class, 'edit'])->name('editMutabaah');
-    Route::put('/mutabaah/update/{id}', [MutabaahController::class, 'update'])->name('updateMutabaah');
-    Route::delete('/mutabaah/{id}', [MutabaahController::class, 'destroy'])->name('hapusMutabaah');
+    // Route::get('/mutabaah/addMutabaah', [MutabaahController::class, 'create'])->name('tambahMutabaah');
+    // Route::post('/mutabaah/addMutabaah/create', [MutabaahController::class, 'store'])->name('storeMutabaah');
+    // Route::get('/mutabaah/edit/{id}', [MutabaahController::class, 'edit'])->name('editMutabaah');
+    // Route::put('/mutabaah/update/{id}', [MutabaahController::class, 'update'])->name('updateMutabaah');
+    // Route::delete('/mutabaah/{id}', [MutabaahController::class, 'destroy'])->name('hapusMutabaah');
 
     // nilai
     Route::get('/nilai', [NilaiController::class, 'index'])->name('nilai');

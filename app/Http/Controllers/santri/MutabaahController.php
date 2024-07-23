@@ -98,7 +98,7 @@ class MutabaahController extends Controller
         ]);
 
         // Periksa apakah tanggal sudah ada
-        $existingMutabaah = Mutabaah::where('tanggal', $request->tanggal)->first();
+        $existingMutabaah = Mutabaah::where('user_id', Auth()->id())->where('tanggal', $request->tanggal)->first();
         if ($existingMutabaah) {
             return redirect()->back()->withErrors(['tanggal' => 'Tanggal sudah ada.'])->withInput();
         }
@@ -171,6 +171,7 @@ class MutabaahController extends Controller
 
         // Periksa apakah tanggal sudah ada dan bukan tanggal yang sedang diperbarui
         $existingMutabaah = Mutabaah::where('tanggal', $request->tanggal)
+            ->where('user_id', Auth()->id())
             ->where('id', '<>', $id)
             ->first();
 
