@@ -67,7 +67,7 @@ Route::get('/', function () {
 // Route::get('/donatur', [DonaturController::class, 'index'])->middleware('donatur');
 // });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //chart
     Route::get('/get-dates-by-month/{month}', [SantriController::class, 'getDatesByMonth'])->name('get-dates-by-month');
@@ -148,7 +148,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'santri'])->group(function () {
+Route::middleware(['auth', 'role:santri'])->group(function () {
 
     //Import Pelanggaran & Prestasi
     Route::post('/import-pelanggaran', [PelanggaranController::class, 'import'])->name('importpelanggaran');
@@ -262,7 +262,7 @@ Route::middleware(['auth', 'santri'])->group(function () {
     Route::get('/mutabaah/hapusmutabaah/{id}', [MutabaahController::class, 'destroy'])->name('hapusmutabaah');
 });
 
-Route::middleware(['auth', 'donatur'])->group(function () {
+Route::middleware(['auth', 'role:donatur'])->group(function () {
     Route::get('/donatur', [DonaturController::class, 'index'])->name('donaturdashboard');
 });
 
