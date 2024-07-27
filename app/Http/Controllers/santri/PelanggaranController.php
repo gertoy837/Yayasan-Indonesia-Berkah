@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Santri;
+
 use App\Http\Controllers\Controller;
-use App\Models\pelanggaran;
+use App\Models\Pelanggaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -12,7 +13,7 @@ class PelanggaranController extends Controller
 {
     public function index()
     {  
-        $query = pelanggaran::where('user_id', Auth::user()->id)->get();
+        $query = Pelanggaran::where('user_id', Auth::user()->id)->get();
         return view('santrii.pelanggaran.index',compact('query'));
     }
 

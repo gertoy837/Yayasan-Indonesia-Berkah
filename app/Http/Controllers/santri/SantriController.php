@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Santri;
+
 use App\Http\Controllers\Controller;
 use App\Models\Santri;
 use App\Http\Requests\StoresantriRequest;
