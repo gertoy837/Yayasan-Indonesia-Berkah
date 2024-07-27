@@ -63,15 +63,17 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'role' => \App\Http\Middleware\RoleLevel::class,
     ];
 
     // app/Http/Kernel.php
 
     protected $routeMiddleware = [
         // ...
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'santri' => \App\Http\Middleware\SantriMiddleware::class,
-        'donatur' => \App\Http\Middleware\DonaturMiddleware::class,
+        // 'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        // 'santri' => \App\Http\Middleware\SantriMiddleware::class,
+        // 'donatur' => \App\Http\Middleware\DonaturMiddleware::class,
+        'role' => \App\Http\Middleware\RoleLevel::class,
     ];
 
     

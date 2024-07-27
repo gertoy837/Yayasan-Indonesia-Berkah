@@ -17,7 +17,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
+        'nama_lengkap',
         'email',
         'password',
         'role', // pastikan 'role' ada di sini
@@ -41,6 +42,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function santri()
+    {
+        return $this->hasOne(Santri::class, 'user_id', 'id');
+    }
+
+    public function pelanggaran()
+    {
+        return $this->hasMany(pelanggaran::class);
+    }
+
+    public function nilai()
+    {
+        return $this->hasMany(nilai::class);
+    }
 
     // Tambahkan metode ini untuk memeriksa role
     public function isAdmin() {

@@ -11,16 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nilais', function (Blueprint $table) {
+        Schema::create('nilai', function (Blueprint $table) {
             $table->id();
-            $table->string('namasantri');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->integer('Adab');
+            $table->integer('Aqidah');
+            $table->integer('Akhlak');
             $table->integer('IT');
             $table->integer('Fiqih');
             $table->integer('Hadis');
             $table->integer('BahasaInggris');
             $table->integer('BahasaArab');
             $table->integer('Quran');            
-            $table->integer('Polygon');
+            $table->integer('Public_Speaking');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nilais');
+        Schema::dropIfExists('nilai');
     }
 };
