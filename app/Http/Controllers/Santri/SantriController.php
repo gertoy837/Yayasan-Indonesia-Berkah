@@ -195,7 +195,9 @@ class SantriController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('santrii.santri.detail',compact('user'));
+        $totalpelanggaran = Pelanggaran::where('user_id', Auth()->id())->count();
+        $totalprestasi = Prestasi::where('user_id', Auth()->id())->count();
+        return view('santrii.santri.detail',compact('user', 'totalpelanggaran', 'totalprestasi'));
     }
 
     /**

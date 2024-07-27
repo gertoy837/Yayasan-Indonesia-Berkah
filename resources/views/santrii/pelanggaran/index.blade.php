@@ -13,12 +13,6 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-item ">
-                    <a href="{{ route('santri') }}" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
-                        <span>Data Santri</span>
-                    </a>
-                </li> --}}
                 <li class="sidebar-item active">
                     <a href="{{ route('pelanggaran') }}" class='sidebar-link'>
                         <i class="bi bi-exclamation-triangle"></i>
@@ -52,9 +46,6 @@
                     <div class=" text-center rounded mb-3">
                         <div class="d-flex align-items-center justify-content-between">
                             <h3>Pelanggaran Santri {{ Auth::user()->nama_lengkap }}</h3>
-                            {{-- <a class="btn btn-md btn-primary" href="{{ route('tambahpelanggaran') }}">
-                                <i class="fas fa-plus-circle"></i>
-                                Add New Data</a> --}}
                         </div>
                     </div>
                     <div class="card-body">
@@ -66,7 +57,6 @@
                                     <th scope="col">Nama Pelanggaran</th>
                                     <th scope="col">Kategori pelanggaran</th>
                                     <th scope="col">Keterangan pelanggaran</th>
-                                    {{-- <th scope="col">Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,15 +67,6 @@
                                         <td>{{ $item->nama_pelanggaran }}</td>
                                         <td>{{ $item->kategori_pelanggaran }}</td>
                                         <td>{{ $item->deskripsi_pelanggaran }}</td>
-                                        {{-- <td class="text-center">
-                                            <a class="btn btn-warning rounded-pill m-2"
-                                                href="{{ route('editpelanggaran', $item->id) }}"><i
-                                                    class="fa fa-solid fa-pen"></i></a>
-                                            <a class="btn btn-light rounded-pill m-2"
-                                                href="{{ route('hapuspelanggaran', $item->id) }}"
-                                                onclick="return confirm('Mau Dihapus?!')"><i
-                                                    class="fa fa-solid fa-trash"></i></a>
-                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

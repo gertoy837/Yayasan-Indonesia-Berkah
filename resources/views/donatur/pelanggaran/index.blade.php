@@ -1,8 +1,5 @@
 @extends('../../include/adminsidebar')
 
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     @include('include.bagianatas')
     <script>

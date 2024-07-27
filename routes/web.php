@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Santri\SantriController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Santri\PelanggaranController;
-use App\Http\Controllers\Santri\DashboardController;
 use App\Http\Controllers\Santri\PrestasiController;
 use App\Http\Controllers\Santri\MutabaahController;
 use App\Http\Controllers\Santri\NilaiController;
@@ -24,16 +23,13 @@ use App\Http\Controllers\Admin\AdminNilaiController;
 
 // Import Controller
 use App\Http\Controllers\SantriImportController;
-use Illuminate\Support\Facades\Storage;
 
 // Auth Controller
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\AuthController;
 
 // Setting Controller
 use App\Http\Controllers\SettingsController;
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------

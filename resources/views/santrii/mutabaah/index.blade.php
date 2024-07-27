@@ -13,12 +13,6 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-item ">
-                    <a href="{{ route('santri') }}" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
-                        <span>Data Santri</span>
-                    </a>
-                </li> --}}
                 <li class="sidebar-item">
                     <a href="{{ route('pelanggaran') }}" class='sidebar-link'>
                         <i class="bi bi-exclamation-triangle"></i>

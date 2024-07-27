@@ -276,14 +276,30 @@ body {
     letter-spacing: 0.25px;
 }
 
+.custom-color-red-original {
+    background-color: #fe3f40;
+    color: #fff;
+}
+
+.custom-color-red {
+    background-color: #fe3f40;
+    color: #fff;
+}
+
+.custom-color-red:hover {
+    background-color: #a20e0e;
+    color: #fff;
+}
+
 .header-area .main-nav .nav li .main-red-button button {
     display: inline-block;
     background-color: #fe3f40;
     font-size: 15px;
-    font-weight: 400;
+    font-weight: 700;
     color: #fff !important;
     text-transform: capitalize;
     padding: 12px 25px;
+    border: 1px solid transparent;
     border-radius: 23px;
     letter-spacing: 0.25px;
     line-height: 15px; /* Tambahkan ini */
