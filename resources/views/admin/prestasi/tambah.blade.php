@@ -27,6 +27,12 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a href="{{ route('adminakun') }}" class='sidebar-link'>
+                        <i class="bi bi-person"></i>
+                        <span>Data Akun</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a href="{{ route('adminsantri') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Data Santri</span>

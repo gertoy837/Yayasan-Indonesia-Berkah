@@ -29,13 +29,16 @@ class AdminNilaiController extends Controller
                 'users.nama_lengkap',
                 'santri.jk_santri',
                 'santri.angkatan_santri',
+                'nilai.Adab',
+                'nilai.Aqidah',
+                'nilai.Akhlak',
                 'nilai.Fiqih',
                 'nilai.IT',
                 'nilai.Hadis',
                 'nilai.Quran',
                 'nilai.BahasaArab',
                 'nilai.BahasaInggris',
-                'nilai.Polygon'
+                'nilai.Public_Speaking'
             )
             ->where('users.role', 'santri');
 
@@ -75,13 +78,16 @@ class AdminNilaiController extends Controller
         $nilai = new nilai();
 
         $nilai->user_id = $request->user_id;
+        $nilai->Adab = $request->Adab;
+        $nilai->Aqidah = $request->Aqidah;
+        $nilai->Akhlak = $request->Akhlak;
         $nilai->Fiqih = $request->Fiqih;
         $nilai->Hadis = $request->Hadis;
         $nilai->IT = $request->IT;
         $nilai->Quran = $request->Quran;
         $nilai->BahasaArab = $request->BahasaArab;
         $nilai->BahasaInggris = $request->BahasaInggris;
-        $nilai->Polygon = $request->Polygon;
+        $nilai->Public_Speaking = $request->Public_Speaking;
 
         $nilai->save();
 
@@ -118,13 +124,16 @@ class AdminNilaiController extends Controller
         $nilai = nilai::findOrFail($id);
 
         $nilai->user_id = $request->user_id;
+        $nilai->Adab = $request->Adab;
+        $nilai->Aqidah = $request->Aqidah;
+        $nilai->Akhlak = $request->Akhlak;
         $nilai->Fiqih = $request->Fiqih;
         $nilai->Hadis = $request->Hadis;
         $nilai->IT = $request->IT;
         $nilai->Quran = $request->Quran;
         $nilai->Bahasaarab = $request->BahasaArab;
         $nilai->Bahasainggris = $request->BahasaInggris;
-        $nilai->Polygon = $request->Polygon;
+        $nilai->Public_Speaking = $request->Public_Speaking;
 
         $nilai->save();
         session()->flash('update', 'Data nilai berhasil diupdate!');

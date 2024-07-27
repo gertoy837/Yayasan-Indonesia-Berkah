@@ -5,7 +5,9 @@
             <div class="d-flex align-items-center justify-content-between mb-0">
                 <h3 class="mb-0">Tambah Data Nilai Santri</h3>
                 <a class="btn btn-md btn-primary " style="margin-bottom:20px" href="{{ route('adminnilai') }}"><i
-                        class="fas fa-arrow-left mr-2"></i>Kembali</a>
+                        class="fas fa-arrow-left mr-2"></i>
+                    Kembali
+                </a>
             </div>
         </div>
         <div class="card">
@@ -17,7 +19,7 @@
                         <div class="row">
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="first-name-column">Nama Santri</label>
+                                    <label for="basicSelect">Nama Santri</label>
                                     <select class="form-select" id="basicSelect" name="user_id">
                                         <option hidden>Nama Santri</option>
                                         @foreach ($users as $item)
@@ -28,74 +30,81 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="first-name-column">Fiqih</label>
-                                    <input value type="no" id="first-name-column" class="form-control"
-                                        placeholder="Nilah Fiqih" name="Fiqih">
+                                    <label for="Adab">Adab</label>
+                                    <input inputmode="numeric" type="number" id="Adab" class="form-control"
+                                        placeholder="Nilai Adab" name="Adab">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="first-name-column"> IT </label>
-                                    <input value type="no" id="first-name-column" class="form-control"
+                                    <label for="Aqidah">Aqidah</label>
+                                    <input inputmode="numeric" type="number" id="Aqidah" class="form-control"
+                                        placeholder="Nilai Aqidah" name="Aqidah">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="Akhlak">Akhlak</label>
+                                    <input inputmode="numeric" type="number" id="Akhlak" class="form-control"
+                                        placeholder="Nilai Akhlak" name="Akhlak">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="Fiqih">Fiqih</label>
+                                    <input inputmode="numeric" type="number" id="Fiqih" class="form-control"
+                                        placeholder="Nilai Fiqih" name="Fiqih">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="IT"> IT </label>
+                                    <input inputmode="numeric" type="number" id="IT" class="form-control"
                                         placeholder="Nilai IT " name="IT">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="first-name-column">Hadis</label>
-                                    <input value type="no" id="first-name-column" class="form-control"
+                                    <label for="Hadis">Hadis</label>
+                                    <input inputmode="numeric" type="number" id="Hadis" class="form-control"
                                         placeholder="Nilai Hadis" name="Hadis">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="first-name-column">Quran</label>
-                                    <input value type="no" id="first-name-column" class="form-control"
+                                    <label for="Quran">Quran</label>
+                                    <input inputmode="numeric" type="number" id="Quran" class="form-control"
                                         placeholder="Nilai Quran" name="Quran">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="first-name-column">Bahasa Arab</label>
-                                    <input value type="no" id="first-name-column" class="form-control"
+                                    <label for="BahasaArab">Bahasa Arab</label>
+                                    <input inputmode="numeric" type="number" id="BahasaArab" class="form-control"
                                         placeholder="Nilai Bahasa Arab" name="BahasaArab">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="first-name-column">Bahasa Inggris</label>
-                                    <input value type="no" id="first-name-column" class="form-control"
+                                    <label for="BahasaInggris">Bahasa Inggris</label>
+                                    <input inputmode="numeric" type="number" id="BahasaInggris" class="form-control"
                                         placeholder="Nilai Bahasa Inggris" name="BahasaInggris">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label for="first-name-column">Polygon</label>
-                                    <input value type="no" id="first-name-column" class="form-control"
-                                        placeholder="Nilai Polygon" name="Polygon">
+                                    <label for="Public_Speaking">Public Speaking</label>
+                                    <input inputmode="numeric" type="number" id="Public_Speaking" class="form-control"
+                                        placeholder="Nilai Public_Speaking" name="Public_Speaking">
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary me-1 mb-1">submit</button>
-                                {{-- <a href="{{ route('mutabaah') }}" type="reset" class="btn btn-light-secondary me-1 mb-1">Kembali</a> --}}
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        {{-- <div class="page-content"> 
-        <section class="section">
-            <div class="card">
-                <section id="multiple-column-form">
-                    <div class="row match-height">
-                        <div class="col-12">
-                            
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </section>
-    <div> --}}
     </div>
 @endsection

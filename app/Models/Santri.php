@@ -14,7 +14,8 @@ class Santri extends Model
 
     protected $fillable = [
         'jk_santri', 
-        'angkatan_santri', 
+        'angkatan_santri',
+        'tahun_angkatan_santri',
         'tgllahir_santri', 
         'alamat_santri'
     ];

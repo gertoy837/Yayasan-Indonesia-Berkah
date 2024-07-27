@@ -41,43 +41,37 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
                 <li class="sidebar-item">
-                    <a href="{{ route('admindashboard') }}" class='sidebar-link'>
+                    <a href="{{ route('dashboard.donatur') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('adminakun') }}" class='sidebar-link'>
-                        <i class="bi bi-person"></i>
-                        <span>Data Akun</span>
-                    </a>
-                </li>
                 <li class="sidebar-item active">
-                    <a href="{{ route('adminsantri') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.santri') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Data Santri</span>
                     </a>
                 </li>
-                <li class="sidebar-item ">
-                    <a href="{{ route('adminpelanggaran') }}" class='sidebar-link'>
+                <li class="sidebar-item">
+                    <a href="{{ route('donatur.pelanggaran') }}" class='sidebar-link'>
                         <i class="bi bi-exclamation-triangle"></i>
                         <span>Pelanggaran</span>
                     </a>
                 </li>
-                <li class="sidebar-item ">
-                    <a href="{{ route('adminprestasi') }}" class='sidebar-link'>
+                <li class="sidebar-item">
+                    <a href="{{ route('donatur.prestasi') }}" class='sidebar-link'>
                         <i class="bi bi-trophy"></i>
                         <span>Prestasi</span>
                     </a>
                 </li>
-                <li class="sidebar-item ">
-                    <a href="{{ route('adminmutabaah') }}" class='sidebar-link'>
+                <li class="sidebar-item">
+                    <a href="{{ route('donatur.mutabaah') }}" class='sidebar-link'>
                         <i class="bi bi-calendar"></i>
                         <span>Mutaba'ah Santri</span>
                     </a>
                 </li>
                 <li class="sidebar-item ">
-                    <a href="{{ route('adminnilai') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.nilai') }}" class='sidebar-link'>
                         <i class="bi bi-award"></i>
                         <span>Nilai Santri</span>
                     </a>
@@ -91,13 +85,10 @@
                     <div class="text-center rounded">
                         <div class="d-flex align-items-center justify-content-between">
                             <h3 class="mb-0">Data Santri</h3>
-                            <a class="btn btn-md btn-primary" href="{{ route('admintambahsantri') }}">
-                                <i class="fas fa-plus-circle"></i> Add New Data
-                            </a>
                         </div>
                     </div>
                     <div class="card-body mt-3">
-                        <form id="filter-form" action="{{ route('adminsantri') }}" method="GET" class="mb-3">
+                        <form id="filter-form" action="{{ route('donatur.santri') }}" method="GET" class="mb-3">
                             <div class="d-flex justify-content-end gap-2">
                                 <div class="">
                                     <input type="text" name="search_name" id="search_name" class="form-control"
@@ -127,10 +118,12 @@
                                     </select>
                                 </div>
                                 <div class="">
-                                    <select name="filter_tahun_angkatan" id="filter_tahun_angkatan" class="form-control" onchange="autoSubmit()">
+                                    <select name="filter_tahun_angkatan" id="filter_tahun_angkatan" class="form-control"
+                                        onchange="autoSubmit()">
                                         <option value="">All Tahun Angkatan</option>
                                         @foreach ($tahun_angkatans as $tahun)
-                                            <option value="{{ $tahun }}" {{ request('filter_tahun_angkatan') == $tahun ? 'selected' : '' }}>
+                                            <option value="{{ $tahun }}"
+                                                {{ request('filter_tahun_angkatan') == $tahun ? 'selected' : '' }}>
                                                 {{ $tahun }}</option>
                                         @endforeach
                                     </select>
@@ -152,7 +145,6 @@
                                     <th scope="col" class="text-center">Tanggal Lahir</th>
                                     <th scope="col" class="text-center">Alamat</th>
                                     <th scope="col" class="text-center">Foto</th>
-                                    <th scope="col" class="text-center" width="10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="pelanggaran-list">
@@ -179,21 +171,6 @@
                                                 @endif
                                             </td>
                                         @endif
-                                        <td class="text-center">
-                                            <a class="btn btn-warning rounded-3 p-2 me-1"
-                                                href="{{ route('admineditsantri', $item->santri->id) }}">
-                                                <i class="fa fa-solid fa-pen"></i>
-                                            </a>
-                                            <form action="{{ route('adminhapussantri', $item->santri->user_id) }}" method="POST"
-                                                style="display: inline;"
-                                                onsubmit="return confirm('Mau Dihapus?!')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger rounded-3 p-2 me-1">
-                                                    <i class="fa fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

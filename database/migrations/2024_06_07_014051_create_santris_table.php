@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->enum('jk_santri', ['Ikhwan','Akhwat']);  
             $table->string('angkatan_santri');
+            $table->integer('tahun_angkatan_santri');
             $table->date('tgllahir_santri');
             $table->string('alamat_santri');
             $table->string('photo_santri')->nullable();

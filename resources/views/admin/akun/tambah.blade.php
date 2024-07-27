@@ -27,13 +27,13 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item active">
                     <a href="{{ route('adminakun') }}" class='sidebar-link'>
                         <i class="bi bi-person"></i>
                         <span>Data Akun</span>
                     </a>
                 </li>
-                <li class="sidebar-item active">
+                <li class="sidebar-item">
                     <a href="{{ route('adminsantri') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Data Santri</span>
@@ -123,14 +123,13 @@
 
             <div id="main-content">
                 <div class="d-flex justify-content-between mb-3">
-                    <h3>Tambah Data Santri</h3>
-                    <a href="{{ route('adminsantri') }}" class="btn btn-secondary me-1 mb-1">Kembali</a>
+                    <h3>Tambah Data Akun</h3>
+                    <a href="{{ route('adminakun') }}" class="btn btn-secondary me-1 mb-1">Kembali</a>
                 </div>
                 <div class="page-content">
                     <section class="section">
                         <div class="card">
-                            <form method="post" action="{{ route('adminstoretambah') }}"
-                                enctype="multipart/form-data">
+                            <form method="post" action="{{ route('adminakun.store') }}">
                                 @csrf
                                 <div class="row match-height">
                                     <div class="col-12">
@@ -144,7 +143,7 @@
                                                                 <input type="text" id="username"
                                                                     class="form-control" placeholder="Username"
                                                                     name="username">
-                                                                @error('nama_santri')
+                                                                @error('username')
                                                                     <small class="text-danger">{{ $message }}</small>
                                                                 @enderror
                                                             </div>
@@ -184,83 +183,18 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-12">
-                                                            <label for="Kelas">Tingkatan/Kelas</label>
+                                                            <label for="Role">Role</label>
                                                             <div class="input-group mb-3">
-                                                                <select class="form-select" id="Kelas"
-                                                                    name="angkatan_santri">
-                                                                    <option hidden>Pilih Kelas...</option>
-                                                                    <option value="Mustawa 1">Mustawa 1</option>
-                                                                    <option value="Mustawa 2">Mustawa 2</option>
-                                                                    <option value="Mustawa 3">Mustawa 3</option>
-                                                                    <option value="Khidmat">Khidmat</option>
+                                                                <select class="form-select" id="Role"
+                                                                    name="role">
+                                                                    <option hidden>Pilih Role...</option>
+                                                                    <option value="admin">admin</option>
+                                                                    <option value="santri">santri</option>
+                                                                    <option value="donatur">donatur</option>
                                                                 </select>
-                                                                @error('angkatan_santri')
+                                                                @error('role')
                                                                     <small class="text-danger">{{ $message }}</small>
                                                                 @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-12">
-                                                            <label for="thn_angkatan">Tahun Angkatan</label>
-                                                            <input name="thn_angkatan" id="thn_angkatan"
-                                                                type="number"
-                                                                class="form-control flatpickr-no-config"
-                                                                placeholder="Tahun Angkatan">
-                                                            @error('thn_angkatan')
-                                                                <small class="text-danger">{{ $message }}</small>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="col-md-6 col-12">
-                                                            <label for="tgl_lahir">Tanggal Lahir</label>
-                                                            <input name="tgllahir_santri" id="tgl_lahir"
-                                                                type="date"
-                                                                class="form-control flatpickr-no-config"
-                                                                placeholder="Select date..">
-                                                            @error('tgllahir_santri')
-                                                                <small class="text-danger">{{ $message }}</small>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="col-md-6 col-12">
-                                                            <div class="form-group">
-                                                                <label for="alamat">Alamat
-                                                                    Lengkap</label>
-                                                                <input type="text" id="alamat"
-                                                                    class="form-control" name="alamat_santri"
-                                                                    placeholder="Alamat Lengkap">
-                                                                @error('alamat_santri')
-                                                                    <small class="text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-12">
-                                                            <label for="basicInput">Jenis Kelamin
-                                                                Santri</label>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="jk_santri" id="genderI" value="Ikhwan">
-                                                                @error('jk_santri')
-                                                                    <small class="text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                                <label class="form-check-label" for="genderI">
-                                                                    Ikhwan
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="jk_santri" id="genderA" value="Akhwat">
-                                                                @error('jk_santri')
-                                                                    <small class="text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                                <label class="form-check-label" for="genderA">
-                                                                    Akhwat
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-12">
-                                                            <div class="mb-3 card">
-                                                                <label for="formFile">Foto</label>
-                                                                <input type="file" id="formFile"
-                                                                    name="photo_santri" class="image-crop-filepond"
-                                                                    image-crop-aspect-ratio="1:1">
                                                             </div>
                                                         </div>
                                                         <div class="col-12 d-flex justify-content-end">
@@ -280,45 +214,6 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('template/dist/assets') }}/static/js/components/dark.js"></script>
-    <script src="{{ asset('template/dist/assets') }}/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="{{ asset('template/dist/assets') }}/compiled/js/app.js"></script>
-    <script
-        src="{{ asset('template/dist/assets') }}/extensions/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js">
-    </script>
-    <script
-        src="{{ asset('template/dist/assets') }}/extensions/filepond-plugin-file-validate-type/filepond-plugin-file-validate-type.min.js">
-    </script>
-    <script
-        src="{{ asset('template/dist/assets') }}/extensions/filepond-plugin-image-crop/filepond-plugin-image-crop.min.js">
-    </script>
-    <script
-        src="{{ asset('template/dist/assets') }}/extensions/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js">
-    </script>
-    <script
-        src="{{ asset('template/dist/assets') }}/extensions/filepond-plugin-image-filter/filepond-plugin-image-filter.min.js">
-    </script>
-    <script
-        src="{{ asset('template/dist/assets') }}/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js">
-    </script>
-    <script
-        src="{{ asset('template/dist/assets') }}/extensions/filepond-plugin-image-resize/filepond-plugin-image-resize.min.js">
-    </script>
-    <script src="{{ asset('template/dist/assets') }}/extensions/filepond/filepond.js"></script>
-    <script src="{{ asset('template/dist/assets') }}/extensions/toastify-js/src/toastify.js"></script>
-    <script src="{{ asset('template/dist/assets') }}/static/js/pages/filepond.js"></script>
-    <script>
-        @if (session('status'))
-            Toastify({
-                text: "{{ session('status') }}",
-                duration: 3000, // 3 seconds
-                gravity: "bottom", // 'top' or 'bottom'
-                position: "right", // 'left', 'center' or 'right'
-                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-            }).showToast();
-        @endif
-    </script>
 </body>
 
 </html>

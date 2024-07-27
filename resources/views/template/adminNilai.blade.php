@@ -14,6 +14,12 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a href="{{ route('adminakun') }}" class='sidebar-link'>
+                        <i class="bi bi-person"></i>
+                        <span>Data Akun</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a href="{{ route('adminsantri') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Data Santri</span>
@@ -45,27 +51,16 @@
                 </li>
             </ul>
         @endsection
-
+        
         <div id="main" class='layout-navbar navbar-fixed'>
             @include('include.header')
-            <div id="main-content">
-                <!-- ThemeModal -->
-                @include('include.thememodal')
+            <div id="main-content p-0">
                 @yield('adminNilai')
             </div>
         </div>
 
         @include('include.bagianbawah')
-
-        {{-- <script src="{{ asset('template/dist/assets') }}/static/js/components/dark.js"></script>
-        <script src="{{ asset('template/dist/assets') }}/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    
-        <script src="{{ asset('template/dist/assets') }}/compiled/js/app.js"></script>
-            
-        <!-- Need: Apexcharts -->
-        <script src="{{ asset('template/dist/assets') }}/extensions/apexcharts/apexcharts.min.js"></script>
-        <script src="{{ asset('template/dist/assets') }}/static/js/pages/dashboard.js"></script> --}}
-
+    </div>
 </body>
 
 </html>

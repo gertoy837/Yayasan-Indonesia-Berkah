@@ -1,16 +1,13 @@
-@extends('template.adminNilai')
-@section('adminNilai')
+@extends('template.donaturNilai')
+@section('donaturNilai')
     <div class="table-card prestasi-card-container">
         <div class="text-center rounded">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <h3 class="mb-0">Nilai Santri</h3>
-                <a class="btn btn-md btn-primary" style="margin-bottom:20px" href="{{ route('admintambahnilai') }}">
-                    <i class="fas fa-plus-circle"></i> Add New Data
-                </a>
             </div>
         </div>
         <div class="card-body">
-            <form id="filterForm" action="{{ route('adminnilai') }}" method="GET" class="mb-3">
+            <form id="filterForm" action="{{ route('donatur.nilai') }}" method="GET" class="mb-3">
                 <div class="d-flex justify-content-end gap-2">
                     <div class="">
                         <input type="text" name="search" id="searchInput" class="form-control"
@@ -56,7 +53,6 @@
                             </th>
                             <th scope="col" class="text-center px-3" style="white-space: nowrap">Public
                                 Speaking</th>
-                            <th scope="col" class="text-center px-5">Action</th>
                         </tr>
                     </thead>
                     <tbody id="santriTableBody">
@@ -74,21 +70,6 @@
                                 <td>{{ $item->BahasaArab }}</td>
                                 <td>{{ $item->BahasaInggris }}</td>
                                 <td>{{ $item->Public_Speaking }}</td>
-                                <td class="text-center">
-                                    <a class="btn btn-warning rounded-pill m-2"
-                                        href="{{ route('admineditnilai', $item->nilai_id) }}">
-                                        <i class="fa fa-solid fa-pen"></i>
-                                    </a>
-                                    <form action="{{ route('adminhapusnilai', $item->nilai_id) }}" method="POST"
-                                        style="display: inline;"
-                                        onsubmit="return confirm('Mau Dihapus?!')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-light rounded-pill m-2">
-                                            <i class="fa fa-solid fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>

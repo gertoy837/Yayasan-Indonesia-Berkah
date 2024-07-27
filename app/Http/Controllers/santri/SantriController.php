@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Santri;
 use App\Http\Requests\StoresantriRequest;
 use App\Http\Requests\UpdatesantriRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\dashboard;
 use App\Models\Pelanggaran;
@@ -66,32 +67,6 @@ class SantriController extends Controller
         ];
     }
      
-
-    //  public function dashboard(Request $request)
-    // {
-    //     // Ambil data prestasi dan pelanggaran
-    //     $santriData = Santri::with(['prestasi', 'pelanggaran'])->get();
-
-    //     // Hitung total santri, pelanggaran, dan prestasi
-    //     $totalSantri = Santri::count();
-    //     $totalpelanggaran = Pelanggaran::count();
-    //     $totalprestasi = Prestasi::count();
-
-    //     // Olah data untuk chart
-    //     $categories = [];
-    //     $prestasiData = [];
-    //     $pelanggaranData = [];
-
-    //     foreach ($santriData as $santri) {
-    //         $categories[] = $santri->nama_santri;
-    //         $prestasiData[] = $santri->prestasi->count();
-    //         $pelanggaranData[] = $santri->pelanggaran->count();
-    //     }
-
-    //     $query = dashboard::all();
-
-    //     return view('santrii.dashboard.index', compact('request', 'query', 'totalSantri', 'totalpelanggaran', 'totalprestasi', 'categories', 'prestasiData', 'pelanggaranData'));
-    // }
     public function dashboard(Request $request)
     {
         $genderData = Santri::selectRaw('jk_santri, COUNT(*) as count')
@@ -102,8 +77,8 @@ class SantriController extends Controller
         $monthlyData = $this->getMonthlyDataArray();
 
         $totalSantri = Santri::count();
-        $totalpelanggaran = Pelanggaran::count();
-        $totalprestasi = Prestasi::count();
+        $totalpelanggaran = Pelanggaran::where('user_id', Auth()->id())->count();
+        $totalprestasi = Prestasi::where('user_id', Auth()->id())->count();
 
         return view('santrii.dashboard.index', [
             'request' => $request,
@@ -151,17 +126,6 @@ class SantriController extends Controller
         $query = Santri::all();
         return view('santrii.santri.tambah',compact('query'));
     }
-
-    public function deleteAll()
-    {
-        Santri::truncate();
-
-        return response()->json([
-            'message' => 'Semua data santri berhasil dihapus!'
-        ]);
-    }
-
-    
 
     /**
      * Store a newly created resource in storage.
@@ -229,8 +193,8 @@ class SantriController extends Controller
      */
     public function show($id)
     {
-        $santri = Santri::findOrFail($id);
-        return view('santrii.santri.detail',compact('santri'));
+        $user = User::findOrFail($id);
+        return view('santrii.santri.detail',compact('user'));
     }
 
     /**

@@ -30,6 +30,12 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                    <a href="{{ route('adminakun') }}" class='sidebar-link'>
+                        <i class="bi bi-person"></i>
+                        <span>Data Akun</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a href="{{ route('adminsantri') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Data Santri</span>
@@ -145,11 +151,15 @@
                                                 href="{{ route('admineditpelanggaran', $item->id) }}">
                                                 <i class="fa fa-solid fa-pen"></i>
                                             </a>
-                                            <a class="btn btn-light rounded-pill m-2"
-                                                href="{{ route('adminhapuspelanggaran', $item->id) }}"
-                                                onclick="return confirm('Mau Dihapus?!')">
-                                                <i class="fa fa-solid fa-trash"></i>
-                                            </a>
+                                            <form action="{{ route('adminhapuspelanggaran', $item->id) }}" method="POST"
+                                                style="display: inline;"
+                                                onsubmit="return confirm('Mau Dihapus?!')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-light rounded-pill m-2">
+                                                    <i class="fa fa-solid fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @empty

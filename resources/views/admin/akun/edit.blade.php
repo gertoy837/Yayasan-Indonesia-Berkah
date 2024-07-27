@@ -24,13 +24,13 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item active">
                     <a href="{{ route('adminakun') }}" class='sidebar-link'>
                         <i class="bi bi-person"></i>
                         <span>Data Akun</span>
                     </a>
                 </li>
-                <li class="sidebar-item active">
+                <li class="sidebar-item">
                     <a href="{{ route('adminsantri') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Data Santri</span>
@@ -121,23 +121,20 @@
                 </nav>
             </header>
             <div id="main-content">
-                <div class="page-heading">
-                    <h3>Edit Data Santri</h3>
+                <div class="d-flex justify-content-between mb-3">
+                    <h3>Edit Data Akun</h3>
+                    <a href="{{ route('adminakun') }}" class="btn btn-secondary me-1 mb-1">Kembali</a>
                 </div>
                 <div class="page-content">
                     <section class="section">
                         <div class="card">
-                            <form method="post" action="{{ route('adminupdatesantri', $edit->id) }}"
-                                enctype="multipart/form-data">
+                            <form method="post" action="{{ route('adminakun.update', $edit->id) }}">
                                 @method('PUT')
                                 @csrf
                                 <section id="multiple-column-form">
                                     <div class="row match-height">
                                         <div class="col-12">
                                             <div class="card">
-                                                <div class="card-header">
-                                                    <h4 class="card-title">Edit Data Santri</h4>
-                                                </div>
                                                 <div class="card-content">
                                                     <div class="card-body">
                                                         <form class="form">
@@ -145,7 +142,7 @@
                                                                 <div class="col-md-6 col-12">
                                                                     <div class="form-group">
                                                                         <label for="username">Username</label>
-                                                                        <input value="{{ $edit->user->username }}"
+                                                                        <input value="{{ $edit->username }}"
                                                                             type="text" id="username"
                                                                             class="form-control"
                                                                             placeholder="Username" name="username">
@@ -155,17 +152,17 @@
                                                                     <div class="form-group">
                                                                         <label for="first-name-column">Nama
                                                                             Lengkap</label>
-                                                                        <input value="{{ $edit->user->nama_lengkap }}"
+                                                                        <input value="{{ $edit->nama_lengkap }}"
                                                                             type="text" id="first-name-column"
                                                                             class="form-control"
                                                                             placeholder="Nama Lengkap"
-                                                                            name="nama_santri">
+                                                                            name="nama_lengkap">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6 col-12">
                                                                     <div class="form-group">
                                                                         <label for="email">Email</label>
-                                                                        <input value="{{ $edit->user->email }}"
+                                                                        <input value="{{ $edit->email }}"
                                                                             type="text" id="email"
                                                                             class="form-control" placeholder="Email"
                                                                             name="email">
@@ -180,100 +177,28 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6 col-12">
-                                                                    <label>Tingkatan/Kelas</label>
+                                                                    <label for="role">Role</label>
                                                                     <div class="input-group mb-3">
-                                                                        <select class="form-select"
-                                                                            id="inputGroupSelect01"
-                                                                            name="angkatan_santri">
-                                                                            <option>Pilih...</option>
-                                                                            <option value="Mustawa 1"
-                                                                                {{ $edit->angkatan_santri === 'Mustawa 1' ? 'selected' : '' }}>
-                                                                                Mustawa 1</option>
-                                                                            <option value="Mustawa 2"
-                                                                                {{ $edit->angkatan_santri === 'Mustawa 2' ? 'selected' : '' }}>
-                                                                                Mustawa 2</option>
-                                                                            <option value="Mustawa 3"
-                                                                                {{ $edit->angkatan_santri === 'Mustawa 3' ? 'selected' : '' }}>
-                                                                                Mustawa 3</option>
-                                                                            <option value="Khidmat"
-                                                                                {{ $edit->angkatan_santri === 'Khidmat' ? 'selected' : '' }}>
-                                                                                Khidmat</option>
+                                                                        <select class="form-select" id="role"
+                                                                            name="role">
+                                                                            <option hidden>Pilih Role...</option>
+                                                                            <option value="admin"
+                                                                                {{ $edit->role === 'admin' ? 'selected' : '' }}>
+                                                                                admin</option>
+                                                                            <option value="santri"
+                                                                                {{ $edit->role === 'santri' ? 'selected' : '' }}>
+                                                                                santri</option>
+                                                                            <option value="donatur"
+                                                                                {{ $edit->role === 'donatur' ? 'selected' : '' }}>
+                                                                                donatur</option>
                                                                         </select>
-                                                                        <label class="input-group-text"
-                                                                            for="inputGroupSelect01">Tingkatan</label>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-6 col-12">
-                                                                    <label for="thn_angkatan">Tahun Angkatan</label>
-                                                                    <input name="thn_angkatan" id="thn_angkatan"
-                                                                        type="number"
-                                                                        value="{{ $edit->tahun_angkatan_santri }}"
-                                                                        class="form-control flatpickr-no-config"
-                                                                        placeholder="Tahun Angkatan">
-                                                                    @error('thn_angkatan')
-                                                                        <small
-                                                                            class="text-danger">{{ $message }}</small>
-                                                                    @enderror
-                                                                </div>
-                                                                <div class="col-md-6 col-12">
-                                                                    <label for="basicInput">Tanggal Lahir</label>
-                                                                    <input name="tgllahir_santri" id="tgllahir_santri"
-                                                                        type="date"
-                                                                        value="{{ $edit->tgllahir_santri }}"
-                                                                        class="form-control flatpickr-no-config"
-                                                                        placeholder="Select date..">
-                                                                </div>
-                                                                <div class="col-md-6 col-12">
-                                                                    <div class="form-group">
-                                                                        <label for="company-column">ALamat
-                                                                            Lengkap</label>
-                                                                        <input type="text" id="company-column"
-                                                                            class="form-control" name="alamat_santri"
-                                                                            placeholder="Alamat Lengkap"
-                                                                            value="{{ $edit['alamat_santri'] }}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6 col-12">
-                                                                    <label for="basicInput">Jenis Kelamin
-                                                                        Santri</label>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="radio"
-                                                                            name="jk_santri" id="flexRadioDefault1"
-                                                                            value="Ikhwan"
-                                                                            {{ $edit->jk_santri === 'Ikhwan' ? 'checked' : '' }}>
-                                                                        <label class="form-check-label"
-                                                                            for="flexRadioDefault1">
-                                                                            Ikhwan
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="radio"
-                                                                            name="jk_santri" id="flexRadioDefault1"
-                                                                            value="Akhwat"
-                                                                            {{ $edit->jk_santri === 'Akhwat' ? 'checked' : '' }}>
-                                                                        <label class="form-check-label"
-                                                                            for="flexRadioDefault1">
-                                                                            Akhwat
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-6 col-12">
-                                                                    <div class="mb-3">
-                                                                        <label for="formFile" class="form-label">Photo
-                                                                            Santri</label>
-                                                                        <input class="form-control"
-                                                                            name="photo_santri" type="file"
-                                                                            id="formFile">
-                                                                    </div>
-                                                                </div>
-
                                                                 <div class="col-12 d-flex justify-content-end">
                                                                     <button type="submit"
-                                                                        class="btn btn-primary me-1 mb-1">Submit</button>
-                                                                    <a href="{{ route('adminsantri') }}"
-                                                                        type="reset"
-                                                                        class="btn btn-light-secondary me-1 mb-1">Kembali</a>
+                                                                        class="btn btn-primary me-1 mb-1">
+                                                                        Submit
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -290,9 +215,6 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('template/dist/assets') }}/static/js/components/dark.js"></script>
-    <script src="{{ asset('template/dist/assets') }}/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="{{ asset('template/dist/assets') }}/compiled/js/app.js"></script>
 </body>
 
 </html>

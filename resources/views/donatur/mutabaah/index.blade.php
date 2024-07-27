@@ -8,43 +8,37 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
                 <li class="sidebar-item">
-                    <a href="{{ route('admindashboard') }}" class='sidebar-link'>
+                    <a href="{{ route('dashboard.donatur') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('adminakun') }}" class='sidebar-link'>
-                        <i class="bi bi-person"></i>
-                        <span>Data Akun</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('adminsantri') }}" class='sidebar-link'>
+                <li class="sidebar-item ">
+                    <a href="{{ route('donatur.santri') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Data Santri</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('adminpelanggaran') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.pelanggaran') }}" class='sidebar-link'>
                         <i class="bi bi-exclamation-triangle"></i>
                         <span>Pelanggaran</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('adminprestasi') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.prestasi') }}" class='sidebar-link'>
                         <i class="bi bi-trophy"></i>
                         <span>Prestasi</span>
                     </a>
                 </li>
                 <li class="sidebar-item active">
-                    <a href="{{ route('adminmutabaah') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.mutabaah') }}" class='sidebar-link'>
                         <i class="bi bi-calendar"></i>
                         <span>Mutaba'ah Santri</span>
                     </a>
                 </li>
                 <li class="sidebar-item ">
-                    <a href="{{ route('adminnilai') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.nilai') }}" class='sidebar-link'>
                         <i class="bi bi-award"></i>
                         <span>Nilai Santri</span>
                     </a>
@@ -58,7 +52,7 @@
                     <h3 class="mb-3">Data Mutabaah Santri</h3>
                     <div class="card-body mb-5">
                         <!-- Updated form for auto-filtering -->
-                        <form method="GET" action="{{ route('adminmutabaah') }}" id="filterForm">
+                        <form method="GET" action="{{ route('donatur.mutabaah') }}" id="filterForm">
                             <div class="mb-3">
                                 <div class="d-flex justify-content-end gap-2">
                                     <div class="">
@@ -87,6 +81,17 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="">
+                                        <select name="tahun_angkatan" id="tahun_angkatan" class="form-select pe-5">
+                                            <option value="">Semua Tahun</option>
+                                            @foreach ($tahunAngkatanList as $tahun)
+                                                <option value="{{ $tahun }}"
+                                                    {{ request('tahun_angkatan') == $tahun ? 'selected' : '' }}>
+                                                    {{ $tahun }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -98,6 +103,7 @@
                                         <th scope="col">Nama Santri</th>
                                         <th scope="col">Jenis Kelamin</th>
                                         <th scope="col">Angkatan</th>
+                                        <th scope="col">Tahun Angkatan</th>
                                         <th scope="col" width="10%" colspan="2">Action</th>
                                     </tr>
                                 </thead>
@@ -111,9 +117,10 @@
                                             <td class="text-center">{{ $item->nama_lengkap }}</td>
                                             <td class="text-center">{{ $item->jk_santri }}</td>
                                             <td class="text-center">{{ $item->angkatan_santri }}</td>
+                                            <td class="text-center">{{ $item->tahun_angkatan_santri }}</td>
                                             <td class="text-center">
                                                 <a class="btn btn-primary"
-                                                    href="{{ route('adminmutabaahdetail', $item->user_id) }}">
+                                                    href="{{ route('donatur.detailmutabaah', $item->user_id) }}">
                                                     <i class="fa fa-solid fa-eye"></i>
                                                 </a>
                                             </td>

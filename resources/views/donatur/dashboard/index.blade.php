@@ -76,37 +76,37 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
                 <li class="sidebar-item active">
-                    <a href="{{ route('santridashboard') }}" class='sidebar-link'>
+                    <a href="{{ route('dashboard.donatur') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-item ">
-                    <a href="{{ route('santri') }}" class='sidebar-link'>
+                <li class="sidebar-item ">
+                    <a href="{{ route('donatur.santri') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Data Santri</span>
                     </a>
-                </li> --}}
+                </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('pelanggaran') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.pelanggaran') }}" class='sidebar-link'>
                         <i class="bi bi-exclamation-triangle"></i>
                         <span>Pelanggaran</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('prestasi') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.prestasi') }}" class='sidebar-link'>
                         <i class="bi bi-trophy"></i>
                         <span>Prestasi</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('mutabaah') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.mutabaah') }}" class='sidebar-link'>
                         <i class="bi bi-calendar"></i>
                         <span>Mutaba'ah Santri</span>
                     </a>
                 </li>
                 <li class="sidebar-item ">
-                    <a href="{{ route('nilai') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.nilai') }}" class='sidebar-link'>
                         <i class="bi bi-award"></i>
                         <span>Nilai Santri</span>
                     </a>
@@ -120,7 +120,7 @@
                 </a>
             </header>
             <div class="page-heading">
-                <h3>Dashboard Santri</h3>
+                <h3>Dashboard Donatur</h3>
             </div>
             <div class="page-content">
                 <section class="row">
@@ -218,22 +218,10 @@
                                     <div class="dropdown">
                                         <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                             <div class="user-menu d-flex">
-                                                @if (Auth::user()->santri->photo_santri)
-                                                    <div class="avatar avatar-xl">
-                                                        <img alt="Foto Santri"
-                                                            src="{{ asset('storage') }}/images/{{ Auth::user()->santri->photo_santri }}">
-                                                    </div>
-                                                @else
-                                                    <div class="avatar avatar-xl">
-                                                        @if (Auth::user()->santri->jk_santri == 'Ikhwan')
-                                                            <img alt="Foto Ikhwan"
-                                                                src="{{ asset('storage') }}/avatars/default_ikhwan.jpg">
-                                                        @else
-                                                            <img alt="Foto Akhwat"
-                                                                src="{{ asset('storage') }}/avatars/default_akhwat.jpg">
-                                                        @endif
-                                                    </div>
-                                                @endif
+                                                <div class="avatar avatar-xl">
+                                                    <img src="{{ asset('template/dist') }}/assets/compiled/jpg/1.jpg"
+                                                        alt="Face 1">
+                                                </div>
                                                 <div class="ms-3 name">
                                                     <h6 class="font-bold mt-2">{{ Auth::user()->nama_lengkap }}</h6>
                                                     <label class="text-muted mb-0">Log <code>Out? </code></label>
@@ -243,20 +231,13 @@
                                         <ul class="dropdown-menu dropdown-menu-end x-slot"
                                             aria-labelledby="dropdownMenuButton" style="min-width: 11rem;">
                                             <li>
-                                                <h6 class="dropdown-header">Hello, {{ Auth::user()->nama_lengkap }}
-                                                </h6>
+                                                <h6 class="dropdown-header">Hello, {{ Auth::user()->nama_lengkap }}</h6>
                                             </li>
-                                            <li><x-dropdown-link :href="route('detailsantri', Auth()->id())" class="dropdown-item">
-                                                    <i class="icon-mid bi bi-person me-2"></i>
-                                                    {{ __('Profile') }}
-                                                </x-dropdown-link>
-                                            </li>
-                                            <li><x-dropdown-link :href="route('profile.edit')" class="dropdown-item">
-                                                    <i class="icon-mid bi bi-gear me-2"></i>
+                                            <li><x-dropdown-link :href="route('profile.edit')" class="dropdown-item"><i
+                                                        class="icon-mid bi bi-gear me-2"></i>
                                                     {{ __('Setting') }}
-                                                </x-dropdown-link>
-                                            </li>
-                                            <hr class="dropdown-divider">
+                                                </x-dropdown-link></li>
+                                                <hr class="dropdown-divider">
                                             </li>
                                             <li>
                                                 <form method="POST" action="{{ route('logout') }}">

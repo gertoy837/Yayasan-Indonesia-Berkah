@@ -8,43 +8,37 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
                 <li class="sidebar-item">
-                    <a href="{{ route('admindashboard') }}" class='sidebar-link'>
+                    <a href="{{ route('dashboard.donatur') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('adminakun') }}" class='sidebar-link'>
-                        <i class="bi bi-person"></i>
-                        <span>Data Akun</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="{{ route('adminsantri') }}" class='sidebar-link'>
+                <li class="sidebar-item ">
+                    <a href="{{ route('donatur.santri') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Data Santri</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('adminpelanggaran') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.pelanggaran') }}" class='sidebar-link'>
                         <i class="bi bi-exclamation-triangle"></i>
                         <span>Pelanggaran</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{ route('adminprestasi') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.prestasi') }}" class='sidebar-link'>
                         <i class="bi bi-trophy"></i>
                         <span>Prestasi</span>
                     </a>
                 </li>
                 <li class="sidebar-item active">
-                    <a href="{{ route('adminmutabaah') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.mutabaah') }}" class='sidebar-link'>
                         <i class="bi bi-calendar"></i>
                         <span>Mutaba'ah Santri</span>
                     </a>
                 </li>
                 <li class="sidebar-item ">
-                    <a href="{{ route('adminnilai') }}" class='sidebar-link'>
+                    <a href="{{ route('donatur.nilai') }}" class='sidebar-link'>
                         <i class="bi bi-award"></i>
                         <span>Nilai Santri</span>
                     </a>
@@ -60,19 +54,15 @@
                             @foreach ($users as $item)
                                 <h3>Data Mutabaah Santri {{ $item->nama_lengkap }}</h3>
                                 <div class="">
-                                    <a href="{{ route('adminmutabaah') }}" class="btn btn-md btn-secondary"
+                                    <a href="{{ route('donatur.mutabaah') }}" class="btn btn-md btn-secondary"
                                         id="addNewDataBtn">
                                         <i class="fas fa-arrow-left"></i> Kembali
-                                    </a>
-                                    <a href="{{ route('tambahMutabaah', $item->id) }}" class="btn btn-md btn-primary"
-                                        id="addNewDataBtn">
-                                        <i class="fas fa-plus-circle"></i> Add New Data
                                     </a>
                                 </div>
                             @endforeach
                         </div>
                         <!-- Add filter form -->
-                        <form id="filterForm" action="{{ route('adminmutabaahdetail', $id) }}" method="GET"
+                        <form id="filterForm" action="{{ route('donatur.detailmutabaah', $id) }}" method="GET"
                             class="mb-3 d-flex justify-content-end gap-2">
                             <div class="">
                                 <select name="bulan" id="monthSelect" class="form-select pe-5">
@@ -113,7 +103,6 @@
                                             & Shaum</th>
                                         <th scope="col" colspan="3">Work Out</th>
                                         <th scope="col" colspan="5">Muamalah & Ihsan</th>
-                                        <th scope="col" rowspan="2" class="px-5">Action</th>
                                     </tr>
                                     <tr class="text-white">
                                         <th scope="col" class="text-center" style="white-space: nowrap">S</th>
@@ -180,21 +169,6 @@
                                             <td>{{ $item->bersyukur ? '√' : '' }}</td>
                                             <td style="white-space: nowrap">{{ $item->reading_book }}</td>
                                             <td>{{ $item->mendoakan_oranglain ? '√' : '' }}</td>
-                                            <td class="text-center">
-                                                <a class="btn btn-warning rounded-5 m-2"
-                                                    href="{{ route('editMutabaah', $item->id) }}">
-                                                    <i class="fa fa-solid fa-pen"></i>
-                                                </a>
-                                                <form action="{{ route('hapusMutabaah', $item->id) }}" method="POST"
-                                                    style="display: inline;"
-                                                    onsubmit="return confirm('Mau Dihapus?!')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-light rounded-5 m-2">
-                                                        <i class="fa fa-solid fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

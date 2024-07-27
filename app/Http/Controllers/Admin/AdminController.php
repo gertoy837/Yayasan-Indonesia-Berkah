@@ -22,6 +22,98 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function index_akun(Request $request)
+    {
+        $query = User::query();
+    
+        if ($request->filled('nama_lengkap')) {
+            $query->where('nama_lengkap', 'like', '%' . $request->nama_lengkap . '%');
+        }
+    
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }
+    
+        if ($request->filled('sort') && $request->filled('direction')) {
+            $query->orderBy($request->sort, $request->direction);
+        } else {
+            $query->orderBy('id', 'asc');
+        }
+    
+        $users = $query->paginate(10);
+    
+        return view('admin.akun.index', compact('users'));
+    }    
+
+    public function create_akun()
+    {
+        return view('admin.akun.tambah');
+    }
+
+    public function store_akun(Request $request)
+    {
+        // Validasi input
+        // $request->validate([
+        //     'nama_lengkap' => 'required|string|max:255',
+        //     'username' => 'required|string|max:255|unique:users',
+        //     'email' => 'required|email|max:255|unique:users',
+        //     'password' => 'required|string|min:8|confirmed',
+        //     'jk_santri' => 'required|in:Ikhwan,Akhwat',
+        //     'angkatan_santri' => 'required|string|max:255',
+        //     'tgllahir_santri' => 'required|date',
+        //     'domisili_santri' => 'required|string|max:255',
+        //     'alamat_santri' => 'required|string|max:255',
+        //     'photo_santri' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        // ]);
+
+        // Buat instance User baru
+        $user = new User();
+        $user->username = $request->username;
+        $user->nama_lengkap = $request->nama_lengkap;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role = $request->role;
+        $user->save();
+
+        // Redirect dengan pesan sukses
+        session()->flash('add', 'Data berhasil ditambahkan!');
+        return redirect()->route('adminakun');
+    }
+
+    public function edit_akun($id)
+    {
+        $edit = User::findOrFail($id);
+        return view('admin.akun.edit', compact('edit'));
+    }
+
+    public function update_akun(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->username = $request->username;
+        $user->nama_lengkap = $request->nama_lengkap;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->role = $request->role;
+
+        $user->save();
+        
+        session()->flash('update', 'Data berhasil diupdate!');
+        return redirect()->route('adminakun');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy_akun($id)
+    {
+        $hapus = User::findOrFail($id);
+        $hapus->delete();
+
+        session()->flash('destroy', 'Data berhasil dihapus!');
+        return back();
+    }
 
     public function getDatesByMonth($month)
     {
@@ -91,15 +183,6 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {
-        $users = User::where('role', 'santri')->with('santri')->paginate(10);
-        // $santris = Santri::where('user_id', $users->id)->paginate(10);
-
-        // $data =  new santri;
-        return view('admin.santri.index', compact('users', 'request'));
-    }
-
-    public function index2(Request $request)
-    {
         $query = User::where('role', 'santri')->with('santri');
     
         if ($request->has('search_name')) {
@@ -117,13 +200,20 @@ class AdminController extends Controller
                 $q->where('angkatan_santri', $request->filter_angkatan);
             });
         }
-    
+
+        if ($request->has('filter_tahun_angkatan') && $request->filter_tahun_angkatan != '') {
+            $query->whereHas('santri', function ($q) use ($request) {
+                $q->where('tahun_angkatan_santri', $request->filter_tahun_angkatan);
+            });
+        }
+
         $users = $query->paginate(10);
     
         // Fetch unique angkatan values
         $angkatans = Santri::distinct()->pluck('angkatan_santri')->sort()->values();
+        $tahun_angkatans = Santri::distinct()->pluck('tahun_angkatan_santri')->sort()->values();
     
-        return view('admin.santri.index2', compact('users', 'angkatans'));
+        return view('admin.santri.index', compact('users', 'angkatans', 'tahun_angkatans'));
     }
 
     public function search(Request $request)
@@ -153,18 +243,6 @@ class AdminController extends Controller
         return view('admin.santri.tambah', compact('query'));
     }
 
-    public function deleteAll()
-    {
-        Santri::truncate();
-
-        return response()->json([
-            'message' => 'Semua data santri berhasil dihapus!'
-        ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         // Validasi input
@@ -195,6 +273,7 @@ class AdminController extends Controller
         $santri->user_id = $user->id; // Menggunakan ID pengguna yang baru disimpan
         $santri->jk_santri = $request->jk_santri;
         $santri->angkatan_santri = $request->angkatan_santri;
+        $santri->tahun_angkatan_santri = $request->thn_angkatan;
         $santri->tgllahir_santri = $request->tgllahir_santri;
         $santri->alamat_santri = $request->alamat_santri;
 
@@ -253,6 +332,7 @@ class AdminController extends Controller
 
         $santri->jk_santri = $request->jk_santri;
         $santri->angkatan_santri = $request->angkatan_santri;
+        $santri->tahun_angkatan_santri = $request->thn_angkatan;
         $santri->tgllahir_santri = $request->tgllahir_santri;
         $santri->alamat_santri = $request->alamat_santri;
         
