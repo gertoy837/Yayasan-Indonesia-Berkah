@@ -88,12 +88,12 @@ class AdminNilaiController extends Controller
         $nilai->BahasaArab = $request->BahasaArab;
         $nilai->BahasaInggris = $request->BahasaInggris;
         $nilai->Public_Speaking = $request->Public_Speaking;
-
         $nilai->save();
 
         session()->flash('add', 'Data nilai berhasil ditambahkan!');
         return redirect()->route('adminnilai');
     }
+
 
     /**
      * Display the specified resource.
