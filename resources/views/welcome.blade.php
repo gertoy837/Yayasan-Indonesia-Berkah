@@ -48,7 +48,6 @@ https://templatemo.com/tm-562-space-dynamic
     </div>
     <!-- ***** Preloader End ***** -->
 
-<<<<<<< HEAD
     <!-- ***** Header Area Start ***** -->
     <header
       class="header-area header-sticky wow slideInDown"
@@ -97,74 +96,6 @@ https://templatemo.com/tm-562-space-dynamic
               <!-- ***** Menu End ***** -->
             </nav>
           </div>
-=======
-<!-- Modal -->
-<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-3 shadow-lg">
-            <!-- Modal Header -->
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="authModalLabel">Login / Register</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- Modal Body -->
-            <div class="modal-body">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" id="authTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#loginForm" type="button" role="tab" aria-controls="loginForm" aria-selected="true">Log in</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#registerForm" type="button" role="tab" aria-controls="registerForm" aria-selected="false">Register</button>
-                    </li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content mt-4" id="authTabContent">
-                    <!-- Login Form Tab -->
-                    <div class="tab-pane fade show active" id="loginForm" role="tabpanel" aria-labelledby="login-tab">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="login" class="form-label">Username atau Email</label>
-                                <input type="text" name="login" class="form-control" id="login" placeholder="Username atau Email" required autofocus>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block rounded-pill">Log in</button>
-                        </form>
-                    </div>
-                    <!-- Register Form Tab -->
-                    <div class="tab-pane fade" id="registerForm" role="tabpanel" aria-labelledby="register-tab">
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
-                            </div>
-                            <div class="mb-3">
-                              <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-                              <input type="text" name="nama_lengkap" class="form-control" id="nama_lengkap" placeholder="Nama Lengkap" required>
-                          </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password_confirmation" class="form-label">Confirm Password</label>
-                                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Konfirmasi Password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block rounded-pill">Sign Up</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
->>>>>>> 1012eb8916327c995f90468ee7b601187da172f4
         </div>
       </div>
     </header>
