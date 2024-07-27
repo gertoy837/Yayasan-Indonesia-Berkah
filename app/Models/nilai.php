@@ -13,13 +13,16 @@ class Nilai extends Model
 
     protected $fillable = [
         'user_id',
+        'Adab',
+        'Aqidah',
+        'Akhlak',
         'IT',
         'Fiqih',
         'Hadis',
         'BahasaInggris',
         'BahasaArab',
         'Quran',
-        'Polygon',
+        'Public_Speaking',
     ];
 
     public function user()
