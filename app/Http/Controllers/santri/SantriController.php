@@ -204,8 +204,7 @@ class SantriController extends Controller
     {
         $edit = Santri::findOrFail($id);
         $query = Santri::all();
-        return view ('santrii.santri.edit',compact('edit'));
-        return view ('santrii.santri.edit',compact('query'));
+        return view ('santrii.santri.edit',compact('edit', 'query'));
     }
 
     /**
