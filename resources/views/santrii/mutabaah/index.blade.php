@@ -1,82 +1,59 @@
+@extends('../../include/sidebar')
 @include('include.bagianatas')
 
 <body>
     <script src="{{ asset('template/dist/assets') }}/static/js/initTheme.js"></script>
     <div id="app">
-        <div id="sidebar">
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header position-relative">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="logo">
-                            <a href="{{ route('adminsantri') }}">IB Data</a>
-                        </div>
-                        <div class="sidebar-toggler  x">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-                        <h4 class="sidebar-title">Menu</h4>
-                        <li class="sidebar-item ">
-                            <a href="{{ route('santridashboard') }}" class='sidebar-link '>
-                                <i class="bi bi-grid-fill"></i>
-                                <p class="dika ml-4">Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="sidebar-item ">
-                            <a href="{{ route('santri') }}" class='sidebar-link'>
-                                <i class="bi bi-file-earmark-medical-fill"></i>
-                                <p class="dika ml-4">Data Santri</p>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a href="{{ route('pelanggaran') }}" class='sidebar-link'>
-                                <i class="bi bi-exclamation-triangle"></i>
-                                <p class="dika ml-4">Pelanggaran</p>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item ">
-                            <a href="{{ route('prestasi') }}" class='sidebar-link'>
-                                <i class="bi bi-trophy"></i>
-                                <p class="dika ml-4">Prestasi</p>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item active">
-                            <a href="{{ route('mutabaah') }}" class='sidebar-link'>
-                                <i class="bi bi-calendar"></i>
-                                <p class="dika ml-4">Mutabaah Santri</p>
-                            </a>
-                        </li>
-                        <li class="sidebar-item ">
-                            <a href="{{ route('nilai') }}" class='sidebar-link'>
-                                <i class="bi bi-paper fill"></i>
-                                <p class="dika ml-4">Nilai Santri</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        @section('sidebar-menu')
+            <ul class="menu">
+                <li class="sidebar-title">Menu</li>
+                <li class="sidebar-item">
+                    <a href="{{ route('santridashboard') }}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                {{-- <li class="sidebar-item ">
+                    <a href="{{ route('santri') }}" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-medical-fill"></i>
+                        <span>Data Santri</span>
+                    </a>
+                </li> --}}
+                <li class="sidebar-item">
+                    <a href="{{ route('pelanggaran') }}" class='sidebar-link'>
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <span>Pelanggaran</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="{{ route('prestasi') }}" class='sidebar-link'>
+                        <i class="bi bi-trophy"></i>
+                        <span>Prestasi</span>
+                    </a>
+                </li>
+                <li class="sidebar-item active">
+                    <a href="{{ route('mutabaah') }}" class='sidebar-link'>
+                        <i class="bi bi-calendar"></i>
+                        <span>Mutaba'ah Santri</span>
+                    </a>
+                </li>
+                <li class="sidebar-item ">
+                    <a href="{{ route('nilai') }}" class='sidebar-link'>
+                        <i class="bi bi-award"></i>
+                        <span>Nilai Santri</span>
+                    </a>
+                </li>
+            </ul>
+        @endsection
         <div id="main" class='layout-navbar navbar-fixed'>
             @include('include.header')
             <div id="main-content">
                 <div class="table-card prestasi-card-container">
                     <div class="text-center rounded">
                         <div class="d-flex align-items-center justify-content-between">
-                            <h3 class="mb-0">Mutabaah {{ Auth::user()->name }}</h3>
-                            <center>
-                            </center>
-                            <a class="btn btn-md btn-primary" style="margin-bottom:20px"
-                                href="{{ route('tambahMutabaah') }}">
-                                <i class="fas fa-plus-circle"></i> Add New Data
-                            </a>
+                            <h3>Data Mutabaah {{ Auth::user()->nama_lengkap }}</h3>
                         </div>
                     </div>
-
                     <!-- Dropdown for selecting month -->
                     <div class="mb-3">
                         <!-- Form untuk memilih bulan dan tahun -->
@@ -104,10 +81,8 @@
                                 </div>
                             </div>
                         </form>
-                        
                     </div>
-
-                    <div class="card-body mb-5">
+                    <div class="overflow-y-hidden">
                         <table class="table text-start align-right table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-white text-center">
@@ -121,7 +96,6 @@
                                         & Shaum</th>
                                     <th scope="col" colspan="3">Work Out</th>
                                     <th scope="col" colspan="5">Muamalah & Ihsan</th>
-                                    <th scope="col" rowspan="2" class="px-5">Action</th>
                                 </tr>
                                 <tr class="text-white">
                                     <th scope="col" class="text-center" style="white-space: nowrap">S</th>
@@ -154,12 +128,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
                                 @foreach ($mutabaah as $item)
                                     <tr>
-                                        <td class="text-center">{{ $no++ }}</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $item->tanggal }}</td>
                                         <td>{{ $item->shubuh ? '√' : '' }}</td>
                                         <td>{{ $item->dzuhur ? '√' : '' }}</td>
@@ -188,32 +159,17 @@
                                         <td>{{ $item->bersyukur ? '√' : '' }}</td>
                                         <td style="white-space: nowrap">{{ $item->reading_book }}</td>
                                         <td>{{ $item->mendoakan_oranglain ? '√' : '' }}</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-warning rounded-5 m-2"
-                                                href="{{ route('editMutabaah', $item->id) }}">
-                                                <i class="fa fa-solid fa-pen"></i>
-                                            </a>
-                                            <form action="{{ route('hapusMutabaah', $item->id) }}" method="POST"
-                                                style="display: inline;" onsubmit="return confirm('Mau Dihapus?!')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-light rounded-5 m-2">
-                                                    <i class="fa fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
-                    </div>
                     </div>
                 </div>
             </div>
         </div>
-        @include('include.bagianbawah')
     </div>
+    @include('include.bagianbawah')
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const yearSelect = document.getElementById('tahun');
@@ -275,7 +231,6 @@
             }
         });
     </script>
-
 </body>
 
 </html>

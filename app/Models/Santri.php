@@ -10,23 +10,18 @@ class Santri extends Model
 {
     use HasFactory;
     
-
-    public function prestasi()
-    {
-        return $this->hasMany(Prestasi::class, 'santri_id');
-    }
-
-    public function pelanggaran()
-    {
-        return $this->hasMany(Pelanggaran::class, 'santri_id');
-    }
+    protected $table = 'santri';
 
     protected $fillable = [
-        'nama_santri', 
         'jk_santri', 
-        'angkatan_santri', 
+        'angkatan_santri',
+        'tahun_angkatan_santri',
         'tgllahir_santri', 
-        'domisili_santri', 
         'alamat_santri'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

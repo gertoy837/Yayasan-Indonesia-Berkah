@@ -120,8 +120,8 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required autofocus>
+                                <label for="login" class="form-label">Username atau Email</label>
+                                <input type="text" name="login" class="form-control" id="login" placeholder="Username atau Email" required autofocus>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
@@ -135,28 +135,24 @@
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="mb-3">
-                                <label for="role" class="form-label">Role</label>
-                                <select id="role" name="role" class="form-select" required>
-                                    <option value="santri">Santri</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="donatur">Donatur</option>
-                                </select>
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" name="username" class="form-control" id="username" placeholder="Username" required>
                             </div>
+                            <div class="mb-3">
+                              <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                              <input type="text" name="nama_lengkap" class="form-control" id="nama_lengkap" placeholder="Nama Lengkap" required>
+                          </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email address</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Username</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Enter your username" required>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password" required>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password_confirmation" class="form-label">Confirm Password</label>
-                                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Confirm your password" required>
+                                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Konfirmasi Password" required>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block rounded-pill">Sign Up</button>
                         </form>

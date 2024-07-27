@@ -9,18 +9,19 @@ class Prestasi extends Model
 {
     use HasFactory;
 
+    protected $table = 'prestasi';
+
     protected $fillable = [
         'nama_prestasi',
         'kategori_prestasi',
         'keterangan_prestasi',
         'tglprestasi',
-        'santri_id',
     ];
 
     protected $dates = ['tglprestasi']; // This tells Eloquent that 'tglprestasi' should be treated as a date
 
-    public function santri()
+    public function user()
     {
-        return $this->belongsTo(Santri::class);
+        return $this->belongsTo(User::class);
     }
 }

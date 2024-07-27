@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\nilai;
 use App\Models\Santri;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Storenilai;
 use App\Http\Requests\updatenilai;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,20 +19,54 @@ class AdminNilaiController extends Controller
      */
     public function index(Request $request)
     {
-                // $data =  new nilai;
-                $query = nilai::all();
-                $santris = Santri::all();
-                return view ('admin.nilai.index',compact('request','query','santris'));
+        $selectedAngkatan = $request->input('angkatan');
+
+        $query = DB::table('users')
+            ->join('nilai', 'nilai.user_id', '=', 'users.id')
+            ->join('santri', 'santri.user_id', '=', 'users.id')
+            ->select(
+                'nilai.id as nilai_id',
+                'users.nama_lengkap',
+                'santri.jk_santri',
+                'santri.angkatan_santri',
+                'nilai.Adab',
+                'nilai.Aqidah',
+                'nilai.Akhlak',
+                'nilai.Fiqih',
+                'nilai.IT',
+                'nilai.Hadis',
+                'nilai.Quran',
+                'nilai.BahasaArab',
+                'nilai.BahasaInggris',
+                'nilai.Public_Speaking'
+            )
+            ->where('users.role', 'santri');
+
+        if ($request->filled('search')) {
+            $query->where('users.nama_lengkap', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('gender')) {
+            $query->where('santri.jk_santri', $request->gender);
+        }
+
+        if ($selectedAngkatan) {
+            $query->where('santri.angkatan_santri', $selectedAngkatan);
+        }
+
+        $query = $query->orderBy('nama_lengkap', 'asc')->get();
+        $angkatanList = DB::table('santri')->distinct()->pluck('angkatan_santri');
+
+        return view('admin.nilai.index', compact('angkatanList', 'query'));
     }
 
     /**
      * Show the form for creating a new resource.
-     */ 
+     */
     public function create(Request $request)
     {
-        $query = nilai::all();
-        $santri = Santri::all();
-        return view('admin.nilai.tambah',compact('query','santri'));
+        $users = User::where('role', 'santri')->get();
+        return view('admin.nilai.tambah', compact('users'));
     }
 
 
@@ -39,36 +75,19 @@ class AdminNilaiController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input
-        $request->validate([
-            'namasantri' => 'required',
-            'Fiqih' => 'required|numeric',
-            'IT' => 'required|numeric',
-            'Hadis' => 'required|numeric',
-            'Quran' => 'required|numeric',
-            'BahasaArab' => 'required|numeric',
-            'BahasaInggris' => 'required|numeric',
-            'Polygon' => 'required|numeric',
-        ]);
+        $nilai = new nilai();
 
-        // Periksa apakah nama santri sudah ada di tabel nilai
-        $existingSantri = Nilai::where('namasantri', $request->namasantri)->first();
-
-        if ($existingSantri) {
-            return back()->withErrors(['namasantri' => 'Nama santri ini sudah ada dalam tabel nilai.'])->withInput();
-        }
-
-        // Simpan data baru
-        $nilai = new Nilai();
-        $nilai->namasantri = $request->namasantri;
+        $nilai->user_id = $request->user_id;
+        $nilai->Adab = $request->Adab;
+        $nilai->Aqidah = $request->Aqidah;
+        $nilai->Akhlak = $request->Akhlak;
         $nilai->Fiqih = $request->Fiqih;
         $nilai->Hadis = $request->Hadis;
         $nilai->IT = $request->IT;
         $nilai->Quran = $request->Quran;
         $nilai->BahasaArab = $request->BahasaArab;
         $nilai->BahasaInggris = $request->BahasaInggris;
-        $nilai->Polygon = $request->Polygon;
-    
+        $nilai->Public_Speaking = $request->Public_Speaking;
         $nilai->save();
 
         session()->flash('add', 'Data nilai berhasil ditambahkan!');
@@ -82,9 +101,8 @@ class AdminNilaiController extends Controller
     public function show($id)
     {
         $nilai = nilai::findOrFail($id);
-        
 
-        return view('admin.mutabaah.nilai',compact('adminnilai'));
+        return view('admin.mutabaah.nilai', compact('adminnilai'));
 
     }
 
@@ -93,9 +111,9 @@ class AdminNilaiController extends Controller
      */
     public function edit($id)
     {
-        $edit = nilai::findOrFail($id);
-        $query = nilai::all();
-        return view ('admin.nilai.edit',compact('edit'));
+        $query = nilai::findOrFail($id);
+        $users = User::where('id', $query->user_id)->first();
+        return view('admin.nilai.edit', compact('users', 'query'));
     }
 
     /**
@@ -105,14 +123,17 @@ class AdminNilaiController extends Controller
     {
         $nilai = nilai::findOrFail($id);
 
-        $nilai->namasantri = $request->namasantri;
+        $nilai->user_id = $request->user_id;
+        $nilai->Adab = $request->Adab;
+        $nilai->Aqidah = $request->Aqidah;
+        $nilai->Akhlak = $request->Akhlak;
         $nilai->Fiqih = $request->Fiqih;
         $nilai->Hadis = $request->Hadis;
         $nilai->IT = $request->IT;
         $nilai->Quran = $request->Quran;
         $nilai->Bahasaarab = $request->BahasaArab;
         $nilai->Bahasainggris = $request->BahasaInggris;
-        $nilai->Polygon = $request->Polygon;
+        $nilai->Public_Speaking = $request->Public_Speaking;
 
         $nilai->save();
         session()->flash('update', 'Data nilai berhasil diupdate!');
@@ -124,7 +145,7 @@ class AdminNilaiController extends Controller
      */
     public function destroy($id)
     {
-        $hapus =nilai ::findOrFail($id);
+        $hapus = nilai::findOrFail($id);
         $hapus->delete();
         session()->flash('destroy', 'Data nilai berhasil dihapus!');
         return redirect()->route('adminnilai');

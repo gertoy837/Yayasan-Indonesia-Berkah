@@ -53,106 +53,85 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    // profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-//     Route::get('/admin', [AdminController::class, 'index'])->middleware('admin');
-// Route::get('/santri', [SantriController::class, 'index'])->middleware('santri');
-// Route::get('/donatur', [DonaturController::class, 'index'])->middleware('donatur');
-// });
-
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //chart
     Route::get('/get-dates-by-month/{month}', [SantriController::class, 'getDatesByMonth'])->name('get-dates-by-month');
-
-
-    // profile
-    Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/admin/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/admin/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // DASHBOARD
     Route::get('/admindashboard', [AdminController::class, 'dashboard'])->name('admindashboard');
 
     // search
-    Route::get('/adminsantris/search', [AdminController::class, 'search'])->name('search');
+    Route::get('/dashboard/search', [AdminController::class, 'search'])->name('search');
+
+    // Data Akun 
+    Route::get('/dashboard/admin/akun', [AdminController::class, 'index_akun'])->name('adminakun');
+    Route::get('/dashboard/admin/akun/create', [AdminController::class, 'create_akun'])->name('adminakun.create');
+    Route::post('/dashboard/admin/akun/store', [AdminController::class, 'store_akun'])->name('adminakun.store');
+    Route::get('/dashboard/admin/akun/edit/{id}', [AdminController::class, 'edit_akun'])->name('adminakun.edit');
+    Route::put('/dashboard/admin/akun/update/{id}', [AdminController::class, 'update_akun'])->name('adminakun.update');
+    Route::delete('/dashboard/admin/akun/delete/{id}', [AdminController::class, 'destroy_akun'])->name('adminakun.delete');
 
     // DATA SANTRI
-    Route::get('/adminsantri', [AdminController::class, 'index'])->name('adminsantri');
-    Route::get('/adminsantriaddsantri', [AdminController::class, 'create'])->name('admintambahsantri');
-    Route::post('/adminsantristore', [AdminController::class, 'store'])->name('adminstoretambah');
-    Route::get('/adminsantriformeditsantri/{id}', [AdminController::class, 'edit'])->name('admineditsantri');
-    Route::put('/adminsantri/updatesantri/{id}', [AdminController::class, 'update'])->name('adminupdatesantri');
-    Route::get('/adminsantri/show/{id}', [AdminController::class, 'show'])->name('admindetailsantri');
-    Route::get('/adminsantri/hapussantri/{id}', [AdminController::class, 'destroy'])->name('adminhapussantri');
+    Route::get('/dashboard/admin/santri', [AdminController::class, 'index'])->name('adminsantri');
+    Route::get('/dashboard/admin/santri/create', [AdminController::class, 'create'])->name('admintambahsantri');
+    Route::post('/dashboard/admin/santri/store', [AdminController::class, 'store'])->name('adminstoretambah');
+    Route::get('/dashboard/admin/santri/edit/{id}', [AdminController::class, 'edit'])->name('admineditsantri');
+    Route::put('/dashboard/admin/santri/update/{id}', [AdminController::class, 'update'])->name('adminupdatesantri');
+    Route::get('/dashboard/admin/santri/show/{id}', [AdminController::class, 'show'])->name('admindetailsantri');
+    Route::delete('/dashboard/admin/santri/delete/{id}', [AdminController::class, 'destroy'])->name('adminhapussantri');
 
     // pelanggaran
-    Route::get('/adminpelanggaran', [AdminPelanggaranController::class, 'index'])->name('adminpelanggaran');
-    Route::get('/adminpelanggaran/addpelanggaran', [PelanggaranController::class, 'create'])->name('admintambahpelanggaran');
-    Route::post('/adminpelanggaran/store', [AdminPelanggaranController::class, 'store'])->name('adminstorepelanggaran');
-    Route::get('/adminpelanggaran/formeditpelanggaran/{id}', [AdminPelanggaranController::class, 'edit'])->name('admineditpelanggaran');
-    Route::put('/adminpelanggaran/updatepelanggaran/{id}', [AdminPelanggaranController::class, 'update'])->name('adminupdatepelanggaran');
-    Route::get('/adminpelanggaran/show/{id}', [AdminPelanggaranController::class, 'show'])->name('admindetailpelanggaran');
-    Route::get('/adminpelanggaran/hapuspelanggaran/{id}', [AdminPelanggaranController::class, 'destroy'])->name('adminhapuspelanggaran');
+    Route::get('/dashboard/admin/pelanggaran', [AdminPelanggaranController::class, 'index'])->name('adminpelanggaran');
+    Route::get('/dashboard/admin/pelanggaran/create', [AdminPelanggaranController::class, 'create'])->name('admintambahpelanggaran');
+    Route::post('/dashboard/admin/pelanggaran/store', [AdminPelanggaranController::class, 'store'])->name('adminstorepelanggaran');
+    Route::get('/dashboard/admin/pelanggaran/edit/{id}', [AdminPelanggaranController::class, 'edit'])->name('admineditpelanggaran');
+    Route::put('/dashboard/admin/pelanggaran/update/{id}', [AdminPelanggaranController::class, 'update'])->name('adminupdatepelanggaran');
+    Route::get('/dashboard/admin/pelanggaran/show/{id}', [AdminPelanggaranController::class, 'show'])->name('admindetailpelanggaran');
+    Route::delete('/dashboard/admin/pelanggaran/delete/{id}', [AdminPelanggaranController::class, 'destroy'])->name('adminhapuspelanggaran');
 
     // prestasi
-    Route::get('/adminprestasi', [AdminPrestasiController::class, 'index'])->name('adminprestasi');
-    Route::get('/adminprestasi/addprestasi', [PrestasiController::class, 'create'])->name('admintambahprestasi');
-    Route::post('/adminprestasi/store', [AdminPrestasiController::class, 'store'])->name('adminstoreprestasi');
-    Route::get('/adminprestasi/formeditprestasi/{id}', [AdminPrestasiController::class, 'edit'])->name('admineditprestasi');
-    Route::put('/adminprestasi/updateprestasi/{id}', [AdminPrestasiController::class, 'update'])->name('adminupdateprestasi');
-    Route::get('/adminprestasi/show/{id}', [AdminPrestasiController::class, 'show'])->name('admindetailprestasi');
-    Route::get('/adminprestasi/hapusprestasi/{id}', [AdminPrestasiController::class, 'destroy'])->name('adminhapusprestasi');
+    Route::get('/dashboard/admin/prestasi', [AdminPrestasiController::class, 'index'])->name('adminprestasi');
+    Route::get('/dashboard/admin/prestasi/show/{id}', [AdminPrestasiController::class, 'show'])->name('admindetailprestasi');
+    Route::get('/dashboard/admin/prestasi/create', [AdminPrestasiController::class, 'create'])->name('admintambahprestasi');
+    Route::post('/dashboard/admin/prestasi/store', [AdminPrestasiController::class, 'store'])->name('adminstoreprestasi');
+    Route::get('/dashboard/admin/prestasi/edit/{id}', [AdminPrestasiController::class, 'edit'])->name('admineditprestasi');
+    Route::put('/dashboard/admin/prestasi/update/{id}', [AdminPrestasiController::class, 'update'])->name('adminupdateprestasi');
+    Route::delete('/dashboard/admin/prestasi/delete/{id}', [AdminPrestasiController::class, 'destroy'])->name('adminhapusprestasi');
 
     // nilai
-    Route::get('/adminnilai', [AdminNilaiController::class, 'index'])->name('adminnilai');
-    Route::get('/adminnilai/addnilai', [AdminNilaiController::class, 'create'])->name('admintambahnilai');
-    Route::get('/adminnilai/formeditnilai/{id}', [AdminNilaiController::class, 'edit'])->name('admineditnilai');
-    Route::put('/adminnilai/updatenilai/{id}', [AdminNilaiController::class, 'update'])->name('adminupdatenilai');
-    Route::get('/adminnilai/hapusnilai/{id}', [AdminNilaiController::class, 'destroy'])->name('adminhapusnilai');
-    Route::post('/adminnilai/nilai', [AdminNilaiController::class, 'store'])->name('adminstorenilai');
+    Route::get('/dashboard/admin/nilai', [AdminNilaiController::class, 'index'])->name('adminnilai');
+    Route::get('/dashboard/admin/nilai/create', [AdminNilaiController::class, 'create'])->name('admintambahnilai');
+    Route::post('/dashboard/admin/nilai/store', [AdminNilaiController::class, 'store'])->name('adminstorenilai');
+    Route::get('/dashboard/admin/nilai/edit/{id}', [AdminNilaiController::class, 'edit'])->name('admineditnilai');
+    Route::put('/dashboard/admin/nilai/update/{id}', [AdminNilaiController::class, 'update'])->name('adminupdatenilai');
+    Route::delete('/dashboard/admin/nilai/delete/{id}', [AdminNilaiController::class, 'destroy'])->name('adminhapusnilai');
 
     // mutabaah
-    Route::get('/adminmutabaah', [AdminMutabaahController::class, 'index'])->name('adminmutabaah');
-    Route::get('/adminmutabaah/months', [AdminMutabaahController::class, 'getMonthsByYear']);
-    Route::get('/adminmutabaah/years', [AdminMutabaahController::class, 'getYearsBySantri']);
-    Route::get('/adminmutabaah/months', [AdminMutabaahController::class, 'getMonthsBySantriAndYear']);
-    
-    // tahajud
-    Route::get('/adminmutabaah/addmutabaahtahajud', [MutabaahController::class, 'create2'])->name('admintambahmutabaahtahajud');
-    Route::get('/adminmutabaah/formeditmutabaahtahajud/{id}', [AdminMutabaahController::class, 'edit'])->name('admineditmutabaahtahajud');
-    Route::put('/adminmutabaah/updatemutabaahtahajud/{id}', [AdminMutabaahController::class, 'update'])->name('adminupdatemutabaahtahajud');
-    Route::get('/adminmutabaah/hapusmutabaahtahajud/{id}', [AdminMutabaahController::class, 'destroy'])->name('adminhapusmutabaahtahajud');
-    Route::post('/adminmutabaah/mutabaahtahajud', [AdminMutabaahController::class, 'store'])->name('adminstoremutabaahtahajud');
-
-    // shalat jamaah
-    Route::get('/adminmutabaah/addmutabaahdzikir', [MutabaahController::class, 'create'])->name('admintambahmutabaahdzikir');
-    Route::get('/adminmutabaah/addmutabaahsholat_jamaah', [MutabaahController::class, 'create'])->name('admintambahmutabaahsholat_jamaah');
-    Route::get('/adminmutabaah/addmutabaahWO', [MutabaahController::class, 'create'])->name('admintambahmutabaahWO');
-    Route::get('/adminmutabaah/formeditmutabaah/{id}', [AdminMutabaahController::class, 'edit'])->name('admineditmutabaah');
-    Route::put('/adminmutabaah/updatemutabaah/{id}', [AdminMutabaahController::class, 'update'])->name('adminupdatemutabaah');
-    Route::get('/adminmutabaah/show/{id}', [AdminMutabaahController::class, 'show'])->name('admindetailmutabaah');
-    Route::get('/adminmutabaah/hapusmutabaah/{id}', [AdminMutabaahController::class, 'destroy'])->name('adminhapusmutabaah');
-
-
+    Route::get('/dashboard/admin/mutabaah', [AdminMutabaahController::class, 'index'])->name('adminmutabaah');
+    Route::get('/dashboard/admin/mutabaah/detail/{id}', [AdminMutabaahController::class, 'detail'])->name('adminmutabaahdetail');
+    Route::get('/dashboard/admin/mutabaah/getMonths/{id}', [AdminMutabaahController::class, 'getMonths'])->name('getMonths');
+    Route::get('/dashboard/admin/mutabaah/create/{id}', [AdminMutabaahController::class, 'create'])->name('tambahMutabaah');
+    Route::post('/dashboard/admin/mutabaah/store', [AdminMutabaahController::class, 'store'])->name('storeMutabaah');
+    Route::get('/dashboard/admin/mutabaah/edit/{id}', [AdminMutabaahController::class, 'edit'])->name('editMutabaah');
+    Route::put('/dashboard/admin/mutabaah/update/{id}', [AdminMutabaahController::class, 'update'])->name('updateMutabaah');
+    Route::delete('/dashboard/admin/mutabaah/delete/{id}', [AdminMutabaahController::class, 'destroy'])->name('hapusMutabaah');
 });
 
-Route::middleware(['auth', 'santri'])->group(function () {
+Route::middleware(['auth', 'role:santri'])->group(function () {
 
     //Import Pelanggaran & Prestasi
     Route::post('/import-pelanggaran', [PelanggaranController::class, 'import'])->name('importpelanggaran');
     Route::post('/import-prestasi', [PrestasiController::class, 'import'])->name('importprestasi');
     Route::post('/import-santri', [SantriController::class, 'import'])->name('importsantri');
     Route::post('/store-santri', [SantriController::class, 'store'])->name('storeSantri');
-
-
 
     //chart
     Route::get('/get-dates-by-month/{month}', [SantriController::class, 'getDatesByMonth'])->name('get-dates-by-month');
@@ -182,11 +161,6 @@ Route::middleware(['auth', 'santri'])->group(function () {
     // Rute untuk menghandle proses import Excel
     Route::post('/santri/import', [SantriImportController::class, 'import'])->name('santri.import.post');
 
-    // profile
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
     // setting
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
@@ -194,72 +168,47 @@ Route::middleware(['auth', 'santri'])->group(function () {
     Route::get('/dashboard', [SantriController::class, 'dashboard'])->name('santridashboard');
 
     // search
-    Route::get('/search', [SantriController::class, 'search'])->name('santri.search');
+    Route::get('/dashboard/santri/search', [SantriController::class, 'search'])->name('santri.search');
 
     // DATA SANTRI
-    Route::get('/santri', [SantriController::class, 'index'])->name('santri');
-    Route::get('/santri/addsantri', [SantriController::class, 'create'])->name('tambahsantri');
-    Route::post('/santri/store', [SantriController::class, 'store'])->name('storetambah');
-    Route::get('/santri/formeditsantri/{id}', [SantriController::class, 'edit'])->name('editsantri');
-    Route::put('/santri/updatesantri/{id}', [SantriController::class, 'update'])->name('updatesantri');
-    Route::get('/santri/show/{id}', [SantriController::class, 'show'])->name('detailsantri');
-    Route::get('/santri/hapussantri/{id}', [SantriController::class, 'destroy'])->name('hapussantri');
+    Route::get('/dashboard/santri', [SantriController::class, 'index'])->name('santri');
+    Route::get('/dashboard/profile/{id}', [SantriController::class, 'show'])->name('detailsantri');
 
     // pelanggaran
-    Route::get('/pelanggaran', [PelanggaranController::class, 'index'])->name('pelanggaran');
-    Route::get('/pelanggaran/addpelanggaran', [PelanggaranController::class, 'create'])->name('tambahpelanggaran');
-    Route::post('/pelanggaran/store', [PelanggaranController::class, 'store'])->name('storepelanggaran');
-    Route::get('/pelanggaran/formeditpelanggaran/{id}', [PelanggaranController::class, 'edit'])->name('editpelanggaran');
-    Route::put('/pelanggaran/updatepelanggaran/{id}', [PelanggaranController::class, 'update'])->name('updatepelanggaran');
-    Route::get('/pelanggaran/show/{id}', [PelanggaranController::class, 'show'])->name('detailpelanggaran');
-    Route::get('/pelanggaran/hapuspelanggaran/{id}', [PelanggaranController::class, 'destroy'])->name('hapuspelanggaran');
+    Route::get('/dashboard/santri/pelanggaran', [PelanggaranController::class, 'index'])->name('pelanggaran');
 
     // prestasi
-    Route::get('/prestasi', [PrestasiController::class, 'index'])->name('prestasi');
-    Route::get('/prestasi/addprestasi', [PrestasiController::class, 'create'])->name('tambahprestasi');
-    Route::post('/prestasi/store', [PrestasiController::class, 'store'])->name('storeprestasi');
-    Route::get('/prestasi/formeditprestasi/{id}', [PrestasiController::class, 'edit'])->name('editprestasi');
-    Route::put('/prestasi/updateprestasi/{id}', [PrestasiController::class, 'update'])->name('updateprestasi');
-    Route::get('/prestasi/show/{id}', [PrestasiController::class, 'show'])->name('detailprestasi');
-    Route::get('/prestasi/hapusprestasi/{id}', [PrestasiController::class, 'destroy'])->name('hapusprestasi');
+    Route::get('/dashboard/santri/prestasi', [PrestasiController::class, 'index'])->name('prestasi');
 
     // mutabaah
-    Route::get('/mutabaah', [MutabaahController::class, 'index'])->name('mutabaah');
-    Route::get('/mutabaah/months', [MutabaahController::class, 'getMonthsByYear']);
-    Route::get('/mutabaah/addMutabaah', [MutabaahController::class, 'create'])->name('tambahMutabaah');
-    Route::post('/mutabaah/addMutabaah/create', [MutabaahController::class, 'store'])->name('storeMutabaah');
-    Route::get('/mutabaah/edit/{id}', [MutabaahController::class, 'edit'])->name('editMutabaah');
-    Route::put('/mutabaah/update/{id}', [MutabaahController::class, 'update'])->name('updateMutabaah');
-    Route::delete('/mutabaah/{id}', [MutabaahController::class, 'destroy'])->name('hapusMutabaah');
+    Route::get('/dashboard/santri/mutabaah', [MutabaahController::class, 'index'])->name('mutabaah');
+    Route::get('/dashboard/santri/mutabaah/months', [MutabaahController::class, 'getMonthsByYear']);
 
     // nilai
-    Route::get('/nilai', [NilaiController::class, 'index'])->name('nilai');
-    Route::get('/nilai/addnilai', [NilaiController::class, 'create'])->name('tambahnilai');
-    Route::get('/nilai/formeditnilai/{id}', [NilaiController::class, 'edit'])->name('editnilai');
-    Route::put('/nilai/updatenilai/{id}', [NilaiController::class, 'update'])->name('updatenilai');
-    Route::get('/nilai/hapusnilai/{id}', [NilaiController::class, 'destroy'])->name('hapusnilai');
-    Route::post('/nilai/nilai', [NilaiController::class, 'store'])->name('storenilai');
-
-    // tahajud
-    Route::get('/mutabaah/addmutabaahtahajud', [MutabaahController::class, 'create2'])->name('tambahmutabaahtahajud');
-    // Route::get('/mutabaah/addmutabaah', [MutabaahController::class, 'create'])->name('tambahmutabaah');
-    Route::get('/mutabaah/formeditmutabaahtahajud/{id}', [MutabaahController::class, 'edit'])->name('editmutabaahtahajud');
-    Route::put('/mutabaah/updatemutabaahtahajud/{id}', [MutabaahController::class, 'update'])->name('updatemutabaahtahajud');
-    Route::get('/mutabaah/hapusmutabaahtahajud/{id}', [MutabaahController::class, 'destroy'])->name('hapusmutabaahtahajud');
-    Route::post('/mutabaah/mutabaahtahajud', [MutabaahController::class, 'store'])->name('storemutabaahtahajud');
-
-    // shalat jamaah
-    Route::get('/mutabaah/addmutabaahdzikir', [MutabaahController::class, 'create'])->name('tambahmutabaahdzikir');
-    Route::get('/mutabaah/addmutabaahsholat_jamaah', [MutabaahController::class, 'create'])->name('tambahmutabaahsholat_jamaah');
-    Route::get('/mutabaah/addmutabaahWO', [MutabaahController::class, 'create'])->name('tambahmutabaahWO');
-    Route::get('/mutabaah/formeditmutabaah/{id}', [MutabaahController::class, 'edit'])->name('editmutabaah');
-    Route::put('/mutabaah/updatemutabaah/{id}', [MutabaahController::class, 'update'])->name('updatemutabaah');
-    Route::get('/mutabaah/show/{id}', [MutabaahController::class, 'show'])->name('detailmutabaah');
-    Route::get('/mutabaah/hapusmutabaah/{id}', [MutabaahController::class, 'destroy'])->name('hapusmutabaah');
+    Route::get('/dashboard/santri/nilai', [NilaiController::class, 'index'])->name('nilai');
 });
 
-Route::middleware(['auth', 'donatur'])->group(function () {
-    Route::get('/donatur', [DonaturController::class, 'index'])->name('donaturdashboard');
+Route::middleware(['auth', 'role:donatur'])->group(function () {
+    // DASHBOARD
+    Route::get('/donaturdashboard', [DonaturController::class, 'dashboard'])->name('dashboard.donatur');
+
+    // DATA SANTRI
+    Route::get('/dashboard/donatur/santri', [DonaturController::class, 'index'])->name('donatur.santri');
+    Route::get('/dashboard/donatur/santri/show/{id}', [DonaturController::class, 'show'])->name('donatur.detailsantri');
+
+    // pelanggaran
+    Route::get('/dashboard/donatur/pelanggaran', [DonaturController::class, 'pelanggaran'])->name('donatur.pelanggaran');
+
+    // prestasi
+    Route::get('/dashboard/donatur/prestasi', [DonaturController::class, 'prestasi'])->name('donatur.prestasi');
+
+    // mutabaah
+    Route::get('/dashboard/donatur/mutabaah', [DonaturController::class, 'mutabaah'])->name('donatur.mutabaah');
+    Route::get('/dashboard/donatur/mutabaah/detail/{id}', [DonaturController::class, 'detailmutabaah'])->name('donatur.detailmutabaah');
+    Route::get('/dashboard/donatur/mutabaah/getMonths/{id}', [DonaturController::class, 'getMonths'])->name('getMonths');
+
+    // nilai
+    Route::get('/dashboard/donatur/nilai', [DonaturController::class, 'nilai'])->name('donatur.nilai');
 });
 
 require __DIR__ . '/auth.php';
