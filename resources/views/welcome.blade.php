@@ -192,23 +192,6 @@ https://templatemo.com/tm-562-space-dynamic
                                     <a rel="nofollow" href="https://ib-school.id/" target="_parent">Pesantren
                                         Indonesia Berkah</a>.
                                 </p>
-                                <!-- <form id="search" action="#" method="GET">
-                    <fieldset>
-                      <input
-                        type="address"
-                        name="address"
-                        class="email"
-                        placeholder="Masukkan URL situs Anda..."
-                        autocomplete="on"
-                        required
-                      />
-                    </fieldset>
-                    <fieldset>
-                      <button type="submit" class="main-button">
-                        Analisis Situs
-                      </button>
-                    </fieldset>
-                  </form> -->
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -333,7 +316,7 @@ https://templatemo.com/tm-562-space-dynamic
             </div>
             <div class="row" style="justify-content: center">
                 <div class="col-lg-2 col-sm-6">
-                    <a href="#">
+                    <a href="https://www.instagram.com/n4ylnw">
                         <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                             <div class="hidden-content">
                                 <h5>R.R Nayla Nadya Wibowo</h5>
@@ -345,7 +328,7 @@ https://templatemo.com/tm-562-space-dynamic
                     </a>
                 </div>
                 <div class="col-lg-2 col-sm-6">
-                    <a href="#">
+                    <a href="https://www.instagram.com/rahmawatiniras49/">
                         <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                             <div class="hidden-content">
                                 <h5>Ana Rahma Niraswati</h5>
@@ -357,7 +340,7 @@ https://templatemo.com/tm-562-space-dynamic
                     </a>
                 </div>
                 <div class="col-lg-2 col-sm-12">
-                    <a href="#">
+                    <a href="https://www.instagram.com/mahardikamahmud.s">
                         <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                             <div class="hidden-content">
                                 <h5>Mahardika Mahmud Suhari</h5>
@@ -369,7 +352,7 @@ https://templatemo.com/tm-562-space-dynamic
                     </a>
                 </div>
                 <div class="col-lg-2 col-sm-6">
-                    <a href="#">
+                    <a href="https://www.instagram.com/slnzx_nn/">
                         <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                             <div class="hidden-content">
                                 <h5>Yuanita Selenia</h5>
@@ -381,7 +364,7 @@ https://templatemo.com/tm-562-space-dynamic
                     </a>
                 </div>
                 <div class="col-lg-2 col-sm-6">
-                    <a href="#">
+                    <a href="https://www.instagram.com/nurulaniq_/">
                         <div class="item wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                             <div class="hidden-content">
                                 <h5>Nurul Aniq Khoirunnisa</h5>
@@ -395,96 +378,6 @@ https://templatemo.com/tm-562-space-dynamic
             </div>
         </div>
     </div>
-
-    <!-- <div id="contact" class="contact-us section">
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-lg-6 align-self-center wow fadeInLeft"
-            data-wow-duration="0.5s"
-            data-wow-delay="0.25s"
-          >
-            <div class="section-heading">
-              <h2>Feel Free To Send Us a Message About Your Website Needs</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                doer ket eismod tempor incididunt ut labore et dolores
-              </p>
-              <div class="phone-info">
-                <h4>
-                  For any enquiry, Call Us:
-                  <span
-                    ><i class="fa fa-phone"></i>
-                    <a href="#">010-020-0340</a></span
-                  >
-                </h4>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-lg-6 wow fadeInRight"
-            data-wow-duration="0.5s"
-            data-wow-delay="0.25s"
-          >
-            <form id="contact" action="" method="post">
-              <div class="row">
-                <div class="col-lg-6">
-                  <fieldset>
-                    <input
-                      type="name"
-                      name="name"
-                      id="name"
-                      placeholder="Name"
-                      autocomplete="on"
-                      required
-                    />
-                  </fieldset>
-                </div>
-                <div class="col-lg-6">
-                  <fieldset>
-                    <input
-                      type="surname"
-                      name="surname"
-                      id="surname"
-                      placeholder="Surname"
-                      autocomplete="on"
-                      required
-                    />
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <input
-                      type="text"
-                      name="email"
-                      id="email"
-                      pattern="[^ @]*@[^ @]*"
-                      placeholder="Your Email"
-                      required=""
-                    />
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <textarea name="message" type="text" class="form-control" id="message" placeholder="Message" required=""></textarea>
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <button type="submit" id="form-submit" class="main-button">
-                      Send Message
-                    </button>
-                  </fieldset>
-                </div>
-              </div>
-              <div class="contact-dec">
-                <img src="{{ asset('templati') }}/assets/images/contact-decoration.png" alt="" />
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <footer>
         <div class="container">
