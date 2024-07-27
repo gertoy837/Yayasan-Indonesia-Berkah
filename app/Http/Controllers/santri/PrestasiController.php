@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Santri;
 
 use App\Http\Controllers\Controller;
-use App\Models\prestasi;
+use App\Models\Prestasi;
 use App\Http\Requests\StoreprestasiRequest;
 use App\Http\Requests\UpdateprestasiRequest;
 use Illuminate\Http\Request;
-use App\Models\Santri;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PrestasiImport;
 
