@@ -9,11 +9,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Santri;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PelanggaranImport;
+use Excel;
 
 class AdminPelanggaranController extends Controller
 {
+    public function import(Request $request) {
+        Excel::import(new PelanggaranImport(), $request->file('file'));
+
+        return redirect()->back();
+    }
     /**
      * Display a listing of the resource.
      */
@@ -46,7 +51,7 @@ class AdminPelanggaranController extends Controller
         }
 
         // Ambil data pelanggaran
-        $queryResult = $query->get();
+        $queryResult = $query->paginate(10);
 
         // Ambil daftar angkatan untuk dropdown
         $angkatanList = santri::distinct()->pluck('angkatan_santri');
@@ -71,16 +76,6 @@ class AdminPelanggaranController extends Controller
         return view('admin.pelanggaran.tambah', compact('users'));
     }
 
-    public function import(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
-
-        Excel::import(new PelanggaranImport, $request->file('file'));
-
-        return redirect()->back()->with('success', 'Data Pelanggaran Imported Successfully');
-    }
     public function store(Request $request)
     {
         $pelanggaran = new Pelanggaran();

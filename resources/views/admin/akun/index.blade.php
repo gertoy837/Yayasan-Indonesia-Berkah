@@ -54,6 +54,42 @@
                 </li>
             </ul>
         @endsection
+
+        {{-- Modal Import --}}
+        <div class="form-group">
+            <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel33" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel33">Import Data Akun </h4>
+                            <a href="{{ asset('template-import/template_data_akun.xlsx') }}" class="btn btn-outline-info">
+                                <i class="fa fa-download"></i> Download Template Excel
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{{ route('admin.import.akun') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="card">
+                                    <input type="file" name="file" class="basic-filepond">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Close</span>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
+                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Kirim</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="main" class='layout-navbar navbar-fixed'>
             @include('include.header')
             <div id="main-content">
@@ -61,9 +97,15 @@
                     <div class="text-center rounded">
                         <div class="d-flex align-items-center justify-content-between">
                             <h3 class="mb-0">Data Akun</h3>
-                            <a class="btn btn-md btn-primary" href="{{ route('adminakun.create') }}">
-                                <i class="fas fa-plus-circle"></i> Add New Data
-                            </a>
+                            <div class="">
+                                <button type="button" class="btn btn-success me-1" data-bs-toggle="modal"
+                                    data-bs-target="#inlineForm">
+                                    Import Data
+                                </button>
+                                <a class="btn btn-md btn-primary" href="{{ route('adminakun.create') }}">
+                                    <i class="fas fa-plus-circle"></i> Add New Data
+                                </a>
+                            </div>
                         </div>
                         <form action="{{ route('adminakun') }}" method="GET" id="searchForm" class="mt-3">
                             <div class="d-flex justify-content-end gap-2">
@@ -74,7 +116,8 @@
                                 <div class="">
                                     <select name="role" id="role" class="form-control">
                                         <option value="">Semua Role</option>
-                                        <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin
+                                        <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>
+                                            Admin
                                         </option>
                                         <option value="santri" {{ request('role') == 'santri' ? 'selected' : '' }}>
                                             Santri</option>
@@ -85,68 +128,73 @@
                             </div>
                         </form>
                     </div>
-                    <div class="card-body mt-3">
-                        <table class="table text-start align-right table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-white">
-                                    <th scope="col" class="text-center" width="5%">No</th>
-                                    <th scope="col" class="text-center">
-                                        <a
-                                            href="{{ route('adminakun', ['sort' => 'username', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc']) }}">
-                                            Username
-                                        </a>
-                                    </th>
-                                    <th scope="col" class="text-center">
-                                        <a
-                                            href="{{ route('adminakun', ['sort' => 'nama_lengkap', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc']) }}">
-                                            Nama Lengkap
-                                        </a>
-                                    </th>
-                                    <th scope="col" class="text-center">
-                                        <a
-                                            href="{{ route('adminakun', ['sort' => 'email', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc']) }}">
-                                            Email
-                                        </a>
-                                    </th>
-                                    <th scope="col" class="text-center">
-                                        <a
-                                            href="{{ route('adminakun', ['sort' => 'role', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc']) }}">
-                                            Role
-                                        </a>
-                                    </th>
-                                    <th scope="col" class="text-center" width="10%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pelanggaran-list">
-                                @foreach ($users as $item)
-                                    <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $item->username }}</td>
-                                        <td>{{ $item->nama_lengkap }}</td>
-                                        <td>{{ $item->email }}</td>
-                                        <td>{{ $item->role }}</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-warning rounded-3 p-2 me-1"
-                                                href="{{ route('adminakun.edit', $item->id) }}">
-                                                <i class="fa fa-solid fa-pen"></i>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table text-start align-right table-bordered table-hover mb-0">
+                                <thead>
+                                    <tr class="text-white">
+                                        <th scope="col" class="text-center" width="5%">No</th>
+                                        <th scope="col" class="text-center">
+                                            <a
+                                                href="{{ route('adminakun', ['sort' => 'username', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc']) }}">
+                                                Username
                                             </a>
-                                            <form action="{{ route('adminakun.delete', $item->id) }}" method="POST"
-                                                style="display: inline;"
-                                                onsubmit="return confirm('Mau Dihapus?!')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger rounded-3 p-2">
-                                                    <i class="fa fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </td>
+                                        </th>
+                                        <th scope="col" class="text-center">
+                                            <a
+                                                href="{{ route('adminakun', ['sort' => 'nama_lengkap', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc']) }}">
+                                                Nama Lengkap
+                                            </a>
+                                        </th>
+                                        <th scope="col" class="text-center">
+                                            <a
+                                                href="{{ route('adminakun', ['sort' => 'email', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc']) }}">
+                                                Email
+                                            </a>
+                                        </th>
+                                        <th scope="col" class="text-center">
+                                            <a
+                                                href="{{ route('adminakun', ['sort' => 'role', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc']) }}">
+                                                Role
+                                            </a>
+                                        </th>
+                                        <th scope="col" class="text-center" width="10%">Action</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="d-flex justify-content-center mt-3">
-                        {{ $users->appends(request()->query())->links() }}
+                                </thead>
+                                <tbody id="pelanggaran-list">
+                                    @php
+                                        $start = ($users->currentPage() - 1) * $users->perPage() + 1;
+                                    @endphp
+                                    @foreach ($users as $item)
+                                        <tr>
+                                            <td class="text-center">{{ $start + $loop->index }}</td>
+                                            <td>{{ $item->username }}</td>
+                                            <td>{{ $item->nama_lengkap }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->role }}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-warning rounded-3 p-2 me-1"
+                                                    href="{{ route('adminakun.edit', $item->id) }}">
+                                                    <i class="fa fa-solid fa-pen"></i>
+                                                </a>
+                                                <form action="{{ route('adminakun.delete', $item->id) }}"
+                                                    method="POST" style="display: inline;"
+                                                    onsubmit="return confirm('Mau Dihapus?!')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger rounded-3 p-2">
+                                                        <i class="fa fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            {!! $users->withQueryString()->links('pagination::bootstrap-5') !!}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Nilai;
 use App\Models\pelanggaran;
 use App\Models\Prestasi;
 use App\Models\Santri;
@@ -120,7 +121,7 @@ class DonaturController extends Controller
         }
 
         // Ambil data pelanggaran
-        $queryResult = $query->get();
+        $queryResult = $query->paginate(10);
 
         // Ambil daftar angkatan untuk dropdown
         $angkatanList = santri::distinct()->pluck('angkatan_santri');
@@ -160,7 +161,7 @@ class DonaturController extends Controller
             });
         }
     
-        $query = $query->get();
+        $query = $query->paginate(10);
         
         // Ambil daftar angkatan untuk filter
         $angkatanList = Santri::distinct()->pluck('angkatan_santri');
@@ -203,7 +204,7 @@ class DonaturController extends Controller
         }
     
         // Ambil data santri
-        $santri = $query->get();
+        $santri = $query->paginate(10);
     
         // Check if any data was found
         $dataFound = $santri->isNotEmpty();
@@ -282,45 +283,42 @@ class DonaturController extends Controller
 
     public function nilai(Request $request)
     {
-        $selectedAngkatan = $request->input('angkatan');
+        $query = Nilai::query();
 
-        $query = DB::table('users')
-            ->join('nilai', 'nilai.user_id', '=', 'users.id')
-            ->join('santri', 'santri.user_id', '=', 'users.id')
-            ->select(
-                'nilai.id as nilai_id',
-                'users.nama_lengkap',
-                'santri.jk_santri',
-                'santri.angkatan_santri',
-                'nilai.Adab',
-                'nilai.Aqidah',
-                'nilai.Akhlak',
-                'nilai.Fiqih',
-                'nilai.IT',
-                'nilai.Hadis',
-                'nilai.Quran',
-                'nilai.BahasaArab',
-                'nilai.BahasaInggris',
-                'nilai.Public_Speaking'
-            )
-            ->where('users.role', 'santri');
-
-        if ($request->filled('search')) {
-            $query->where('users.nama_lengkap', 'like', '%' . $request->search . '%');
-        }
-
+        // Filter berdasarkan gender
         if ($request->filled('gender')) {
-            $query->where('santri.jk_santri', $request->gender);
+            $gender = $request->input('gender');
+            $query->whereHas('user.santri', function ($q) use ($gender) {
+                $q->where('jk_santri', $gender);
+            });
         }
 
-        if ($selectedAngkatan) {
-            $query->where('santri.angkatan_santri', $selectedAngkatan);
+        // Filter berdasarkan angkatan
+        if ($request->filled('angkatan')) {
+            $angkatan = $request->input('angkatan');
+            $query->whereHas('user.santri', function ($q) use ($angkatan) {
+                $q->where('angkatan_santri', $angkatan);
+            });
         }
 
-        $query = $query->orderBy('nama_lengkap', 'asc')->get();
-        $angkatanList = DB::table('santri')->distinct()->pluck('angkatan_santri');
+        // Pencarian berdasarkan nama santri
+        if ($request->filled('search_name')) {
+            $searchName = $request->input('search_name');
+            $query->whereHas('user.santri', function ($q) use ($searchName) {
+                $q->where('nama_lengkap', 'like', '%' . $searchName . '%');
+            });
+        }
 
-        return view('donatur.nilai.index', compact('angkatanList', 'query'));
+        // Ambil data pelanggaran
+        $queryResult = $query->paginate(10);
+
+        // Ambil daftar angkatan untuk dropdown
+        $angkatanList = santri::distinct()->pluck('angkatan_santri');
+
+        return view('donatur.nilai.index',  [
+            'query' => $queryResult,
+            'angkatanList' => $angkatanList,
+        ]);
     }
 
 }

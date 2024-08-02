@@ -1,31 +1,86 @@
 @extends('template.adminNilai')
 @section('adminNilai')
+    {{-- Modal Import --}}
+    <div class="form-group">
+        <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel33">Import Data Nilai</h4>
+                        <a href="{{ asset('template-import/template_data_nilai.xlsx') }}" class="btn btn-outline-info">
+                            <i class="fa fa-download"></i> Download Template Excel
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ route('admin.import.nilai') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card">
+                                <input type="file" name="file" class="basic-filepond">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Close</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
+                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Kirim</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="table-card prestasi-card-container">
         <div class="text-center rounded">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <h3 class="mb-0">Nilai Santri</h3>
-                <a class="btn btn-md btn-primary" style="margin-bottom:20px" href="{{ route('admintambahnilai') }}">
-                    <i class="fas fa-plus-circle"></i> Add New Data
-                </a>
+                <div class="">
+                    <button type="button" class="btn btn-success me-1" data-bs-toggle="modal" data-bs-target="#inlineForm">
+                        Import Data
+                    </button>
+                    <a class="btn btn-md btn-primary" href="{{ route('admintambahnilai') }}">
+                        <i class="fas fa-plus-circle"></i> Add New Data
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="card-body">
-            <form id="filterForm" action="{{ route('adminnilai') }}" method="GET" class="mb-3">
-                <div class="d-flex justify-content-end gap-2">
-                    <div class="">
-                        <input type="text" name="search" id="searchInput" class="form-control"
-                            placeholder="Search by name" value="{{ request('search') }}">
+        <div class="card">
+            <div class="card-body">
+                <form id="filter-form" action="{{ route('adminprestasi') }}" class="d-flex justify-content-end gap-2"
+                    method="GET">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" name="search_name" id="search_name" class="form-control"
+                                    value="{{ request('search_name') }}" placeholder="Masukkan nama santri..."
+                                    oninput="autoSubmit();">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="clearSearch();">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="">
-                        <select name="gender" id="genderSelect" class="form-select pe-5">
-                            <option value="">Semua gender</option>
-                            <option value="Ikhwan" {{ request('gender') == 'Ikhwan' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="Akhwat" {{ request('gender') == 'Akhwat' ? 'selected' : '' }}>Perempuan</option>
+                    <div class="form-group">
+                        <select name="gender" id="filter_gender" class="form-control" onchange="autoSubmit();">
+                            <option value="" hidden>Pilih gender</option>
+                            <option value="">Semua</option>
+                            <option value="ikhwan" {{ request('gender') == 'ikhwan' ? 'selected' : '' }}>
+                                Ikhwan</option>
+                            <option value="akhwat" {{ request('gender') == 'akhwat' ? 'selected' : '' }}>
+                                Akhwat</option>
                         </select>
                     </div>
-                    <div class="">
-                        <select name="angkatan" id="angkatanSelect" class="form-select pe-5">
-                            <option value="">Semua Angkatan</option>
+                    <div class="form-group">
+                        <select name="angkatan" id="filter_angkatan" class="form-control" onchange="autoSubmit();">
+                            <option value="" hidden>Pilih angkatan</option>
+                            <option value="">Semua</option>
                             @foreach ($angkatanList as $angkatan)
                                 <option value="{{ $angkatan }}"
                                     {{ request('angkatan') == $angkatan ? 'selected' : '' }}>
@@ -34,65 +89,71 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-            </form>
-            <div class="overflow-y-hidden">
-                <table class="table number align-right table-bordered table-hover mb-0">
-                    <thead>
-                        <tr class="text-white">
-                            <th scope="col" class="text-center" width="2%">No</th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap" width="10%">Nama Santri
-                            </th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">Adab</th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">Aqidah</th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">Akhlak</th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">Fiqih</th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">IT</th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">Hadis</th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">Quran</th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">Bahasa Arab
-                            </th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">Bahasa Inggris
-                            </th>
-                            <th scope="col" class="text-center px-3" style="white-space: nowrap">Public
-                                Speaking</th>
-                            <th scope="col" class="text-center px-5">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="santriTableBody">
-                        @foreach ($query as $index => $item)
-                            <tr>
-                                <td class="text-center">{{ $index + 1 }}</td>
-                                <td>{{ $item->nama_lengkap }}</td>
-                                <td>{{ $item->Adab }}</td>
-                                <td>{{ $item->Aqidah }}</td>
-                                <td>{{ $item->Akhlak }}</td>
-                                <td>{{ $item->Fiqih }}</td>
-                                <td>{{ $item->IT }}</td>
-                                <td>{{ $item->Hadis }}</td>
-                                <td>{{ $item->Quran }}</td>
-                                <td>{{ $item->BahasaArab }}</td>
-                                <td>{{ $item->BahasaInggris }}</td>
-                                <td>{{ $item->Public_Speaking }}</td>
-                                <td class="text-center">
-                                    <a class="btn btn-warning rounded-pill m-2"
-                                        href="{{ route('admineditnilai', $item->nilai_id) }}">
-                                        <i class="fa fa-solid fa-pen"></i>
-                                    </a>
-                                    <form action="{{ route('adminhapusnilai', $item->nilai_id) }}" method="POST"
-                                        style="display: inline;"
-                                        onsubmit="return confirm('Mau Dihapus?!')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-light rounded-pill m-2">
-                                            <i class="fa fa-solid fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                </form>
+                <div class="overflow-y-hidden">
+                    <table class="table number align-right table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-white">
+                                <th scope="col" class="text-center" width="2%">No</th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap" width="10%">Nama
+                                    Santri
+                                </th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">Adab</th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">Aqidah</th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">Akhlak</th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">Fiqih</th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">IT</th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">Hadis</th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">Quran</th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">Bahasa Arab
+                                </th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">Bahasa Inggris
+                                </th>
+                                <th scope="col" class="text-center px-3" style="white-space: nowrap">Public
+                                    Speaking</th>
+                                <th scope="col" class="text-center px-5">Action</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody id="santriTableBody">
+                            @php
+                                $start = ($query->currentPage() - 1) * $query->perPage() + 1;
+                            @endphp
+                            @foreach ($query as $item)
+                                <tr>
+                                    <td class="text-center">{{ $start + $loop->index }}</td>
+                                    <td>{{ $item->user->nama_lengkap }}</td>
+                                    <td>{{ $item->Adab }}</td>
+                                    <td>{{ $item->Aqidah }}</td>
+                                    <td>{{ $item->Akhlak }}</td>
+                                    <td>{{ $item->Fiqih }}</td>
+                                    <td>{{ $item->IT }}</td>
+                                    <td>{{ $item->Hadis }}</td>
+                                    <td>{{ $item->Quran }}</td>
+                                    <td>{{ $item->BahasaArab }}</td>
+                                    <td>{{ $item->BahasaInggris }}</td>
+                                    <td>{{ $item->Public_Speaking }}</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-warning rounded-pill m-2"
+                                            href="{{ route('admineditnilai', $item->id) }}">
+                                            <i class="fa fa-solid fa-pen"></i>
+                                        </a>
+                                        <form action="{{ route('adminhapusnilai', $item->id) }}" method="POST"
+                                            style="display: inline;" onsubmit="return confirm('Mau Dihapus?!')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-light rounded-pill m-2">
+                                                <i class="fa fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                {!! $query->withQueryString()->links('pagination::bootstrap-5') !!}
             </div>
         </div>
     </div>

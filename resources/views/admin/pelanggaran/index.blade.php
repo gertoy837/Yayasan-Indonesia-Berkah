@@ -67,17 +67,60 @@
                 </li>
             </ul>
         @endsection
+
+        {{-- Modal Import --}}
+        <div class="form-group">
+            <div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel33" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel33">Import Data Pelanggaran </h4>
+                            <a href="{{ asset('template-import/template_data_pelanggaran.xlsx') }}"
+                                class="btn btn-outline-info">
+                                <i class="fa fa-download"></i> Download Template Excel
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{{ route('admin.import.pelanggaran') }}"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="card">
+                                    <input type="file" name="file" class="basic-filepond">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Close</span>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal">
+                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Kirim</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="main" class='layout-navbar navbar-fixed'>
             @include('include.header')
             <div id="main-content">
                 <div class="table-card prestasi-card-container">
                     <div class="text-center rounded">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <h3 class="mb-0">Pelanggaran Santri</h3>
-                            <a class="btn btn-md btn-primary" style="margin-bottom:20px"
-                                href="{{ route('admintambahpelanggaran') }}">
-                                <i class="fas fa-plus-circle"></i> Add New Data
-                            </a>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h3 class="">Pelanggaran Santri</h3>
+                            <div class="">
+                                <button type="button" class="btn btn-success me-1" data-bs-toggle="modal"
+                                    data-bs-target="#inlineForm">
+                                    Import Data
+                                </button>
+                                <a class="btn btn-md btn-primary" href="{{ route('admintambahpelanggaran') }}">
+                                    <i class="fas fa-plus-circle"></i> Add New Data
+                                </a>
+                            </div>
                         </div>
                         <div class="">
                             <form id="filter-form" action="{{ route('adminpelanggaran') }}"
@@ -124,51 +167,61 @@
                     </div>
                     <div class="mb-3">
                     </div>
-                    <div class="card-body">
-                        <table class="table text-start align-right table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-white">
-                                    <th scope="col">No</th>
-                                    <th scope="col">Nama Santri</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Nama Pelanggaran</th>
-                                    <th scope="col">Kategori pelanggaran</th>
-                                    <th scope="col">Keterangan pelanggaran</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pelanggaran-list">
-                                @forelse ($query as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->user->nama_lengkap }}</td>
-                                        <td>{{ $item->tglpelanggaran }}</td>
-                                        <td>{{ $item->nama_pelanggaran }}</td>
-                                        <td>{{ $item->kategori_pelanggaran }}</td>
-                                        <td>{{ $item->deskripsi_pelanggaran }}</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-warning rounded-pill m-2"
-                                                href="{{ route('admineditpelanggaran', $item->id) }}">
-                                                <i class="fa fa-solid fa-pen"></i>
-                                            </a>
-                                            <form action="{{ route('adminhapuspelanggaran', $item->id) }}" method="POST"
-                                                style="display: inline;"
-                                                onsubmit="return confirm('Mau Dihapus?!')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-light rounded-pill m-2">
-                                                    <i class="fa fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center">Data tidak ada</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama Santri</th>
+                                            <th scope="col">Tanggal</th>
+                                            <th scope="col">Nama Pelanggaran</th>
+                                            <th scope="col">Kategori Pelanggaran</th>
+                                            <th scope="col">Keterangan Pelanggaran</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pelanggaran-list">
+                                        @php
+                                            $start = ($query->currentPage() - 1) * $query->perPage() + 1;
+                                        @endphp
+                                        @forelse ($query as $item)
+                                            <tr>
+                                                <td>{{ $start + $loop->index }}</td>
+                                                <td style="white-space: nowrap">{{ $item->user->nama_lengkap }}</td>
+                                                <td style="white-space: nowrap">{{ $item->tglpelanggaran }}</td>
+                                                <td style="white-space: nowrap">{{ $item->nama_pelanggaran }}</td>
+                                                <td style="white-space: nowrap">{{ $item->kategori_pelanggaran }}</td>
+                                                <td style="white-space: nowrap">{{ $item->deskripsi_pelanggaran }}</td>
+                                                <td class="d-flex">
+                                                    <a class="btn btn-warning btn-sm"
+                                                        href="{{ route('admineditpelanggaran', $item->id) }}">
+                                                        <i class="fa fa-pencil-alt"></i>
+                                                    </a>
+                                                    <form action="{{ route('adminhapuspelanggaran', $item->id) }}"
+                                                        method="POST" style="display: inline;"
+                                                        onsubmit="return confirm('Mau Dihapus?!')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="7" class="text-center">Data tidak ada</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            {!! $query->withQueryString()->links('pagination::bootstrap-5') !!}
+                        </div>
                     </div>
                 </div>
             </div>

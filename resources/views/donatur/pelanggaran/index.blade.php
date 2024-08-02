@@ -111,35 +111,43 @@
                     </div>
                     <div class="mb-3">
                     </div>
-                    <div class="card-body">
-                        <table class="table text-start align-right table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-white">
-                                    <th scope="col">No</th>
-                                    <th scope="col">Nama Santri</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Nama Pelanggaran</th>
-                                    <th scope="col">Kategori pelanggaran</th>
-                                    <th scope="col">Keterangan pelanggaran</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pelanggaran-list">
-                                @forelse ($query as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->user->nama_lengkap }}</td>
-                                        <td>{{ $item->tglpelanggaran }}</td>
-                                        <td>{{ $item->nama_pelanggaran }}</td>
-                                        <td>{{ $item->kategori_pelanggaran }}</td>
-                                        <td>{{ $item->deskripsi_pelanggaran }}</td>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table text-start align-right table-bordered table-hover mb-0">
+                                <thead>
+                                    <tr class="text-white">
+                                        <th scope="col">No</th>
+                                        <th scope="col">Nama Santri</th>
+                                        <th scope="col">Tanggal</th>
+                                        <th scope="col">Nama Pelanggaran</th>
+                                        <th scope="col">Kategori pelanggaran</th>
+                                        <th scope="col">Keterangan pelanggaran</th>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center">Data tidak ada</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody id="pelanggaran-list">
+                                    @php
+                                        $start = ($query->currentPage() - 1) * $query->perPage() + 1;
+                                    @endphp
+                                    @forelse ($query as $item)
+                                        <tr>
+                                            <td>{{ $start + $loop->index }}</td>
+                                            <td style="white-space: nowrap">{{ $item->user->nama_lengkap }}</td>
+                                            <td style="white-space: nowrap">{{ $item->tglpelanggaran }}</td>
+                                            <td style="white-space: nowrap">{{ $item->nama_pelanggaran }}</td>
+                                            <td style="white-space: nowrap">{{ $item->kategori_pelanggaran }}</td>
+                                            <td style="white-space: nowrap">{{ $item->deskripsi_pelanggaran }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center">Data tidak ada</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            {!! $query->withQueryString()->links('pagination::bootstrap-5') !!}
+                        </div>
                     </div>
                 </div>
             </div>

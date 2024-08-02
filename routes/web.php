@@ -43,7 +43,9 @@ use App\Http\Controllers\SettingsController;
 */
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::get('/register/admin', [RegisteredUserController::class, 'create_admin'])->name('register_admin');
 Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::post('/register/admin', [RegisteredUserController::class, 'store_admin']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -54,13 +56,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    
+    // import
+    Route::post('/import/akun', [AdminController::class, 'import'])->name('admin.import.akun');
+    Route::post('/import/santri', [AdminController::class, 'importSantri'])->name('admin.import.santri');
+    Route::post('/import/pelanggaran', [AdminPelanggaranController::class, 'import'])->name('admin.import.pelanggaran');
+    Route::post('/import/prestasi', [AdminPrestasiController::class, 'import'])->name('admin.import.prestasi');
+    Route::post('/import/nilai', [AdminNilaiController::class, 'import'])->name('admin.import.nilai');
 
     //chart
     Route::get('/get-dates-by-month/{month}', [SantriController::class, 'getDatesByMonth'])->name('get-dates-by-month');
-
+    
     // DASHBOARD
     Route::get('/admindashboard', [AdminController::class, 'dashboard'])->name('admindashboard');
 
@@ -79,6 +89,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard/admin/santri', [AdminController::class, 'index'])->name('adminsantri');
     Route::get('/dashboard/admin/santri/create', [AdminController::class, 'create'])->name('admintambahsantri');
     Route::post('/dashboard/admin/santri/store', [AdminController::class, 'store'])->name('adminstoretambah');
+    Route::post('/dashboard/admin/santri/store', [AdminController::class, 'storeById'])->name('adminStoreById');
     Route::get('/dashboard/admin/santri/edit/{id}', [AdminController::class, 'edit'])->name('admineditsantri');
     Route::put('/dashboard/admin/santri/update/{id}', [AdminController::class, 'update'])->name('adminupdatesantri');
     Route::get('/dashboard/admin/santri/show/{id}', [AdminController::class, 'show'])->name('admindetailsantri');
