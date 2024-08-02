@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\SantriImport;
+use App\Imports\UserImport;
 use App\Models\Santri;
 use App\Http\Requests\StoresantriRequest;
 use App\Http\Requests\UpdatesantriRequest;
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Pelanggaran;
 use App\Models\Prestasi;
 use Illuminate\Support\Facades\DB;
+use Excel;
 
 
 
@@ -22,6 +25,18 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function import(Request $request) {
+        Excel::import(new UserImport(), $request->file('file'));
+
+        return redirect()->back();
+    }
+
+    public function importSantri(Request $request) {
+        Excel::import(new SantriImport(), $request->file('file'));
+
+        return redirect()->back();
+    }
+
     public function index_akun(Request $request)
     {
         $query = User::query();
@@ -43,7 +58,7 @@ class AdminController extends Controller
         $users = $query->paginate(10);
     
         return view('admin.akun.index', compact('users'));
-    }    
+    }
 
     public function create_akun()
     {
@@ -293,6 +308,29 @@ class AdminController extends Controller
         return redirect()->route('adminsantri');
     }
 
+    public function storeById(Request $request) {
+        $santri = new Santri();
+        $santri->user_id = $request->user_id; // Menggunakan ID pengguna yang baru disimpan
+        $santri->jk_santri = $request->jk_santri;
+        $santri->angkatan_santri = $request->angkatan_santri;
+        $santri->tahun_angkatan_santri = $request->tahun_angkatan_santri;
+        $santri->tgllahir_santri = $request->tgllahir_santri;
+        $santri->alamat_santri = $request->alamat_santri;
+
+        if ($request->photo_santri) {
+            $foto_santri = $request->photo_santri;
+            $name_foto = $foto_santri->getClientOriginalName();
+            $foto_santri->move(public_path() . '/storage/images', $name_foto);
+
+            $santri->photo_santri = $name_foto;
+        }
+        
+        // Simpan data santri
+        $santri->save();
+
+        session()->flash('add', 'Data berhasil ditambahkan!');
+        return redirect()->back();
+    }
 
     /**
      * Display the specified resource.

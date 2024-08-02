@@ -87,94 +87,107 @@
                             <h3 class="mb-0">Data Santri</h3>
                         </div>
                     </div>
-                    <div class="card-body mt-3">
-                        <form id="filter-form" action="{{ route('donatur.santri') }}" method="GET" class="mb-3">
-                            <div class="d-flex justify-content-end gap-2">
-                                <div class="">
-                                    <input type="text" name="search_name" id="search_name" class="form-control"
-                                        placeholder="Search by name" value="{{ request('search_name') }}">
+                    <div class="card">
+                        <div class="card-body mt-3">
+                            <form id="filter-form" action="{{ route('donatur.santri') }}" method="GET" class="mb-3">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <div class="">
+                                        <input type="text" name="search_name" id="search_name" class="form-control"
+                                            placeholder="Search by name" value="{{ request('search_name') }}">
+                                    </div>
+                                    <div class="">
+                                        <select name="filter_gender" id="filter_gender" class="form-control"
+                                            onchange="autoSubmit()">
+                                            <option value="">All Genders</option>
+                                            <option value="Ikhwan"
+                                                {{ request('filter_gender') == 'Ikhwan' ? 'selected' : '' }}>Ikhwan
+                                            </option>
+                                            <option value="Akhwat"
+                                                {{ request('filter_gender') == 'Akhwat' ? 'selected' : '' }}>Akhwat
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="">
+                                        <select name="filter_angkatan" id="filter_angkatan" class="form-control"
+                                            onchange="autoSubmit()">
+                                            <option value="">All Angkatan</option>
+                                            @foreach ($angkatans as $angkatan)
+                                                <option value="{{ $angkatan }}"
+                                                    {{ request('filter_angkatan') == $angkatan ? 'selected' : '' }}>
+                                                    {{ $angkatan }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="">
+                                        <select name="filter_tahun_angkatan" id="filter_tahun_angkatan"
+                                            class="form-control" onchange="autoSubmit()">
+                                            <option value="">All Tahun Angkatan</option>
+                                            @foreach ($tahun_angkatans as $tahun)
+                                                <option value="{{ $tahun }}"
+                                                    {{ request('filter_tahun_angkatan') == $tahun ? 'selected' : '' }}>
+                                                    {{ $tahun }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="">
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="clearSearch()">Clear</button>
+                                    </div>
                                 </div>
-                                <div class="">
-                                    <select name="filter_gender" id="filter_gender" class="form-control"
-                                        onchange="autoSubmit()">
-                                        <option value="">All Genders</option>
-                                        <option value="Ikhwan"
-                                            {{ request('filter_gender') == 'Ikhwan' ? 'selected' : '' }}>Ikhwan
-                                        </option>
-                                        <option value="Akhwat"
-                                            {{ request('filter_gender') == 'Akhwat' ? 'selected' : '' }}>Akhwat
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="">
-                                    <select name="filter_angkatan" id="filter_angkatan" class="form-control"
-                                        onchange="autoSubmit()">
-                                        <option value="">All Angkatan</option>
-                                        @foreach ($angkatans as $angkatan)
-                                            <option value="{{ $angkatan }}"
-                                                {{ request('filter_angkatan') == $angkatan ? 'selected' : '' }}>
-                                                {{ $angkatan }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="">
-                                    <select name="filter_tahun_angkatan" id="filter_tahun_angkatan" class="form-control"
-                                        onchange="autoSubmit()">
-                                        <option value="">All Tahun Angkatan</option>
-                                        @foreach ($tahun_angkatans as $tahun)
-                                            <option value="{{ $tahun }}"
-                                                {{ request('filter_tahun_angkatan') == $tahun ? 'selected' : '' }}>
-                                                {{ $tahun }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="">
-                                    <button type="button" class="btn btn-secondary"
-                                        onclick="clearSearch()">Clear</button>
-                                </div>
-                            </div>
-                        </form>
-                        <table class="table text-start align-right table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-white">
-                                    <th scope="col" class="text-center" width="5%">No</th>
-                                    <th scope="col" class="text-center">Nama Santri</th>
-                                    <th scope="col" class="text-center">Jenis Kelamin</th>
-                                    <th scope="col" class="text-center">Angkatan</th>
-                                    <th scope="col" class="text-center">Tahun</th>
-                                    <th scope="col" class="text-center">Tanggal Lahir</th>
-                                    <th scope="col" class="text-center">Alamat</th>
-                                    <th scope="col" class="text-center">Foto</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pelanggaran-list">
-                                @foreach ($users as $item)
-                                    <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $item->nama_lengkap }}</td>
-                                        <td>{{ $item->santri->jk_santri }}</td>
-                                        <td>{{ $item->santri->angkatan_santri }}</td>
-                                        <td>{{ $item->santri->tahun_angkatan_santri }}</td>
-                                        <td>{{ $item->santri->tgllahir_santri }}</td>
-                                        <td>{{ $item->santri->alamat_santri }}</td>
-                                        @if ($item->santri->photo_santri)
-                                            <td class="avatar avatar-xl p-0 my-2 ml-3 me-1">
-                                                <img
-                                                    src="{{ asset('storage') }}/images/{{ $item->santri->photo_santri }}">
-                                            </td>
-                                        @else
-                                            <td class="avatar avatar-xl p-0 my-2 ml-3 me-1">
-                                                @if ($item->santri->jk_santri == 'Ikhwan')
-                                                    <img src="{{ asset('storage') }}/avatars/default_ikhwan.jpg">
-                                                @else
-                                                    <img src="{{ asset('storage') }}/avatars/default_akhwat.jpg">
-                                                @endif
-                                            </td>
-                                        @endif
+                            </form>
+                            <table class="table text-start align-right table-bordered table-hover mb-0">
+                                <thead>
+                                    <tr class="text-white">
+                                        <th scope="col" class="text-center" width="5%">No</th>
+                                        <th scope="col" class="text-center">Nama Santri</th>
+                                        <th scope="col" class="text-center">Jenis Kelamin</th>
+                                        <th scope="col" class="text-center">Angkatan</th>
+                                        <th scope="col" class="text-center">Tahun</th>
+                                        <th scope="col" class="text-center">Tanggal Lahir</th>
+                                        <th scope="col" class="text-center">Alamat</th>
+                                        <th scope="col" class="text-center">Foto</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody id="pelanggaran-list">
+                                    @php
+                                        $start = ($users->currentPage() - 1) * $users->perPage() + 1;
+                                    @endphp
+                                    @foreach ($users as $item)
+                                        <tr>
+                                            <td class="text-center">{{ $start + $loop->index }}</td>
+                                            <td>{{ $item->nama_lengkap }}</td>
+                                            <td>{{ !empty($item->santri->jk_santri) ? $item->santri->jk_santri : '' }}
+                                            </td>
+                                            <td>{{ !empty($item->santri->angkatan_santri) ? $item->santri->angkatan_santri : '' }}
+                                            </td>
+                                            <td>{{ !empty($item->santri->tahun_angkatan_santri) ? $item->santri->tahun_angkatan_santri : '' }}
+                                            </td>
+                                            <td>{{ !empty($item->santri->tgllahir_santri) ? $item->santri->tgllahir_santri : '' }}
+                                            </td>
+                                            <td>{{ !empty($item->santri->alamat_santri) ? $item->santri->alamat_santri : '' }}
+                                            </td>
+                                            @if (!empty($item->santri->photo_santri) ? $item->santri->photo_santri : '')
+                                                <td class="avatar avatar-xl p-0 my-2 ml-3 me-1">
+                                                    <img
+                                                        src="{{ asset('storage') }}/images/{{ $item->santri->photo_santri }}">
+                                                </td>
+                                            @else
+                                                <td class="avatar avatar-xl p-0 my-2 ml-3 me-1">
+                                                    @if (!empty($item->santri->jk_santri) ? $item->santri->jk_santri == 'Ikhwan' : '')
+                                                        <img src="{{ asset('storage') }}/avatars/default_ikhwan.jpg">
+                                                    @else
+                                                        <img src="{{ asset('storage') }}/avatars/default_akhwat.jpg">
+                                                    @endif
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            {!! $users->withQueryString()->links('pagination::bootstrap-5') !!}
+                        </div>
                     </div>
                 </div>
             </div>

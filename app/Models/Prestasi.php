@@ -12,6 +12,7 @@ class Prestasi extends Model
     protected $table = 'prestasi';
 
     protected $fillable = [
+        'user_id',
         'nama_prestasi',
         'kategori_prestasi',
         'keterangan_prestasi',

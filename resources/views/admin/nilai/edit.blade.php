@@ -24,8 +24,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label for="first-name-column">Nama Santri</label>
-                                                    <input value="{{ $users->nama_lengkap }}" disabled type="number"
-                                                        inputmode="numeric" id="first-name-column" class="form-control"
+                                                    <input value="{{ $users->nama_lengkap }}" disabled id="first-name-column" class="form-control"
                                                         placeholder="Nama Santri" name="">
                                                     <input value="{{ $users->id }}" hidden type="number"
                                                         inputmode="numeric" id="first-name-column" class="form-control"

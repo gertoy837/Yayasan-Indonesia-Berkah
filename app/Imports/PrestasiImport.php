@@ -1,24 +1,44 @@
 <?php
+
 namespace App\Imports;
 
 use App\Models\Prestasi;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use App\Models\User;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class PrestasiImport implements ToModel
+class PrestasiImport implements ToCollection
 {
-    public function model(array $row)
+    /**
+    * @param Collection $collection
+    */
+    public function collection(Collection $collection)
     {
-        // Lakukan debugging untuk memastikan bahwa header sesuai
-        dd($row);
+        $index = 3;
+        $users = User::where('role', 'santri')->get();
+        // dd($collection);
 
-        return new Prestasi([
-            'nama_prestasi' => $row['nama_prestasi'],
-            'kategori_prestasi' => $row['kategori_prestasi'],
-            'keterangan_prestasi' => $row['keterangan_prestasi'],
-            'tglprestasi' => Carbon::createFromFormat('Y-m-d', $row['tglprestasi'])->format('Y-m-d'),
-            'santri_id' => $row['santri_id'],
-        ]);
+        foreach ($collection as $row) {
+            if ($index > 5) {
+                foreach ($users as $item) {
+                    if ($item->username == $row['1'] || $item->nama_lengkap == $row['1']) {
+                        $data['user_id'] = $item->id;
+                    }
+                }
+                $data['nama_prestasi'] = !empty($row['3']) ? $row['3'] : '';
+                $data['kategori_prestasi'] = !empty($row['4']) ? $row['4'] : '';
+                $data['keterangan_prestasi'] = !empty($row['5']) ? $row['5'] : '';
+                $excelDate = $row['2'];
+                $date = Carbon::instance(Date::excelToDateTimeObject($excelDate))->toDate();
+                $data['tglprestasi'] = $date->format('Y-m-d');
+                
+                Prestasi::create($data);
+                // dd($data);
+            }
+
+            $index++;
+        }
     }
 }

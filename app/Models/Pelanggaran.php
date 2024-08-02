@@ -13,6 +13,7 @@ class Pelanggaran extends Model
 
     protected $dates = ['tglpelanggaran'];
     protected $fillable = [
+        'user_id',
         'nama_pelanggaran',
         'kategori_pelanggaran',
         'deskripsi_pelanggaran',

@@ -1,5 +1,17 @@
 @extends('../../include/adminsidebar')
 @include('include.bagianatas')
+<head>
+    <script>
+        function autoSubmit() {
+            document.getElementById('filter-form').submit();
+        }
+
+        function clearSearch() {
+            document.getElementById('search_name').value = '';
+            autoSubmit(); // Submit form after clearing the input
+        }
+    </script>
+</head>
 
 <body>
     <script src="{{ asset('template/dist/assets') }}/static/js/initTheme.js"></script>

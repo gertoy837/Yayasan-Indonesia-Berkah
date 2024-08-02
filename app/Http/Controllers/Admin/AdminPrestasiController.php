@@ -9,11 +9,17 @@ use App\Http\Requests\UpdateprestasiRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Santri;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PrestasiImport;
+use Excel;
 
 class AdminPrestasiController extends Controller
 {
+    public function import(Request $request) {
+        Excel::import(new PrestasiImport(), $request->file('file'));
+
+        return redirect()->back();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -42,7 +48,7 @@ class AdminPrestasiController extends Controller
             });
         }
     
-        $query = $query->get();
+        $query = $query->paginate(10);
         
         // Ambil daftar angkatan untuk filter
         $angkatanList = Santri::distinct()->pluck('angkatan_santri');
@@ -59,18 +65,6 @@ class AdminPrestasiController extends Controller
         // $query = Prestasi::with('Santri')->get();
         $users = User::where('role', 'santri')->get();
         return view('admin.prestasi.tambah', compact('users'));
-    }
-
-    public function import(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
-
-        // Lakukan impor menggunakan PrestasiImport
-        Excel::import(new PrestasiImport, $request->file('file'));
-
-        return redirect()->back()->with('success', 'Data Prestasi Imported Successfully');
     }
 
     /**
