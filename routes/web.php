@@ -89,7 +89,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard/admin/santri', [AdminController::class, 'index'])->name('adminsantri');
     Route::get('/dashboard/admin/santri/create', [AdminController::class, 'create'])->name('admintambahsantri');
     Route::post('/dashboard/admin/santri/store', [AdminController::class, 'store'])->name('adminstoretambah');
-    Route::post('/dashboard/admin/santri/store', [AdminController::class, 'storeById'])->name('adminStoreById');
+    Route::post('/dashboard/admin/santri/storeById', [AdminController::class, 'storeById'])->name('adminStoreById');
     Route::get('/dashboard/admin/santri/edit/{id}', [AdminController::class, 'edit'])->name('admineditsantri');
     Route::put('/dashboard/admin/santri/update/{id}', [AdminController::class, 'update'])->name('adminupdatesantri');
     Route::get('/dashboard/admin/santri/show/{id}', [AdminController::class, 'show'])->name('admindetailsantri');

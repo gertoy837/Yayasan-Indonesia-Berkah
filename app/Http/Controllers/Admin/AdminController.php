@@ -14,6 +14,7 @@ use App\Models\dashboard;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Pelanggaran;
 use App\Models\Prestasi;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Excel;
 
@@ -393,6 +394,10 @@ class AdminController extends Controller
     public function destroy($id)
     {
         $hapus = User::findOrFail($id);
+        $path = 'storage/images/' . $hapus->santri->photo_santri;
+        if (File::exists($path)) {
+            File::delete($path);
+        }
         $hapus->delete();
 
         session()->flash('destroy', 'Data Santri berhasil dihapus!');
