@@ -16,27 +16,34 @@
                                 <h6 class="mb-0 text-gray-600">{{ Auth::user()->nama_lengkap }}</h6>
                                 <p class="mb-0 text-sm text-gray-600">{{ Auth::user()->role }}</p>
                             </div>
-                            @if (Auth::user()->role == 'santri')
-                                @if (Auth::user()->santri->photo_santri)
-                                    <div class="ms-3 avatar avatar-xl">
-                                        <img alt="Foto Santri"
-                                            src="{{ asset('storage') }}/images/{{ Auth::user()->santri->photo_santri }}">
-                                    </div>
-                                @else
-                                    <div class="ms-3 avatar avatar-xl">
-                                        @if (Auth::user()->santri->jk_santri == 'Ikhwan')
-                                            <img alt="Foto Ikhwan"
-                                                src="{{ asset('storage') }}/avatars/default_ikhwan.jpg">
-                                        @else
-                                            <img alt="Foto Akhwat"
-                                                src="{{ asset('storage') }}/avatars/default_akhwat.jpg">
-                                        @endif
-                                    </div>
-                                @endif
-                            @else
+                            @if (Auth::user()->santri == null)
                                 <div class="ms-3 avatar avatar-xl">
                                     <img src="{{ asset('template/dist') }}/assets/compiled/jpg/1.jpg" alt="Face 1">
                                 </div>
+                            @else
+                                @if (Auth::user()->role == 'santri')
+                                    @if (Auth::user()->santri->photo_santri)
+                                        <div class="ms-3 avatar avatar-xl">
+                                            <img alt="Foto Santri"
+                                                src="{{ asset('storage') }}/images/{{ Auth::user()->santri->photo_santri }}">
+                                        </div>
+                                    @else
+                                        <div class="ms-3 avatar avatar-xl">
+                                            @if (Auth::user()->santri->jk_santri == 'Ikhwan')
+                                                <img alt="Foto Ikhwan"
+                                                    src="{{ asset('storage') }}/avatars/default_ikhwan.jpg">
+                                            @else
+                                                <img alt="Foto Akhwat"
+                                                    src="{{ asset('storage') }}/avatars/default_akhwat.jpg">
+                                            @endif
+                                        </div>
+                                    @endif
+                                @else
+                                    <div class="ms-3 avatar avatar-xl">
+                                        <img src="{{ asset('template/dist') }}/assets/compiled/jpg/1.jpg"
+                                            alt="Face 1">
+                                    </div>
+                                @endif
                             @endif
                         </div>
                     </a>

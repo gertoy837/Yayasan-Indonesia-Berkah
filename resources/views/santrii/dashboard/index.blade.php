@@ -209,21 +209,28 @@
                                     <div class="dropdown">
                                         <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                             <div class="user-menu d-flex">
-                                                @if (Auth::user()->santri->photo_santri)
-                                                    <div class="avatar avatar-xl">
-                                                        <img alt="Foto Santri"
-                                                            src="{{ asset('storage') }}/images/{{ Auth::user()->santri->photo_santri }}">
+                                                @if (Auth::user()->santri == null)
+                                                    <div class="ms-3 avatar avatar-xl">
+                                                        <img src="{{ asset('template/dist') }}/assets/compiled/jpg/1.jpg"
+                                                            alt="Face 1">
                                                     </div>
                                                 @else
-                                                    <div class="avatar avatar-xl">
-                                                        @if (Auth::user()->santri->jk_santri == 'Ikhwan')
-                                                            <img alt="Foto Ikhwan"
-                                                                src="{{ asset('storage') }}/avatars/default_ikhwan.jpg">
-                                                        @else
-                                                            <img alt="Foto Akhwat"
-                                                                src="{{ asset('storage') }}/avatars/default_akhwat.jpg">
-                                                        @endif
-                                                    </div>
+                                                    @if (Auth::user()->santri->photo_santri)
+                                                        <div class="avatar avatar-xl">
+                                                            <img alt="Foto Santri"
+                                                                src="{{ asset('storage') }}/images/{{ Auth::user()->santri->photo_santri }}">
+                                                        </div>
+                                                    @else
+                                                        <div class="avatar avatar-xl">
+                                                            @if (Auth::user()->santri->jk_santri == 'Ikhwan')
+                                                                <img alt="Foto Ikhwan"
+                                                                    src="{{ asset('storage') }}/avatars/default_ikhwan.jpg">
+                                                            @else
+                                                                <img alt="Foto Akhwat"
+                                                                    src="{{ asset('storage') }}/avatars/default_akhwat.jpg">
+                                                            @endif
+                                                        </div>
+                                                    @endif
                                                 @endif
                                                 <div class="ms-3 name">
                                                     <h6 class="font-bold mt-2">{{ Auth::user()->nama_lengkap }}</h6>
